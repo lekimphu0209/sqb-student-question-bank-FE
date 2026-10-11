@@ -1,0 +1,14 @@
+Kênh Client gửi lên Server (Publish Destinations):
+
+| STOMP Destination | Mô tả nghiệp vụ | Payload DTO & Các trường chính |
+| :--- | :--- | :--- |
+| `/app/chat.send` | Gửi tin nhắn mới trong hội thoại | `SendWsMessageRequestDto` • `conversationId` (Long) • `content` (String) • `messageType` (TEXT / IMAGE / FILE) • `mediaUrls` (ListString) • `replyToMessageId` (Long) |
+| `/app/chat.read` | Báo đã đọc tin nhắn trong cuộc hội thoại | `ReadWsMessageRequestDto` • `conversationId` (Long) • `lastReadMessageId` (Long) |
+| `/app/chat.typing` | Phát sự kiện đang soạn / dừng soạn tin nhắn | `TypingWsRequestDto` • `conversationId` (Long) • `isTyping` (Boolean) |
+
+#### 2. Kênh Client đăng ký lắng nghe (Subscribe Topics / Queues):
+
+| STOMP Topic / Queue | Mô tả sự kiện | Payload DTO nhận được |
+| :--- | :--- | :--- |
+| `/user/queue/messages` | Lắng nghe tin nhắn cá nhân 1-1, thông báo hệ thống và biên nhận đã đọc | `WsMessageBroadcastDto` / `WsReadReceiptBroadcastDto` |
+| `/topic/conversations.{conversationId}` | Lắng nghe tin nhắn trao đổi trong nhóm và sự kiện thành viên đang soạn tin | `WsMessageBroadcastDto` / `WsTypingBroadcastDto` |

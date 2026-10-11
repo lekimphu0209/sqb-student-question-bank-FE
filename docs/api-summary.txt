@@ -1,0 +1,210 @@
+INFO: {"title": "Hệ Thống Mạng Xã Hội Học Tập & Ngân Hàng Đề Thi - SQB HUST", "description": "Tài liệu đặc tả và kiểm thử tương tác toàn bộ 143+ REST API & Giao thức WebSocket STOMP của nền tảng SQB (Social Network Student-Generated Question Bank).\n\n---\n\n### 🔑 Hướng dẫn xác thực:\n1. Gọi API `/auth/login` để lấy JWT `access_token`.\n2. Nhấn nút **Authorize** ở góc phải trên cùng màn hình, dán token vào ô `Value` (không cần gõ thêm chữ `Bearer `).\n3. Nhấn **Authorize** để tự động gắn Header Authorization cho mọi API cần kiểm thử.\n\n---\n\n### 📦 Cấu trúc phản hồi chuẩn (GlobalResponse Envelope):\nTất cả các REST API trong hệ thống đều trả về theo định dạng vỏ bọc thống nhất:\n```json\n{\n  \"code\": \"0000\",\n  \"message\": \"Thành công\",\n  \"data\": { ... Payload nghiệp vụ ... }\n}\n```\n\n---\n\n### 📡 Đặc tả giao thức Realtime WebSocket STOMP (Chat & Trực tuyến):\n\n- **Endpoint kết nối Handshake:** `ws://<domain>/api/v1/ws` (Client có thể dùng `@stomp/stompjs` hoặc `sockjs-client`).\n- **Header xác thực khi CONNECT:** `Authorization: Bearer <jwt_access_token>`.\n- **Tiền tố Application (Client -> Server):** `/app`\n- **Tiền tố Broker (Server -> Client):** `/user` (kênh riêng tư) và `/topic` (kênh nhóm/cộng đồng)\n\n#### 1. Kênh Client gửi lên Server (Publish Destinations):\n\n| STOMP Destination | Mô tả nghiệp vụ | Payload DTO & Các trường chính |\n| :--- | :--- | :--- |\n| `/app/chat.send` | Gửi tin nhắn mới trong hội thoại | `SendWsMessageRequestDto`<br>• `conversationId` (Long)<br>• `content` (String)<br>• `messageType` (TEXT / IMAGE / FILE)<br>• `mediaUrls` (List&lt;String&gt;)<br>• `replyToMessageId` (Long) |\n| `/app/chat.read` | Báo đã đọc tin nhắn trong cuộc hội thoại | `ReadWsMessageRequestDto`<br>• `conversationId` (Long)<br>• `lastReadMessageId` (Long) |\n| `/app/chat.typing` | Phát sự kiện đang soạn / dừng soạn tin nhắn | `TypingWsRequestDto`<br>• `conversationId` (Long)<br>• `isTyping` (Boolean) |\n\n#### 2. Kênh Client đăng ký lắng nghe (Subscribe Topics / Queues):\n\n| STOMP Topic / Queue | Mô tả sự kiện | Payload DTO nhận được |\n| :--- | :--- | :--- |\n| `/user/queue/messages` | Lắng nghe tin nhắn cá nhân 1-1, thông báo hệ thống và biên nhận đã đọc | `WsMessageBroadcastDto` / `WsReadReceiptBroadcastDto` |\n| `/topic/conversations.{conversationId}` | Lắng nghe tin nhắn trao đổi trong nhóm và sự kiện thành viên đang soạn tin | `WsMessageBroadcastDto` / `WsTypingBroadcastDto` |\n", "contact": {"name": "Đội ngũ phát triển SQB HUST", "email": "bangiaohuongmuadong@gmail.com"}, "license": {"name": "Bản quyền thuộc về Đồng Văn Hiếu và thầy Nguyễn Tiến Thành", "url": "https://github.com/hieuDV171"}, "version": "1.0.0"}
+SERVERS: [{"url": "/api/v1", "description": "API Gateway Base URL (/api/v1)"}]
+SECURITY: {"BearerAuth": {"type": "http", "description": "Nhập chuỗi JWT Access Token nhận được sau khi đăng nhập thành công.", "name": "BearerAuth", "scheme": "bearer", "bearerFormat": "JWT"}}
+PATHS: 128, SCHEMAS: 312
+
+## 01. Xác thực (Auth) (4)
+  POST   /auth/change-password                              Đổi mật khẩu người dùng
+  POST   /auth/login                                        Đăng nhập hệ thống
+  POST   /auth/logout                                       Đăng xuất tài khoản
+  POST   /auth/refresh                                      Cấp mới Access Token (Refresh)
+
+## 02. Quản trị Tài khoản (Admin Auth) (5)
+  POST   /auth/admin/bulk-import                            Tạo hàng loạt tài khoản người dùng (Bulk Import)
+  POST   /auth/admin/register                               Đăng ký tài khoản (Admin)
+  POST   /auth/admin/resend-verify                          Gửi lại mã xác thực OTP
+  POST   /auth/admin/reset-password                         Đặt lại mật khẩu cho người dùng (Reset Password)
+  POST   /auth/admin/verify                                 Xác thực kích hoạt tài khoản bằng mã OTP
+
+## 03. Hồ sơ người dùng (User Profile) (4)
+  DELETE /users/me                                          Xóa hồ sơ cá nhân
+  GET    /users/me                                          Lấy hồ sơ cá nhân của tôi
+  PUT    /users/me                                          Cập nhật hồ sơ cá nhân
+  GET    /users/{userId}                                    Xem hồ sơ công khai của người dùng khác
+
+## 04. Mạng xã hội - Bài viết (Posts) (8)
+  POST   /posts                                             Đăng bài viết mới
+  GET    /posts/me                                          Lấy danh sách bài viết của bản thân
+  DELETE /posts/{id}                                        Xóa bài viết
+  GET    /posts/{id}                                        Lấy chi tiết một bài viết
+  PUT    /posts/{id}                                        Chỉnh sửa bài viết
+  PUT    /posts/{id}/lecturer-notes                         Giảng viên thêm/cập nhật ghi chú chuyên môn
+  GET    /users/{userId}/posts                              Lấy danh sách bài viết của người dùng khác
+  GET    /video-posts                                       Lấy danh sách video bài giảng
+
+## 05. Tương tác - Bình luận (Comments) (4)
+  GET    /comments                                          Lấy danh sách bình luận
+  POST   /comments                                          Tạo bình luận mới hoặc trả lời bình luận
+  DELETE /comments/{commentId}                              Xóa bình luận
+  PUT    /comments/{commentId}                              Chỉnh sửa bình luận
+
+## 06. Tương tác - Cảm xúc (Reactions) (1)
+  POST   /react                                             Thả hoặc gỡ cảm xúc (Toggle Reaction)
+
+## 07. Quan hệ - Kết bạn (Friendships) (7)
+  GET    /friendships                                       Lấy danh sách bạn bè của tôi
+  POST   /friendships/accept                                Chấp nhận lời mời kết bạn
+  POST   /friendships/decline                               Từ chối lời mời kết bạn
+  POST   /friendships/request                               Gửi lời mời kết bạn
+  GET    /friendships/requests/received                     Lấy danh sách lời mời kết bạn đã nhận
+  GET    /friendships/requests/sent                         Lấy danh sách lời mời kết bạn đã gửi
+  DELETE /friendships/{friendId}                            Hủy kết bạn (Unfriend)
+
+## 08. Quan hệ - Theo dõi (Follows) (5)
+  GET    /follows/followers                                 Lấy danh sách người đang theo dõi tôi (Followers)
+  GET    /follows/following                                 Lấy danh sách người tôi đang theo dõi (Following)
+  DELETE /follows/{targetUserId}                            Hủy theo dõi một người dùng
+  POST   /follows/{targetUserId}                            Theo dõi một người dùng
+  GET    /users/{userId}/relationship-stats                 Xem thống kê quan hệ của một người dùng
+
+## 09. Quan hệ - Chặn (Blocks) (3)
+  GET    /blocks                                            Lấy danh sách người dùng đang bị chặn
+  DELETE /blocks/{targetUserId}                             Bỏ chặn người dùng
+  POST   /blocks/{targetUserId}                             Chặn một người dùng
+
+## 10. Trò chuyện - Cuộc hội thoại (Conversations) (14)
+  GET    /conversations                                     Lấy danh sách cuộc hội thoại
+  POST   /conversations/direct                              Tạo cuộc trò chuyện trực tiếp 1-1
+  POST   /conversations/group                               Tạo nhóm chat mới
+  GET    /conversations/hidden                              Lấy danh sách cuộc hội thoại ẩn
+  POST   /conversations/hidden/unlock                       Mở khóa kho trò chuyện ẩn
+  PUT    /conversations/{id}                                Cập nhật thông tin nhóm chat
+  PATCH  /conversations/{id}/hide                           Ẩn cuộc hội thoại vào kho bí mật
+  POST   /conversations/{id}/leave                          Rời khỏi nhóm chat
+  GET    /conversations/{id}/members                        Lấy danh sách thành viên trong nhóm
+  POST   /conversations/{id}/members                        Thêm thành viên vào nhóm chat
+  DELETE /conversations/{id}/members/{userId}               Xóa thành viên khỏi nhóm chat
+  PUT    /conversations/{id}/members/{userId}/role          Cập nhật vai trò thành viên nhóm
+  PATCH  /conversations/{id}/unhide                         Bỏ ẩn cuộc hội thoại
+  POST   /users/me/hidden-chat-pin                          Cài đặt hoặc đổi mã PIN kho trò chuyện ẩn
+
+## 11. Trò chuyện - Tin nhắn (Messages) (2)
+  GET    /conversations/{id}/messages                       Lấy lịch sử tin nhắn trong cuộc hội thoại
+  DELETE /messages/{id}                                     Xóa hoặc thu hồi tin nhắn
+
+## 12. Thông báo (Notifications) (5)
+  GET    /notifications                                     Lấy danh sách thông báo của tôi
+  POST   /notifications/read-all                            Đánh dấu tất cả thông báo đã đọc
+  POST   /notifications/{id}/read                           Đánh dấu một thông báo đã đọc
+  GET    /settings/push                                     Lấy cấu hình nhận thông báo đẩy
+  PUT    /settings/push                                     Cập nhật cấu hình nhận thông báo đẩy
+
+## 13. Dòng hoạt động (Activity Feed) (2)
+  GET    /activity-feeds                                    Lấy dòng hoạt động cá nhân hóa
+  GET    /activity-feeds/new-count                          Đếm số lượng hoạt động mới
+
+## 14. Quản trị Học kỳ (Semesters) (5)
+  GET    /admin/semesters                                   Lấy danh sách tất cả học kỳ
+  POST   /admin/semesters                                   Tạo học kỳ mới
+  PUT    /admin/semesters/deactive-all                      Đóng toàn bộ học kỳ đang kích hoạt
+  DELETE /admin/semesters/{semesterId}                      Xóa học kỳ
+  PUT    /admin/semesters/{semesterId}/activate             Kích hoạt học kỳ
+
+## 15a. Quản trị Môn học (Subjects) (1)
+  POST   /admin/subjects                                    Tạo môn học mới
+
+## 15b. Danh mục Môn học (Subjects Catalog) (1)
+  GET    /subjects                                          Lấy danh sách tất cả môn học
+
+## 16a. Quản lý Lớp học phần (Course Classes) (7)
+  GET    /lecturer/course-classes                           Lấy danh sách lớp học phần trong học kỳ hiện tại
+  POST   /lecturer/course-classes                           Tạo lớp học phần mới
+  GET    /lecturer/course-classes/lecturers                 Lấy danh sách tất cả giảng viên đang hoạt động
+  GET    /lecturer/course-classes/my-classes                Lấy danh sách lớp học phần do tôi phụ trách
+  GET    /lecturer/course-classes/{courseClassId}           Lấy chi tiết lớp học phần
+  GET    /lecturer/course-classes/{courseClassId}/students  Lấy danh sách sinh viên trong lớp học phần
+  POST   /lecturer/course-classes/{courseClassId}/students  Gán sinh viên vào lớp học phần
+
+## 16b. Quản trị Lớp học phần (Admin Course Classes) (1)
+  POST   /admin/course-classes/import-excel                 Import lớp học phần và sinh viên từ file Excel (Admin)
+
+## 17. Phiên Đề xuất Câu hỏi (Sessions) (6)
+  GET    /sessions/my-enrolled-subjects                     Lấy danh sách môn học người dùng đang tham gia
+  GET    /sessions/my-submissions                           Lấy danh sách phiên đề xuất của chính mình
+  DELETE /sessions/my-submissions/{sessionId}               Xóa phiên đề xuất của chính mình
+  GET    /sessions/my-submissions/{sessionId}               Xem chi tiết phiên đề xuất của chính mình
+  PUT    /sessions/my-submissions/{sessionId}               Cập nhật phiên đề xuất của chính mình
+  POST   /sessions/propose                                  Đề xuất phiên câu hỏi mới
+
+## 18. Giảng viên Duyệt Câu hỏi (Question Review) (6)
+  PUT    /questions/{questionId}                            Giảng viên chỉnh sửa câu hỏi
+  POST   /sessions/approve                                  Phê duyệt danh sách câu hỏi
+  GET    /sessions/pending                                  Lấy danh sách phiên đề xuất chờ duyệt
+  POST   /sessions/reject                                   Từ chối danh sách câu hỏi
+  GET    /sessions/{sessionId}                              Xem chi tiết phiên đề xuất để duyệt
+  POST   /sessions/{sessionId}/complete-review              Chốt hoàn tất duyệt phiên đề xuất
+
+## 19. Luyện tập & Đánh giá Câu hỏi (Question Interaction) (6)
+  POST   /questions/{questionId}/answer                     Nộp câu trả lời cho câu hỏi
+  POST   /questions/{questionId}/rate                       Đánh giá chất lượng câu hỏi
+  GET    /questions/{questionId}/ratings                    Lấy danh sách đánh giá của câu hỏi
+  GET    /questions/{questionId}/statistics                 Xem thống kê tương tác của câu hỏi
+  GET    /sessions/{sessionId}/questions                    Lấy danh sách câu hỏi trong phiên để luyện tập
+  GET    /users/{userId}/sessions                           Lấy danh sách phiên đề xuất của một người dùng
+
+## 20. Đề thi & Xuất Đề (Exams) (5)
+  POST   /exams/generate                                    Tự động sinh đề thi từ ngân hàng câu hỏi
+  GET    /exams/my-exams                                    Lấy danh sách đề thi của giảng viên
+  GET    /exams/{examId}                                    Xem chi tiết đề thi
+  GET    /exams/{examId}/export                             Xuất file đề thi (PDF / Excel)
+  GET    /lecturer/questions/export                         Giảng viên xuất toàn bộ câu hỏi môn học
+
+## 21. Gamification & Minigames (13)
+  POST   /admin/leaderboards/rebuild                        Tái tạo Bảng xếp hạng trong Redis (Admin)
+  POST   /admin/semesters/finalize-semester                 Chốt sổ tổng kết học kỳ (Admin)
+  GET    /games/check-in                                    Lấy trạng thái điểm danh hôm nay của người dùng
+  POST   /games/check-in                                    Điểm danh chuyên cần hàng ngày
+  GET    /games/leaderboard                                 Xem Bảng xếp hạng vinh danh sinh viên
+  GET    /games/my-predictions                              Lấy lịch sử các lượt dự đoán của tôi
+  GET    /games/prediction/active-session                   Lấy phiên Game 6 đang mở (Thứ 7 hàng tuần)
+  POST   /games/prediction/approved-questions               Đặt dự đoán Game 2: Số câu hỏi LLM và Con người được duyệt
+  POST   /games/prediction/bank-size                        Đặt dự đoán Game 4: Tổng quy mô ngân hàng câu hỏi cuối kỳ
+  GET    /games/prediction/game-1/classes                   Lấy danh sách lớp học phần để dự đoán Game 1
+  POST   /games/prediction/participants                     Đặt dự đoán Game 1: Số sinh viên nộp bài ngày mai
+  POST   /games/prediction/submit                           Nộp dự đoán Game 6: Phán đoán câu hỏi do AI tạo
+  POST   /questions/{questionId}/ratings/{ratingUserId}/review-error Giảng viên thẩm định báo lỗi câu hỏi (Game 5)
+
+## 22. Huy hiệu & Danh hiệu (Badges) (9)
+  GET    /admin/badges                                      Lấy toàn bộ danh sách huy hiệu (Quản trị viên)
+  POST   /admin/badges                                      Tạo mới huy hiệu danh hiệu
+  DELETE /admin/badges/{badgeId}                            Vô hiệu hóa (Soft Delete) huy hiệu
+  PUT    /admin/badges/{badgeId}                            Cập nhật thông tin huy hiệu
+  POST   /admin/badges/{badgeId}/grant                      Cấp phát huy hiệu thủ công cho người dùng
+  GET    /badges                                            Lấy danh sách tất cả huy hiệu đang hoạt động trong hệ thống
+  GET    /badges/me                                         Lấy danh sách huy hiệu của chính người dùng hiện tại
+  GET    /badges/users/{userId}                             Lấy danh sách huy hiệu của người dùng khác
+  GET    /badges/{badgeId}                                  Xem chi tiết một huy hiệu
+
+## 23. Cửa hàng & Vật phẩm Trang trí (Cosmetics) (5)
+  PUT    /cosmetics/equip                                   Trang bị vật phẩm trang trí
+  GET    /cosmetics/my-inventory                            Xem túi đồ và bộ sưu tập vật phẩm của tôi
+  GET    /cosmetics/shop                                    Xem danh sách vật phẩm trong cửa hàng (Shop)
+  PUT    /cosmetics/unequip                                 Tháo gỡ vật phẩm trang trí đang dùng
+  POST   /cosmetics/{id}/buy                                Mua vật phẩm từ cửa hàng bằng SQB Coins
+
+## 24. Tích hợp Trí tuệ Nhân tạo (AI Integration) (5)
+  POST   /admin/ai/chat                                     Trò chuyện tương tác với trợ lý AI
+  GET    /admin/ai/chat/history                             Lấy lịch sử hội thoại AI theo phiên
+  GET    /admin/ai/chat/sessions                            Lấy danh sách các phiên trò chuyện AI của tôi
+  POST   /questions/{questionId}/ai-apply                   Phê duyệt hoặc loại bỏ kết quả chỉnh sửa của AI
+  POST   /questions/{questionId}/ai-refine                  AI tinh chỉnh câu hỏi trắc nghiệm
+
+## 25. Tìm kiếm Toàn văn (Search) (3)
+  GET    /search                                            Tìm kiếm toàn cục đa thực thể
+  GET    /search/saved                                      Lấy lịch sử tìm kiếm cá nhân & Top từ khóa thịnh hành
+  DELETE /search/saved/{id}                                 Xóa một từ khóa khỏi lịch sử tìm kiếm cá nhân
+
+## 26. Báo cáo & Khiếu nại (Reports) (1)
+  POST   /report                                            Gửi báo cáo vi phạm nội dung hoặc người dùng
+
+## 27. Tải lên Media (Cloudflare R2) (3)
+  POST   /medias/presign                                    Lấy URL ký trước (Presigned URLs)
+  POST   /medias/upload                                     Tải lên media trực tiếp qua Backend
+  POST   /medias/verify                                     Xác minh các tệp tin đã upload lên R2
+
+## 28. Quản lý Thiết bị (Devices) (5)
+  GET    /devices                                           Lấy danh sách thiết bị đang đăng nhập
+  POST   /devices/fid                                       Đồng bộ Firebase Installation ID (FID)
+  POST   /devices/fid/unregister                            Hủy đăng ký Firebase Installation ID (FID)
+  DELETE /devices/{deviceId}                                Xóa thông tin thiết bị khỏi tài khoản
+  POST   /devices/{deviceId}/logout                         Đăng xuất thiết bị chỉ định

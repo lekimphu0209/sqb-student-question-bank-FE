@@ -1,0 +1,21 @@
+# deps / build
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# env & secrets
+.env
+.env.local
+.env.*.local
+*.token
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# logs
+*.log

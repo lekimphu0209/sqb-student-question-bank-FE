@@ -1,0 +1,9 @@
+services:
+  sqb-frontend:
+    build:
+      context: ./sqb-frontend
+    image: sqb-frontend:latest
+    container_name: sqb-frontend
+    ports:
+      - "8080:80"
+    restart: unless-stopped

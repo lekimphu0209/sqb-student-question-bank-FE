@@ -1,0 +1,2615 @@
+=== PAGE 1 ===
+
+=== PAGE 2 ===
+BÀI T ẬP LỚN KỲ 
+20261 
+=== PAGE 3 ===
+3Mục lục
+1.Tổng quan và mục tiêu cốt lõi 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 4 ===
+4Mục lục
+1.Tổng quan và mục tiêu cốt lõi 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 5 ===
+51. Tổng quan và m ục tiêu c ốt lõi 
+●Tên đề tài:  Mạng xã hội cho sinh viên đề xuất và đánh giá câu 
+hỏi trong ngân hàng đề. 
+●Mục tiêu cốt lõi:  Xây dựng hệ thống nguồn lực đám đông 
+(Crowdsourcing) kết hợp Mạng xã hội để sinh viên đóng góp 
+câu hỏi thi (Giữa kỳ/Cuối kỳ), có tích hợp AI để kiểm duyệt và 
+hỗ trợ Gamification nhằm khuyến khích sự tham gia. 
+=== PAGE 6 ===
+61. Tổng quan và m ục tiêu c ốt lõi 
+●Đề xuất Tech Stack (Công nghệ khuyến nghị): 
+○Backend:  Java Spring Boot (Restful API + WebSocket). 
+○Database:  PostgreSQL (Quan h ệ, JSONB, pgvector) + Redis 
+(Cache, Leaderboard, Pub/Sub). 
+○AI/ML Server:  LLM/VLM c ủa nhà tr ường & Framework BTPROP . 
+○Web: Tùy ch ọn framework 
+○Mobile: React Native/ Flutter 
+○Push Notification:  Firebase Cloud Messaging (FCM). 
+Hou, Bairu, et al. "A probabilistic framework for llm hallucination detection via belief tree propagation." Proceedings of the 2025 Conference of the Nations of  
+the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers) . 2025.  
+=== PAGE 7 ===
+71. Yêu c ầu tổng quan c ủa đề tài
+Lịch trình giới thiệu API và giao diện: 
+Chương 1 : API Đăng ký/Đăng nhập 
+Chương 2:  
+-API Đăng ký/Đăng nhập (tiếp theo) 
+-Giao diện đăng ký/đăng nhập 
+-API đăng bài 
+Chương 3: 
+-Giao diện đăng bài/hiển thị bài 
+-API truy vấn bài/sửa bài Chương 4: 
+-Giao diện sửa/xóa/báo cáo/xem 
+bình luận bài 
+-API xóa/báo cáo/thích/xem 
+BL/đăng BL của bài 
+Chương 5: 
+-API danh sách bài/kiểm tra phần 
+tử mới 
+-Giao diện trang chủ 
+WIP
+=== PAGE 8 ===
+81. Yêu c ầu tổng quan c ủa đề tài
+Lịch trình giới thiệu API và giao diện 
+(tiếp): 
+Chương 6: 
+-API tìm kiếm/xem tìm kiếm/xóa 
+tìm kiếm 
+-Giao diện tìm kiếm 
+Chương 7: 
+-API yêu cầu kết bạn/lấy DS 
+video và bạn bè 
+-Giao diện tab bạn bè/video Chương 8: 
+-API xử lý yêu cầu/xem danh 
+sách gợi ý/yêu cầu kết bạn và 
+xem danh sách chặn 
+-Giao diện tab thông báo/bạn bè 
+Chương 9: 
+-API đổi mật khẩu và đọc/sửa cài 
+đặt thông báo 
+-API chặn người dùng, kiểm tra 
+phiên bản 
+WIP
+=== PAGE 9 ===
+91. Yêu c ầu tổng quan c ủa đề tài
+Lịch trình giới thiệu API và giao diện (tiếp): 
+Chương 10: 
+-API lấy/đọc thông báo 
+-API gán mã thiết bị 
+-API lấy/sửa thông tin cá nhân 
+-Giao diện trang người dùng 
+Chương 11: 
+-Các API và giao diện cuối cùng phục vụ việc nhắn tin 
+WIP
+=== PAGE 10 ===
+10Mục lục
+1.Yêu cầu tổng quan của đề tài 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 11 ===
+2. Quy trình b ảo vệ
+112.1. Thành viên 
+2.2. Thời gian bảo vệ 
+2.3. Hình thức bảo vệ 
+=== PAGE 12 ===
+2. Quy trình b ảo vệ
+122.1. Thành viên 
+2.2. Thời gian bảo vệ 
+2.3. Hình thức bảo vệ 
+=== PAGE 13 ===
+2.1. Thành viên 
+13•Mỗi nhóm có tối đa 5 thành viên. 
+•Chiến lược phân chia công việc: 
+•2 Backend Core + DB, 1 AI algorithm, 1 Web Frontend/ 
+Admin Panel, 1 DevOps/Tester 
+•Với lớp IT4788: nên có 01 bạn làm giao diện mobile, 02 bạn 
+cài đặt mô hình nghiệp vụ, 01 bạn làm tester, 01 bạn phụ trách 
+merge code + QA 
+=== PAGE 14 ===
+2. Quy trình b ảo vệ
+142.1. Thành viên 
+2.2. Thời gian bảo vệ 
+2.3. Hình thức bảo vệ 
+=== PAGE 15 ===
+2.2. Th ời gian b ảo vệ
+15Chậm nhất là buổi học thứ 4, các sinh viên gửi thông tin về nhóm 
+của mình cùng thông tin liên lạc của nhóm trưởng 
+Các danh sách bảo vệ sẽ được gửi cho lớp trước khi bảo vệ 
+Các nhóm đến bảo vệ theo đúng lịch của mình, với đầy đủ  các 
+thành viên. 
+Bảo vệ vào các buổi học thứ 14, 15, 16  của môn học 
+Điểm bài tập lớn sẽ được tính vào điểm quá trình  của môn học 
+=== PAGE 16 ===
+2.2. Th ời gian b ảo vệ (2)
+16Các nhóm sẽ được bảo vệ thử vào buổi học thứ 13 
+Một số nhóm sẽ được chọn lựa để đi bảo vệ thử 
+Các nhóm chỉ lên trình bày công việc mình làm được, nếu chưa làm 
+được gì hoặc chưa hoàn thành xong hết hoặc không đến thì vẫn 
+được chấp nhận. 
+Các nhóm trưởng khác nên có mặt để tham khảo 
+Các nhóm nên chuẩn bị như thể đây là một buổi bảo vệ chính thức, 
+để có thể có kết quả tốt trong buổi tiếp theo 
+=== PAGE 17 ===
+2. Quy trình b ảo vệ
+172.1. Thành viên 
+2.2. Thời gian bảo vệ 
+2.3. Hình thức bảo vệ 
+=== PAGE 18 ===
+2.3. Hình th ức bảo vệ
+18Sinh viên bảo vệ xong sẽ điền form để báo cáo. Trong form có yêu 
+cầu báo cáo ghi rõ phân công công việc, link github của mã nguồn. 
+Với IT4788, nhóm sinh viên chuẩn bị đầy đủ ít nhất là 2 điện thoại 
+THẬT  (kết nối mạng 3G/4G), server để demo. Không chấp nhận 
+chỉ sử dụng bộ giả lập. 
+Khi một nhóm bảo vệ (các thành viên ngồi ở hai bàn đầu, dãy giữa), 
+các nhóm khác ngồi cách xa ít nhất hai bàn 
+Bảo vệ xong, nhóm cần ở lại đến phút cuối của buổi học để có thể 
+trả lời các câu hỏi khác (nếu có) 
+Với IT4788, di động phải chia sẻ được màn hình trực tiếp đến 
+laptop qua cổng USB (để test khả năng ngắt mạng) 
+=== PAGE 19 ===
+2.3. Hình th ức bảo vệ (2)
+19Nhóm sinh viên không nhất thiết phải hoàn thành tất cả các chức 
+năng trong danh sách 
+-Nhóm được cao điểm nhất là nhóm hoàn thành được nhiều chức 
+năng nhất. 
+Để được điểm tối đa, nhóm cần phải hoàn thành tối thiểu được 70% 
+các chức năng được yêu cầu. 
+=> ưu tiên làm Core Feature  (Đề xuất câu h ỏi, Tạo đề thi, Post, Chat, Friend, …) 
+trước, sau đó mới xây d ựng AI & Gamification  (Minigame, Hallucination Check) 
+để lấy điểm tuy ệt đối.
+=== PAGE 20 ===
+Mục lục
+201.Yêu cầu tổng quan của đề tài 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 21 ===
+3. Yêu c ầu chức năng và phi ch ức năng
+213.1. Yêu cầu chức năng 
+3.2. Yêu cầu phi chức năng 
+=== PAGE 22 ===
+3. Yêu c ầu chức năng và phi ch ức năng
+223.1. Yêu cầu chức năng 
+3.2. Yêu cầu phi chức năng 
+=== PAGE 23 ===
+3.1. Yêu c ầu chức năng (1) 
+23Hệ thống cần phát triển có các chức năng sau: 
++Cho phép người dùng đăng ký và đăng nhập vào ứng dụng. Tên 
+đăng nhập là email do trường cấp, mật khẩu không chứa các ký 
+tự đặc biệt 
++Cho phép người dùng đăng bài mới với một chế độ duy nhất là 
+public, số lượng từ giới hạn là 500 từ. 
++Bài viết của người dùng KHÔNG giới hạn số ảnh nhưng khi 
+chấm BTL thì chỉ post tối đa bốn hình ảnh 
++Khi bài được đăng, bất kỳ ai (trừ khi bị chặn) cũng có thể xem, 
+like, comment được. Số lượng từ trong một comment không 
+vượt quá 500 từ. 
+=== PAGE 24 ===
+3.1. Yêu c ầu chức năng (2) 
+24+Một bài viết bất kỳ đều có chức năng cho phép người khác báo cáo 
++Một người có thể chặn ( block ) và bỏ chặn ( unblock ) bất kỳ ai. 
+Việc chặn sau khi bỏ chặn không bị giới hạn thời gian như trên 
+facebook 
++Việc chặn một người sẽ khiến người đó không còn là bạn bè của 
+người thực hiện thao tác chặn 
++Việc người A chặn một người không khiến bình luận , like của 
+người đó bị xóa khỏi trang cá nhân (nhưng A sẽ không thấy các 
+bình luận này) 
++Việc chặn một người sẽ khiến hai người không thể trao đổi tin 
+nhắn với nhau được nữa 
++Việc chặn một người sẽ khiến hai người không xem được trang cá 
+nhân của nhau. 
+=== PAGE 25 ===
+3.1. Yêu c ầu chức năng (3) 
+25+Chỉ có một cảm xúc like duy nhất, không có nhiều cảm xúc như 
+phiên bản Facebook hiện nay. 
++Hiện tại chưa cho phép tiến hành lập nhóm nhiều người cùng 
+chat. 
++Khi một người đăng nhập thành công vào ứng dụng hệ thống sẽ 
+hiển thị ưu tiên các bài viết của bạn bè trước. Nếu đã hiển thị 
+xong các bài viết của bạn bè thì sẽ hiển thị ngẫu nhiên các bài 
+của những người dùng khác. Ưu tiên sắp xếp theo thời gian. Tất 
+nhiên không hiển thị bài của những người bị chặn 
++Chủ bài viết không xóa bình luận được. Chủ bình luận không 
+sửa được bình luận. 
+=== PAGE 26 ===
+3.1. Yêu c ầu chức năng (4) 
+26+Không xem được danh sách những người thích một bài viết 
+(nhưng biết được số lượng thích của bài viết). 
++Không bày tỏ cảm xúc cho bình luận được. 
++Bình luận chỉ chứa văn bản, HTTP link và/hoặc emote 
++Với IT4788: được phép tùy chọn âm thanh push notification sao 
+cho thể hiện được “trải nghiệm” tốt nhất 
++Các thông tin được push: có người thích bài viết của bạn, có 
+người bình luận bài viết của bạn, bạn bè đăng bài viết mới, có 
+người gửi tin nhắn cho bạn, có người muốn kết bạn với bạn, tài 
+khoản đăng nhập trên máy khác… (xem chi tiết ở sau) 
+=== PAGE 27 ===
+3.1. Yêu c ầu chức năng (5) 
+27+Tải ảnh có kích thước tối đa 4MB, không làm việc với ảnh 
+động. Tải lên tối đa 4 ảnh (khi đăng bài viết cá nhân) 
++Hoàn toàn có thể sửa, xóa bài viết. 
++Việc xem video* và xem ảnh cá nhân, ảnh bài viết đều có trải 
+nghiệm giống như ứng dụng Facebook 
++với IT4788, ứng dụng có nút đóng để tắt hoàn toàn ứng dụng 
++Một khi bài viết được đăng xong hoặc sửa xong hoặc xóa xong 
+sẽ chuyển về một trang nào đó (theo đúng kịch bản của 
+facebook) 
++Không có việc tham gia và tạo lập nhóm 
+*: GV vẫn đăng bài có video nội dung học được 
+=== PAGE 28 ===
+3.1. Yêu c ầu chức năng (6) 
+28+Không cho phép tag thành viên khác vào bài viết hoặc đoạn chat 
+hoặc bình luận 
++Với IT4788, ứng dụng cho phép việc chụp ảnh trong app. Ngoài 
+ra vẫn có thể chọn các file ảnh có sẵn ở trong máy 
++Với IT4788, ứng dụng cho phép chèn các emotion trong bài viết 
+hoặc bình luận hoặc tin nhắn chat bằng cách nhập các ký tự đặc 
+biệt
++Không cho phép màn hình đăng nhập được chứa thêm nhiều tài 
+khoản 
++Bài viết dài sẽ có nút xem thêm để thu gọn lại. Nhấn vào “Xem 
+thêm” sẽ mở rộng nhưng sau đó không thu gọn được 
++Tất cả các ảnh upload lên sẽ được hiển thị ở phần trung tâm của 
+ảnh
+=== PAGE 29 ===
+3.1. Yêu c ầu chức năng (7) 
+29+Cho phép thiết lập tắt thông báo đẩy hoặc thiết lập có thông báo 
+đẩy nhưng dùng âm thanh mặc định (âm kêu vang lên) hoặc âm 
+có tiếng nói (yêu cầu SV thu âm giọng nói để làm file phát ra) 
++Cho phép tìm kiếm trong màn hình trang chủ của ứng dụng. 
+Chẳng hạn tìm kiếm với từ khóa “đội bóng Nam Việt đá” thì 
+vẫn ra được các kết quả về các bài viết có chứa các từ khóa “đội 
+bóng Việt Nam đá”. 
++KHÔNG cho phép người dùng tự xóa tài khoản của mình 
++Xây dựng trang quản trị để người quản trị có thể dễ dàng 
+thêm/sửa/xóa trực tiếp các dữ liệu cần thiết 
+=== PAGE 30 ===
+3.1. Yêu c ầu chức năng (8) 
+30Đề xuất câu hỏi:  Cho phép sinh viên upload câu hỏi, khai báo trung thực nguồn gốc (Tự làm 
+hoặc AI tạo) – Lưu ý: Thông tin này ẩn với GV . 
+Minigame 1 (Đoán số lượng):  Sinh viên dự đoán số lượng người tham gia đề xuất trong một 
+khung thời gian (sai số ±5%) để nhận điểm thưởng. 
+Minigame 2 (Đoán tỷ lệ duyệt):  Sinh viên dự đoán chính xác số lượng câu hỏi của chính mình 
+(thuộc nhóm AI hoặc Tự làm) được GV chọn để nhận điểm cộng. 
+Minigame 3 (Đoán mức độ yêu thích)  trong đúng 10 câu hỏi của phiên đề xuất, SV dự đoán 
+mức độ ưa thích của bạn học với từng câu. Nếu đúng từ 50% trở lên thì được +0.25 điểm. 
+Minigame 4:  Sinh viên dự đoán số lượng câu hỏi có trong ngân hàng đề của môn học. Chỉ dành 
+cho 3 người được cộng chính xác nhất và sớm nhất. Mỗi người chỉ đoán một lần 
+Minigame 5 (Báo câu lỗi) : SV phát hiện được câu hỏi bị lỗi, rate 0 ⭐
+và nếu câu đó là câu được 
+chọn (vào ngân hàng đề) thì bạn chủ câu bị bớt điểm và bạn báo cáo sẽ được cộng điểm (nhưng 
+bạn đó chỉ được thông báo cộng lúc gần cuối kỳ) 
+Minigame 6 (Dự đoán câu của LLM) : SV được nhìn thấy tối thiểu 7 câu hỏi và dự đoán xem 
+câu nào là do LLM tạo ra. Bạn trả lời đúng hết và sớm nhất sẽ được cộng điểm. Mỗi bạn chỉ được 
+trả lời một lần cho một phiên chơi. 
+=== PAGE 31 ===
+3.1. Yêu c ầu chức năng (9) 
+31
+ 
+=== PAGE 32 ===
+3.1. Yêu c ầu chức năng (Gi ải pháp k ỹ thuật)
+32●Phân loại tính năng theo mô hình MoSCoW: 
+○Must-have (Sống còn):  Auth , Đề xuất câu hỏi, Tạo đề thi, Post, 
+Comment, Like, Block, Friend, Chat 1-1, … 
+○Should-have (Ăn điểm):  Push Notification, Tìm kiếm Full-text, 
+…
+○Could-have (Điểm A+):  AI Chat sửa đề, BTPROP Hallucination 
+Check, Minigame Gamification, Check trùng lặp ảnh (pHash), … 
+Hou, Bairu, et al. "A probabilistic framework for llm hallucination detection via belief tree propagation." Proceedings of the 2025 Conference of the Nations of  
+the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers) . 2025.  
+=== PAGE 33 ===
+3.1. Yêu c ầu chức năng (Gi ải pháp k ỹ thuật)
+33
+ 
+=== PAGE 34 ===
+3. Yêu c ầu chức năng và phi ch ức năng
+343.1. Yêu cầu chức năng 
+3.2. Yêu cầu phi chức năng 
+=== PAGE 35 ===
+3.2. Yêu c ầu phi ch ức năng (1) 
+35+Tất cả dữ liệu trước khi gửi lên nên được kiểm tra ở phía client 
+trước 
++Trừ lần đăng nhập đầu tiên, hệ thống cần có chức năng cache dữ 
+liệu để tạo cảm giác load nội dung cực kỳ mau chóng cho người 
+dùng. Việc cache chỉ áp dụng cho màn trang chủ. 
++Các animation cần phải bắt chước theo Facebook 
++Tính năng pull down to refresh  và pull up to load more  cần 
+được cài đặt 
++Ứng dụng cần hoạt động thật trơn tru, tránh việc bị crash đột 
+ngột
++Một khi ứng dụng gửi yêu cầu lên server , cần có màn hình 
+loading , sau đó một khi không có dữ liệu trả về hoặc dữ liệu trả 
+về không đúng định dạng thì hiện thông báo về lỗi kết nối. 
++Các dữ liệu liên quan đến privacy của người dùng cần được mã 
+hóa
+=== PAGE 36 ===
+3.2. Yêu c ầu phi ch ức năng (2) 
+36+Khi tắt mạng của điện thoại, nhập dữ liệu và gửi yêu cầu thì ứng 
+dụng vẫn tự xác thực input, nếu input đúng đắn mới kiểm tra 
+trạng thái mạng. 
++Các thông báo cần có sự thống nhất với nhau, chẳng hạn ở màn 
+hình Login và màn hình Signup , nếu người dùng nhập sai số 
+điện thoại (thừa số hoặc thiếu số) thì đều có chung một thông 
+báo “Số điện thoại không đúng định dạng” 
++Việc mất kết nối Internet phải thông báo càng sớm càng tốt để 
+hệ thống tránh các thao tác làm tốn tài nguyên cũng như mất 
+thời gian của người dùng. 
++Các thông báo về việc người khác đã đăng nhập vào tài khoản 
+trên máy khác cần được báo càng sớm càng tốt 
+=== PAGE 37 ===
+3.2. Yêu c ầu phi ch ức năng (3) 
+37+Không gán các màu trong ứng dụng bằng các tên mà bằng các 
+mã màu cụ thể, lưu trữ danh sách các mã màu vào một file duy 
+nhất để tiện quản lý. 
++Cần làm cho các file cài không quá lớn. 
+=== PAGE 38 ===
+3.2. Yêu c ầu phi ch ức năng (4) 
+38●Kiểm tra trùng lặp thông minh:  Yêu cầu hệ thống phải so 
+khớp (matching) được không chỉ văn bản mà cả hình ảnh/biểu 
+đồ (diagram) để phát hiện các câu hỏi copy lặp lại dù bị xáo trộn 
+vị trí. 
+●Kiểm soát ảo giác AI (Hallucination):  Ứng dụng rule-based 
+dựa trên framework của Hou25) để hạn chế AI sinh ra thông tin 
+sai lệch khi edit đề. 
+●Hiệu năng & Đồng bộ:  Hệ thống Backend (Java Spring Boot) 
+cần xử lý tốt các luồng chấm điểm realtime và lưu trữ lượng lớn 
+ảnh/tài liệu của sinh viên. 
+[Hou25] "A probabilistic framework for llm hallucination detection via belief tree propagation." Proceedings of the 
+2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human 
+Language Technologies (Volume 1: Long Papers). 2025. 
+=== PAGE 39 ===
+3.2. Yêu c ầu phi ch ức năng (Gi ải pháp k ỹ thuật)
+39●Cache trang chủ:  Dùng Redis Cache. 
+●Offline Validation:  FE phải dùng biểu thức chính quy 
+(Regular expression) để xác thực Email/Mật khẩu tại 
+phía client trước khi gọi API. 
+●Real-time:  Dùng WebSocket cho Chat và Typing 
+Indicator. 
+=== PAGE 40 ===
+Mục lục
+401.Yêu cầu tổng quan của đề tài 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 41 ===
+4. Cơ sở dữ liệu
+41●Kiến trúc CSDL Đa mô hình (Multi-model): 
+○ PostgreSQL (RDBMS): Cơ sở dữ liệu quan hệ 
+○ pgvector (AI Search): Check đạo văn, trùng lặp ảnh 
+○ JSONB (AI Logs): Lưu log cho chat với AI, kết quả check ảo 
+giác (hallucination) 
+=== PAGE 42 ===
+4. Cơ sở dữ liệu
+42Mô hình thực thể quan hệ (ERD)  cho CSDL 
+=== PAGE 43 ===
+4. Cơ sở dữ liệu
+43●Giải thích các kiến trúc được lựa chọn: 
+1. Tại sao có cả bảng follows  và friends ?
+=> Hệ thống có 2 tác nhân chính (actor) là sinh viên (SV) và giáo 
+viên (GV). Với mối quan hệ đồng cấp (GV – GV/ SV – SV) thì sẽ là 
+mối quan hệ bạn bè. Bạn bè  là quan hệ 2 chiều  và cá nhân , ta 
+thường chia sẻ những bài viết riêng tư cho bạn bè xem, nếu không 
+chẳng lẽ bài đăng FB nào của bạn cũng ở chế độ Công khai ? 
+Follow  là mối quan hệ 1 chiều và mang tính học thuật, dùng cho 
+mối quan hệ không đồng cấp, 1 GV không thể ( và không nên) chấp 
+nhận hàng trăm lời mời kết bạn từ SV , nếu phải vậy => bất tiện cho 
+GV . Nếu SV cần theo dõi xem GV có đề bài mới không mà phải chờ 
+GV chấp nhận lời mời kết bạn => lâu, không có giá trị tức thì 
+=== PAGE 44 ===
+4. Cơ sở dữ liệu
+44●Giải thích các kiến trúc được lựa chọn: 
+2. Kiểm tra trùng lặp Đa tầng (Multi-tier Deduplication) 
+Tầng 1: SHA-256 Hash/ MD5 hash (Chặn copy-paste file). 
+Tầng 2: pHash / pg_trgm (Chặn resize ảnh/đạo văn). 
+Tầng 3: Vector Embedding (Chặn vẽ lại biểu đồ/paraphrase) 
+=> Nếu cứ gửi trực tiếp đống ảnh cho LLM/VLM phân biệt thì sẽ 
+rất tốn token 
+=== PAGE 45 ===
+4. Cơ sở dữ liệu
+45●Giải thích các kiến trúc được lựa chọn: 
+3. Lưu trữ AI Chat & Hallucination Audit 
+Dùng JSONB để lưu Belief Tree của framework BTPROP [Hou25] 
+mà không làm vỡ cấu trúc bảng. 
+=> Mấy cái gì liên quan đến AI thường cấu trúc lưu trữ không cố 
+định. Nếu dùng một quan hệ (Bảng) để lưu, khi thay đổi cấu trúc 
+thì phải chạy lệnh thay đổi, chạy migration rất mất thời gian 
+[Hou25] "A probabilistic framework for llm hallucination detection via belief tree propagation." Proceedings of the 
+2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human 
+Language Technologies (Volume 1: Long Papers). 2025. 
+=== PAGE 46 ===
+4. Cơ sở dữ liệu
+46●Giải thích các kiến trúc được lựa chọn: 
+4. Leaderboard Gamification 
+Kết hợp PostgreSQL (Source of Truth) + Redis Sorted Set (Top 10 
+Real-time). 
+=> Khi ta đạt được một thành tựu nào đó, muốn khoe cho cả “thế 
+giới” xem mà bảng xếp hạng cập nhật chậm 
+=> Khó chịu. 
+Nếu lưu vào CSDL 
+=> Thao tác truy vấn CSDL là thao tác I/O 
+=> Tốn kết nối, tốn thời gian 
+=== PAGE 47 ===
+Mục lục
+471.Yêu cầu tổng quan của đề tài 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 48 ===
+5. Danh sách API 
+48Danh sách các nhóm API c ần đượ c phát tri ển:
+●Nhóm 1: Authentication & User Management  (Đăng ký , 
+Đăng nhập, OTP/Verify , Hồ sơ cá nhân, Device Token). 
+●Nhóm 2: Exam Bank & Crowdsourcing  (Upload file .zip , 
+Duyệt câu hỏi, AI Edit, Export, Minigames/Bet). 
+●Nhóm 3: Social Network Core  (Posts, Comments, Reactions, 
+Search, Feed). 
+●Nhóm 4: Relationships & Privacy  (Friends, Follows, Blocks, 
+Reports). 
+●Nhóm 5: Messaging & Notifications  (Chat, Conversations, 
+Push Notifications). 
+Note: Mọi API  nên có prefix /api/v1  để dễ mở rộng sau này 
+=== PAGE 49 ===
+5.1. API - Authentication & User Management 
+495.1.1. Đăng ký & Xác th ực (Auth) 
+5.1.2. Đăng nh ập & Phiên đăng nh ập (Session Flow) 
+METHOD Endpoint 
+POST /auth/register 
+POST /auth/verify 
+POST /auth/resend-verify 
+STTMETHOD Endpoint 
+1 POST /auth/login 
+2 POST /auth/logout 
+3 POST /auth/change-password 
+4 POST /auth/refresh 
+=== PAGE 50 ===
+5.1. API - Authentication & User Management 
+505.1.3. H ồ sơ người dùng & Thi ết bị (User & Device) 
+STTMETHOD Endpoint 
+5 GET /users/me 
+6 GET /users/{userId} 
+7 PUT /users/me 
+8 DELETE /users/me 
+9 POST /devices/register 
+10 DELETE /devices/register 
+=== PAGE 51 ===
+5.2. API – Exam Bank & Crowdsourcing 
+515.2.1. Sinh viên đề xuất/trả lời/đánh giá câu h ỏi
+STTMETHOD Endpoint 
+11 POST /sessions/propose 
+12 GET /sessions/my-submissions 
+13 GET /sessions/my-submissions/{sessionId} 
+14PUT /sessions/my-submissions/{sessionId} 
+15 DELETE /sessions/my-submissions/{sessionId} 
+16 GET /users/{userId}/questions 
+17 POST /questions/{questionId}/answer 
+18 GET /questions/{questionId}/statistics 
+19 POST /questions/{questionId}/rate 
+20 GET /questions/{questionId}/ratings 
+session ở đây là phiên gửi câu hỏi không phải phiên đăng nhập 
+=== PAGE 52 ===
+5.2. API – Exam Bank & Crowdsourcing 
+525.2.2. Question Review (Gi ảng viên duy ệt câu h ỏi)
+STTMETHOD Endpoint 
+21 GET /sessions/pending 
+22 GET /sessions/{sessionId} 
+23 POST /sessions/approve 
+24 POST /sessions/reject 
+25 PUT /questions/{questionId} 
+session ở đây là phiên gửi câu hỏi không phải phiên đăng nhập 
+=== PAGE 53 ===
+5.2. API – Exam Bank & Crowdsourcing 
+535.2.3. AI Integration (T ương tác v ới AI) 
+STTMETHOD Endpoint 
+26POST /questions/{questionId}/ai-refine 
+27POST /questions/{questionId}/ai-apply 
+=== PAGE 54 ===
+5.2. API – Exam Bank & Crowdsourcing 
+545.2.4. Gamification & Minigames 
+STTMETHOD Endpoint 
+28POST /games/prediction/participants 
+29POST /games/prediction/approved-questions 
+30POST /games/prediction/bank-size 
+31GET /games/my-predictions 
+32GET /games/leaderboard 
+=== PAGE 55 ===
+5.2. API – Exam Bank & Crowdsourcing 
+555.2.5. Export & Exam Generation 
+STT METHOD Endpoint 
+33 GET /questions/export 
+34 POST /exams/generate 
+35 GET /exams/{examId} 
+36 GET /exams/my-exams 
+37 GET /exams/{examId}/export 
+=== PAGE 56 ===
+5.3. API – Social Network Core 
+565.3.1. Qu ản lý bài vi ết
+STTMETHOD Endpoint 
+38 POST /posts 
+39 GET /posts/{id} 
+40 PUT /posts/{id} 
+41PUT /posts/{id}/lecturer-notes 
+42 DELETE /posts/{id} 
+43GET /video-posts 
+=== PAGE 57 ===
+5.3. API – Social Network Core 
+575.3.2. Qu ản lý bình lu ận
+STTMETHOD Endpoint 
+44 POST /comments 
+45 GET /comments 
+46 PUT /comments/{commentId} 
+47 DELETE /comments/{commentId} 
+5.3.3. Reactions 
+STTMETHOD Endpoint 
+48 POST /react 
+=== PAGE 58 ===
+5.3. API – Social Network Core 
+585.3.4. Feeds (B ảng tin) 
+STT METHOD Endpoint 
+49 GET /activity-feeds 
+50 GET /activity-feeds/new-count 
+5.3.5. Tìm ki ếm (Search) 
+STTMETHOD Endpoint 
+51 GET /search 
+52 GET /search/saved 
+53 DELETE /search/saved/{id} 
+=== PAGE 59 ===
+5.3. API – Social Network Core 
+595.3.6. T ải ảnh/Video (Media Upload) 
+STT METHOD Endpoint 
+54 POST /media/upload 
+55 POST /media/presign 
+=== PAGE 60 ===
+5.4. API – Relationships & Privacy 
+605.4.1. Friends Management 
+STTMETHOD Endpoint 
+56 POST /friendships/request 
+57 POST /friendships/accept 
+58 POST /friendships/decline 
+59 DELETE /friendships/{friendId} 
+60 GET /friendships 
+61 GET /friendships/requests/received 
+62 GET /friendships/requests/sent 
+=== PAGE 61 ===
+5.4. API – Relationships & Privacy 
+615.4.2. Follows Management 
+STTMETHOD Endpoint 
+63 POST /follows/{targetUserId} 
+64 DELETE /follows/{targetUserId} 
+65 GET /follows/following 
+66 GET /follows/followers 
+67 GET /users/{userId}/relationship-stats 
+=== PAGE 62 ===
+5.4. API – Relationships & Privacy 
+625.4.3. Blocks Management 
+STTMETHOD Endpoint 
+68POST /blocks/{targetUserId} 
+69DELETE /blocks/{targetUserId} 
+70GET /blocks 
+5.4.4. Reports Management 
+STTMETHOD Endpoint 
+71POST /report 
+=== PAGE 63 ===
+5.5. API – Messaging & Notiﬁcations 
+635.5.1. Conversations Management 
+STTMETHOD Endpoint 
+72 GET /conversations 
+73 POST /conversations/{userId} - t ạo m ới h ội 
+tho ại
+74 GET /conversations/direct 
+5.5.2. Messages & Real-time Chat 
+STTMETHOD Endpoint 
+75 GET /conversations/{id}/messages 
+76 DELETE /messages/{id} 5.5.2.A. REST APIs (Load lịch sử & Quản lý) 
+5.5.2.B. WebSocket Endpoints (STOMP) 
+=== PAGE 64 ===
+5.5. API – Messaging & Notiﬁcations 
+645.5.2. Messages & Real-time Chat 
+STTACTION Destination (STOMP) 
+77 SUB /user/queue/messages 
+78 SUB /topic/conv.{id}.typing 
+79 SEND /app/chat.send 
+80 SEND /app/chat.read 
+81 SEND /app/chat.typing 5.5.2.A. REST APIs (Load lịch sử & Quản lý) 
+5.5.2.B. WebSocket Endpoints (STOMP) 
+=== PAGE 65 ===
+5.5. API –Messaging & Notiﬁcations 
+655.5.3. Thông báo n ội bộ (In-App Notifications) 
+STTMETHOD Endpoint 
+82 GET /notifications 
+83 POST /notifications/{id}/read 
+ POST /notifications/read-all 
+5.5.4. Push Notifications 
+STTMETHOD Endpoint 
+84 GET /settings/push 
+85 PUT /settings/push 
+=== PAGE 66 ===
+5.6. (Optional) API – Cosmetics 
+665.6.1. Cosmetic 
+METHOD Endpoint 
+GET /api/v1/cosmetics/my-inventory1
+GET /api/v1/cosmetics/shop2
+PUT /api/v1/cosmetics/equip3
+PUT /api/v1/cosmetics/unequip4
+1: Lấy danh sách v ật phẩm đã mở khóa ( để hiện màn hình B ộ sưu tập).
+2: Lấy tất cả vật phẩm (kèm c ờ is_unlocked và is_equipped) để user ng ắm và xem điều 
+kiện mở khóa. 
+3: Trang b ị vật phẩm (FE g ửi cosmetic_id và type). Backend t ự động gỡ trang b ị cũ cùng 
+loại.
+4: Gỡ trang b ị (trả về mặc định).
+=== PAGE 67 ===
+Danh sách mã response 
+67Code Message Note 
+1000 SUCCESS Thành công 
+1001 DATABASE_CONNECTION_ERROR Không th ể kết nối CSDL 
+1002 MISSING_REQUIRED_PARAMETER Tham s ố không đủ
+1003 INVALID_PARAMETER_TYPE Kiểu tham s ố không h ợp lệ
+1004 INVALID_PARAMETER_VALUE Giá tr ị tham s ố không h ợp lệ
+1005 UNKNOWN_SYSTEM_ERROR Lỗi không xác định
+1006 FILE_SIZE_EXCEEDED Kích th ước tệp quá l ớn
+1007 FILE_UPLOAD_FAILED Lỗi tải lên kho l ưu trữ
+1008 MEDIA_LIMIT_EXCEEDED Tối đa 4 ảnh/1 video 
+1009 ACCESS_DENIED Không có quy ền (Role-based) 
+1010 ACTION_ALREADY_PERFORMED Hành động đã đượ c hoàn thành tr ước đó
+1011 CONTENT_VIOLATES_POLICY Vi phạm tiêu chu ẩn cộng đồng
+9993 VERIFICATION_CODE_INVALID Mã xác th ực không đúng
+9994 NO_MORE_DATA Không có d ữ liệu/Hết dữ liệu
+9995 USER_NOT_EXISTS Người dùng ch ưa tồn tại
+9996 USER_ALREADY_EXISTS Người dùng đã tồn tại
+9997 METHOD_NOT_ALLOWED Sai HTTPS Method 
+9998 TOKEN_INVALID_OR_EXPIRED JWT h ết hạn / sai ch ữ ký
+9999 UNHANDLED_EXCEPTION Lỗi chưa đượ c xử lý
+=== PAGE 68 ===
+Danh sách mã response (2) 
+68Code Message Note 
+9992 USER_NOT_VERIFIED  Người dùng ch ưa xác th ực
+9995 USER_NOT_FOUND  Không tìm th ấy người dùng 
+2001 QUESTION_NOT_FOUND Không tìm th ấy câu h ỏi
+2002 QUESTION_ALREADY_REVIEWED SV cố tình s ửa/xóa câu h ỏi khi GV đã duy ệt (status = 
+APPROVED) 
+2003 DUPLICATE_QUESTION_DETECTED Multi-tier Deduplication phát hi ện trùng (Text / 
+pHash / Vector) 
+2004 INVALID_QUESTION_FORMAT Parse file .txt th ất bại
+2005 FILE_CONTAINS_MALWARE ClamAV quét file .zip thấy virus 
+2006 REVIEW_PERMISSION_DENIED SV cố tình g ọi API ch ỉ dành cho GV ( /approve, 
+/reject, …) 
+2007 QUESTION_HIDDEN_BY_AUTHOR Câu h ỏi đã bị tác gi ả ẩn / xóa 
+2008 SESSION_NOT_FOUND Hết phiên đề xuất câu h ỏi
+2009 POST_NOT_FOUND Không tìm th ấy bài đăng
+2101 AI_SERVICE_UNAVAILABLE Server AI Local đang s ập / quá t ải
+2102 AI_RESPONSE_FORMAT_INVALID AI không tuân th ủ thẻ <JSON>, Backend không parse 
+đượ c
+2103 HALLUCINATION_DETECTED Phế phẩm do AI ảo giác 
+2104 AI_IMAGE_MODIFICATION_NOT_SUPPORTED Chặn cứng khi GV c ố tình prompt yêu c ầu AI v ẽ lại / 
+sửa ảnh biểu đồ
+2105 AI_RATE_LIMIT_EXCEEDED GV spam request AI quá nhi ều lần
+=== PAGE 69 ===
+Mục lục
+691.Yêu cầu tổng quan của đề tài 
+2.Quy trình bảo vệ 
+3.Yêu cầu chức năng và phi chức năng 
+4.Cơ sở dữ liệu 
+5.Danh sách API 
+6.Đăng ký đăng nhập 
+=== PAGE 70 ===
+6.1. POST /auth/register 
+70No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1email string O 
+2password string O Mật khẩu
+3role string X mặc định = STUDENT 
+4device_id string O Input 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data null O ĐỂ ĐƠN GIẢN 
+THÌ THẦY SẼ 
+TẠO 
+ACCOUNT 
+VÀO ĐẦU KỲ 
+=== PAGE 71 ===
+6.4. POST /auth/verify 
+71No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1email string O 
+2verify_code string O Input 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O Thông tin user 
+     id integer O 
+      username string O 
+     access_token string O 
+      refresh_token string O 
+      avatar_url string O 
+      cover_url string X 
+      frame_url string X 
+      verified boolean O false: ch ờ đổi tên + avatar, true: activated 
+      profile_comoleted boolean O ĐỂ ĐƠN GIẢN 
+THÌ THẦY SẼ 
+TẠO 
+ACCOUNT 
+VÀO ĐẦU KỲ 
+=== PAGE 72 ===
+6.4. POST /auth/resend-verify 
+72No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1email string O Input 
+Output 
+No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data null O ĐỂ ĐƠN GIẢN 
+THÌ THẦY SẼ 
+TẠO 
+ACCOUNT 
+VÀO ĐẦU KỲ 
+=== PAGE 73 ===
+6.2. POST /auth/login 
+73No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1email string O 
+2password string O Mật khẩu
+3device_id string O Input 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O Thông tin user 
+     id string O id của user 
+      username string O 
+      access_token string O 
+      refresh_token string O 
+      avatar_url string O 
+      cover_url string X 
+      frame_url string X link c ủa frame vinh danh 
+      verified string O 1: đã xác th ực
+      profile_completed string O 0: ngh ĩa là ch ưa hoàn thành profile 
+=== PAGE 74 ===
+6.3. POST /auth/logout 
+74No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1refresh_token string O 
+2device_id string O Input 
+Output 
+No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data null O 
+=== PAGE 75 ===
+POST /auth/change-password 
+75Output Input 
+No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data null O No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1old_password string O 
+2new_password string O 
+=== PAGE 76 ===
+POST /auth/reset-password 
+76Output Input 
+No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data null O No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1email string O 
+2verify_code string O 
+3new_password string O 
+ĐỂ ĐƠN GIẢN 
+THÌ THẦY SẼ 
+RESET QUA 
+ĐƠN CỦA SV 
+=== PAGE 77 ===
+POST /auth/refresh 
+77Output Input 
+No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1refresh_token string O RT cũ
+No. Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data map O 
+     refresh_token string sinh RT m ới khác RT c ũ
+     access_token string 
+=== PAGE 78 ===
+GET /users/me 
+78Output (1) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     id string O id của user 
+     email string O 
+     full_name string O 
+     avatar_url string O 
+     cover_url string O 
+     frame_url string O Input: 
+No.headers Bắt buộc Mô tả
+1Authorization O Authorization: Bearer {access_token} 
+=== PAGE 79 ===
+GET /users/me (2) 
+79Output (2) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+     bio string X 
+     faculty string X 
+     major string X 
+     student_lecturer_code string X MSSV/Mã cán b ộ
+     role string O 
+     profile_completed string O 
+     verified string O 
+     total_proposed_questions string X 
+     total_approved_questions string X 
+     gamification_points string X 
+     badges_count string X 
+     friends_count string X 
+=== PAGE 80 ===
+GET /users/me (3) 
+80Output (3) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+     followers_count string X 
+     following_count string X 
+     created_at string X 
+=== PAGE 81 ===
+GET /users/{userId} 
+81Output (1) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+     id string O 
+     full_name string O 
+     avatar_url string O 
+     cover_url string O 
+     frame_url string O 
+=== PAGE 82 ===
+GET /users/{userId} (2) 
+82Output (2) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+     bio string X 
+     faculty string X 
+     major string X 
+     code string X MSSV/Mã cán b ộ
+     role string O 
+     total_proposed_questions string X 
+     total_approved_questions string X 
+     gamification_points string X 
+     badges_count string X 
+     friends_count string X 
+=== PAGE 83 ===
+GET /users/{userId} (3) 
+83Output (3) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+     followers_count string X 
+     following_count string X 
+     relationships string O 
+          is_friend string O 
+          is_following string O 
+            is_followed string O 
+           friend_request_status string O null, PENDING, ACCEPTED 
+=== PAGE 84 ===
+PUT /users/me 
+84Output (giống hệt như ở GET /user/me) Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1full_name string X Tối thiểu một trong s ố các tr ường sau 
+đây
+2avatar_url string X phải xuất hiện
+3cover_url string X 
+4bio string X 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+=== PAGE 85 ===
+DELETE /users/me 
+85Output Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data null O No.headers Bắt buộc Mô tả
+1Authorization O Authorization: Bearer {access_token} 
+=== PAGE 86 ===
+POST /devices/register 
+86Output Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data string O 
+     device_id string O 
+     platform string O 
+     is_active string O No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1fcm_token string O 
+2platform string O 
+3device_name string O 
+4app_version string O 
+=== PAGE 87 ===
+DELETE /devices/register 
+87Output Input (CHỈ ĐƯỢC GỌI TỪ PHÍA SERVER) 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data null O No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1fcm_token string O 
+=== PAGE 88 ===
+POST /sessions/propose (API đề xuất câu h ỏi)
+88Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1title string O 
+2content string O 
+3source_url string X nếu upload b ằng link 
+5subject_id string O Mã môn 
+6questions List<Object> X Danh sách các câu h ỏi, MỖI câu h ỏi có 
+cấu trúc nh ư bên d ưới
+     content string X 
+     image_urls List<String> X mảng url c ủa ảnh
+     options List<String> X danh sách các đáp án 
+     explanation string X 
+     source string X LLM / H 
+     confidence string X giá tr ị sẽ từ [0.00;4.00] 
+=== PAGE 89 ===
+POST /sessions/propose (2) 
+89Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+     session_id string O 
+     subject_id string O 
+     questions_count string O 
+     status string O trạng thái c ủa session: PENDING, 
+REVIEWING, RESOLVED, 
+     duplicate_warnings List<Object> O Danh sách câu h ỏi bị cảnh báo trùng l ặp với 
+câu h ỏi trong ngân hàng đề, không có thì  
+null, MỖI object có d ạng nh ư dưới đây
+          question_index integer O 
+          similarity_score double O 
+          similar_question_id integer O 
+          tier string O Bộ lọc tầng nào phát hi ện (Rule-based,  
+MD5,GIN, SHA256, pHash, embedding) 
+=== PAGE 90 ===
+GET /sessions/my-submissions 
+90Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộc Mô tả
+1after string X id cuối của trang tr ước, không có -> l ấy 
+từ đầu
+2limit string O 
+3subject_id string X id của môn h ọc
+4subject_code string X mã của môn h ọc trên SIS 
+4status string X PENDING, REVIEWING, RESOLVED 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+3.1     content List<Object> O MỖI object có các tr ường dưới đây
+=== PAGE 91 ===
+GET /sessions/my-submissions (2) 
+91No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.1          session_id string O 
+3.1.2          subject_id string O 
+3.1.3          subject_name string O Hoặc có th ể là mã môn trên SIS 
+3.1.4          question_counts string O 
+3.1.5          created_at string O timestamp Unix 
+3.1.6          react_count string O 
+3.1.7          comment_count string O 
+3.2     pagination map O 
+3.2.1          after string O ID ph ần tử cuối cùng c ủa List content 
+3.2.2          has_next string O 
+=== PAGE 92 ===
+GET /sessions/my-submissions/{sessionId} 
+92Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+3.1     session_id string O 
+3.2     subject_id string O 
+3.3     comment_count string O của session 
+3.4     react_count string O của session 
+3.5     subject_name string O tên của môn h ọc
+3.6     questions List<Object> O MỖI object có các tr ường sau: 
+3.6.1           question_id string O 
+3.6.2           content string O 
+3.6.3           image_urls List<String> O mảng link các ảnh
+3.6.4           options List<String> O Các lựa chọn
+3.6.5           correct_answer string O 
+=== PAGE 93 ===
+GET /sessions/my-submissions/{sessionId} (2) 
+93Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.6.6           explanation string O 
+3.6.7           source string O LLM / H 
+3.6.8           confidence_score string O 
+3.6.9           reviewed_by_lecturer string O tên gi ảng viên 
+3.6.10           reviewed_at string O 
+3.6.11           comment_count string O của câu h ỏi
+3.6.12           react_count string O của câu h ỏi
+3.6.13           rating_count string O 
+3.7     created_at string O thời gian t ạo
+=== PAGE 94 ===
+PUT /sessions/my-submissions/{sessionId} 
+94Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1questions List<Object> O Mỗi object có các tr ường sau: 
+1.1     question_id string O 
+1.2     content string X 
+1.3     image_urls List<String> X mảng các link ảnh
+1.4     options List<String> X mảng các đáp án 
+1.5     correct_answer string X 
+1.6     explanation string X 
+1.7     source string X LLM / H 
+1.8     confidence string X giá tr ị từ [0.00;4.00] 
+=== PAGE 95 ===
+PUT /sessions/my-submissions/{sessionId} (2) 
+95Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+=== PAGE 96 ===
+DELETE /sessions/my-submissions/{sessionId} 
+96Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+=== PAGE 97 ===
+GET /users/{userId}/questions 
+97Input (lấy danh sách câu hỏi - token nằm trong header) 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộc Mô tả
+1after string X id cuối của trang tr ước, ko có -> l ấy từ đầu
+2limit string O 
+3subject_id string O 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+3.1     items List<Object> O 
+3.1.1           session_code string O 
+3.1.2           session_content string O 
+3.1.3           questions List<Object> O 
+3.1.3.1                     question_id string O 
+3.1.3.2                     content string O 
+=== PAGE 98 ===
+GET /users/{userId}/questions (2) 
+98Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+3.1.3                     image_urls List<String> O danh sách các link ảnh
+3.1.4                     options List<String> O danh sách các l ựa chọn
+3.1.5                     source string O LLM / Human 
+3.1.6                     created_at string O 
+3.1.7                     my_interaction map O 
+3.1.7.1                              answered string O 
+3.1.7.2                              rated string O 
+3.1.8                     hidden_fields map O 
+3.1.8.1                              correct_answer string O 
+3.1.8.2                              explanation string O 
+3.1.9                    react_count string O 
+3.1.10                    comment_count string O 
+3.1.11                     rating_count string O 
+3.2     pagination map O 
+3.2.1           after string O ID ph ần tử cuối cùng trong items 
+3.2.2           has_next string O 
+=== PAGE 99 ===
+POST /questions/{questionId}/answer 
+99Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1selected_option string O Danh sách các đáp án ch ọn
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+     is_correct string O 
+     correct_answer string O 
+     explanation string X 
+=== PAGE 100 ===
+GET /questions/{questionId}/statistics 
+100 Dành cho server gọi để thống kê 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+3.1      total_answers string O 
+3.2     correct_rate string O 
+3.3     option_distribution string O phân ph ối số lượng các l ựa chọn vào 
+các đáp án. VD {“A”:10, “B”:20} 
+3.4     rating_summary string O 
+3.4.1           avg_rating string O 
+3.4.2           total_ratings string O 
+=== PAGE 101 ===
+GET /questions/{questionId}/statistics (2) 
+101 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.5.3           distribution map O 
+3.5.3.1                 0 string O số người đánh giá 0 
+3.5.3.2                 1 string O số người đánh giá 1 
+3.5.3.3                 2 string O số người đánh giá 2 
+3.5.3.4                 3 string O số người đánh giá 3 
+3.5.3.5                 4 string O số người đánh giá 4 
+=== PAGE 102 ===
+POST /questions/{questionId}/rate 
+102 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1rating string O [0;4] 
+2comment string X 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1      new_avg_rating string O 
+3.2     new_rating_count string O 
+=== PAGE 103 ===
+GET /questions/{questionId}/ratings 
+103 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộc Mô tả
+1after string X id cuối của trang tr ước, ko có -> l ấy từ đầu
+2limit string O 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object có: 
+3.1.1           user_id string O 
+3.1.2           rating string O [0.00;4.00] 
+=== PAGE 104 ===
+GET /questions/{questionId}/ratings (2) 
+104 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.3           comment string O 
+3.1.4           created_at string O 
+3.2     pagination array O 
+3.2.1           after string O ID ph ần tử cuối cùng trong items 
+3.2.2           has_next string O 
+=== PAGE 105 ===
+GET /sessions/pending 
+105 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộcMô tả
+1after string X id cuối của trang tr ước, ko có -> l ấy từ 
+đầu
+2limit string O 
+3subject_id string O 
+4sort_by string X reacts, ratings, ratings_count, 
+created_at 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+=== PAGE 106 ===
+GET /sessions/pending (2) 
+106 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1     items List<Object> O MỖI object có các tr ường sau 
+3.1.1           topic string O 
+3.1.2           session_id string O 
+3.1.3           author array O 
+3.1.3.1                user_id string X 
+3.1.3.2                full_name string O nếu is_anonymous true thì b ăm trường này 
+3.1.3.3                avatar_url string X 
+3.1.3.4                frame_url string X 
+3.1.4           created_at string O 
+3.1.5           title string O 
+3.1.6           content string O 
+=== PAGE 107 ===
+GET /sessions/pending (3) 
+107 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next string O 
+=== PAGE 108 ===
+GET /sessions/{sessionId} 
+108 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+     items List<Object> O MỖI Object có các tr ường:
+          question_id string O 
+          content string O 
+          image_urls List<String> O 
+          options List<Object> O MỖI Object có các tr ường
+               key string O 
+               text string O 
+               media_url string X nếu đáp án có ảnh
+          correct_answer string O 
+          explanation string O 
+=== PAGE 109 ===
+POST /sessions/approve 
+109 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+     points_earned string O 
+     user_id string X user_id c ủa người đề xuất câu h ỏi (Tác gi ả)Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1question_ids array O mảng id các câu h ỏi chấp nhận. Ví d ụ:
+[“1”, “2”, “3”] 
+=== PAGE 110 ===
+POST /sessions/reject 
+110 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+     user_id string O id của tác gi ả câu h ỏi
+     session_id string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1question_ids array O mảng id các câu h ỏi từ chối
+=== PAGE 111 ===
+PUT /questions/{questionId} 
+111 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     question_id string O 
+     status string O 
+     reviewed_by string O id GV Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1content string X 
+2options array X { key, text, image_url} 
+     key string X 
+    text string X 
+    image_url string X 
+     is_correct string X 
+3explanation string X 
+4auto_approve string O 
+=== PAGE 112 ===
+POST /questions/{questionId}/ai-reﬁne 
+112 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     edit_log_id string O 
+3.2     suggested_question map O 
+3.2.1           content string X 
+3.2.2           options List<Object> X 
+3.2.2.1                key string X 
+3.2.2.2                text string X 
+3.2.2.3                is_correct string X 
+3.2.2.4                media_url string X 
+3.2.2.5                media_id string X Input 
+Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1prompt string O 
+2chat_session_id string O session id cu ộc đối thoại
+=== PAGE 113 ===
+POST /questions/{questionId}/ai-reﬁne (2) 
+113 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2.4           explanation string X 
+3.2.5           refusal_reason string X 
+3.3     hallucination_audit array O 
+3.3.1           is_hallucinated string O 
+3.3.2           confidence_score string O 
+3.3.3           violations List<Object> O 
+3.3.3.1                type string X 
+3.3.3.2                node_statement string X 
+3.3.3.3                detail string X 
+3.3.3.4                severity string X LOW, HIGH 
+3.3.4           belief_tree_depth string O Output 
+=== PAGE 114 ===
+POST /questions/{questionId}/ai-reﬁne (3) 
+114 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.4     ai_metadata array X 
+3.4.1           model string X 
+3.4.2           tokens_used string X 
+3.4.3           processing_time_ms string X Output 
+=== PAGE 115 ===
+POST /questions/{questionId}/ai-apply 
+115 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+3.1     question_id string O 
+3.2     status string O APPLIED, DISCARDED 
+3.3     confidence_score string O [0.00;1.00] 
+3.4     hallucination string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1edit_log_id string O 
+2approve string O “true" ho ặc “false" 
+=== PAGE 116 ===
+POST /games/prediction/participants 
+116 Input: dự đoán cho ngày hôm sau 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     prediction_id string O 
+3.2     game_type string O DAILY_PREDICTION (m ặc định)
+3.3     target_date string O 
+3.4     predicted_count string O 
+3.5     created_at string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+2predicted_count string O 
+3course_class_id string X Đoán s ố người đề xuất trong l ớp mà SV 
+đang h ọc
+=== PAGE 117 ===
+POST /games/prediction/approved-questions 
+117 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     id string O 
+3.2     game_type string O SESSION_PREDICTION 
+3.3     session_id string O 
+3.4     predicted_data Object O 
+3.5          predicted_llm_count string O 
+3.6          predicted_human_count string O 
+3.7     target_type string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1session_id string O 
+2predicted_llm_count string O 
+3predicted_human_count string O 
+=== PAGE 118 ===
+POST /games/prediction/approved-questions (2) 
+118 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.8     target_id string O 
+3.9     created_at string O Output 
+=== PAGE 119 ===
+POST /games/prediction/bank-size 
+119 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data map O 
+3.1     id string O 
+3.2     game_type string O GLOBAL_PREDICTION 
+3.3     target_type string O 
+3.4     target_id string O 
+3.5     predicted_data Object O 
+3.5.1           predicted_llm_count string O 
+3.5.2           predicted_human_count string O 
+3.6     created_at string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1subject_id string X 1 môn 
+2predicted_bank_size string O 
+=== PAGE 120 ===
+GET /games/my-predictions 
+120 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộcMô tả
+1after string X id cuối của trang tr ước, ko có -> l ấy từ 
+đầu
+2limit string O 
+3status string X PENDING, RESOLVED 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object có các tr ường CỐ ĐỊNH sau 
+(tùy t ừng loại game s ẽ còn các tr ường 
+riêng) 
+3.1.1           prediction_id string O 
+=== PAGE 121 ===
+GET /games/my-predictions (2) 
+121 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.2           game_type string O 
+3.1.3           status string O PENDING, RESOLVED 
+3.1.4           is_correct string O 
+3.1.5           created_at string O 
+3.1.6           resolved_at string O 
+3.2     pagination array O 
+3.2.1            after integer O 
+3.2.2            has_next boolean O 
+=== PAGE 122 ===
+GET /games/leaderboard 
+122 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộcMô tả
+1period string O alltime/monthly/weekly 
+2limit string X ví dụ: 50
+3subject_id string X 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     entries List<Object> O MỖI Object có các tr ường sau: 
+=== PAGE 123 ===
+GET /games/leaderboard 
+123 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.1            rank string O 
+3.1.2            user_id string O 
+3.1.3            full_name string O 
+3.1.4            avatar_url string O 
+3.1.5            frame_url string O 
+3.1.6            total_points string O 
+3.1.7            is_current_user string O 
+=== PAGE 124 ===
+GET /questions/export (Gi ảng viên g ọi rồi gửi SV) 
+124 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộcMô tả
+1subject_id string O 
+2format string O 
+3include_answer string X “true" ho ặc “false", không truy ền thì 
+mặc định là “true" 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     download_url string O 
+     file_size string X 
+     questions_count string X 
+     expires_at string X 
+=== PAGE 125 ===
+POST /exams/generate 
+125 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1subject_id string O 
+2title string X 
+3question_count integer X mặc định = 40 
+4dificulty_distribution array X 
+4.1      easy string X mặc định = 0 
+4.2      medium string X mặc định  = 0 
+4.3      hard string X mặc định = 0 
+4.4      unclassified string X mặc định = 1 
+5topic_weights array X tổng trọng số phải bằng 1 
+5.1     A string X
+A + B + … = 1 5.2     B string X
+5.3     … … X
+6shuffle_options boolean X mặc định = false 
+7include_answer_key boolean X mặc định = false 
+=== PAGE 126 ===
+POST /exams/generate (2) 
+126 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     exam_id string O 
+3.2     title string O 
+3.3     subject_name string O 
+3.4     question_count integer O 
+3.5     questions List<Object> O MỖI Object có các tr ường sau: 
+3.5.1           order string O 
+3.5.2           question_id string O 
+3.5.3           content string O 
+3.5.4           image_urls List<String> O danh sách link các ảnh
+3.5.5           options List<Object> O MỖI Object có các tr ường:
+=== PAGE 127 ===
+POST /exams/generate (3) 
+127 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.5.5.1                key string O Tên đáp án 
+3.5.5.2                text string O Nội dung đáp án 
+3.5.5.3                media_url string X ảnh của đáp án (n ếu có) 
+3.5.6                is_correct string X 
+3.5.7           topic string X 
+3.5.8           difficulty string X 
+3.6     statistic array X 
+3.6.1           easy_count string X 
+3.6.2           medium_count string X 
+3.6.3           hard_count string X 
+3.6.4           unclassified_count string X 
+3.7     created_at string O 
+=== PAGE 128 ===
+GET /exams/{examId} 
+128 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1subject_id string O 
+2title string X 
+3question_count integer X mặc định = 40 
+4dificulty_distribution array X 
+4.1      easy string X mặc định = 0 
+4.2      medium string X mặc định  = 0 
+4.3      hard string X mặc định = 0 
+4.4      unclassified string X mặc định = 1 
+5topic_weights array X tổng trọng số phải bằng 1 
+5.1     A string X
+Tổng A + B + … = 1 5.2     B string X
+5.3     … … X
+6shuffle_options boolean X mặc định = false 
+7include_answer_key boolean X mặc định = false 
+=== PAGE 129 ===
+GET /exams/my-exams 
+129 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộcMô tả
+1after string X 
+2limit string O 
+3subject_id string X 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object có các tr ường sau: 
+3.1.1           exam_id string O 
+3.1.2           title string O 
+3.1.3           subject_name string O 
+=== PAGE 130 ===
+GET /exams/my-exams (2) 
+130 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.4           question_count string O 
+3.1.5           created_at string O 
+3.1.6           statistic array X 
+3.1.6.1                easy_count string X 
+3.1.6.2                medium_count string X 
+3.1.6.3                hard_count string X 
+3.1.6.4                unclassified_count string X 
+3.1.7           download_url string O 
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next string O 
+=== PAGE 131 ===
+GET /exams/{examId}/export 
+131 Input 
+No.Tham s ố truy v ấn (Query Param) Kiểu dữ liệu Bắt buộcMô tả
+1format string X mặc định = pdf 
+2include_answer_key string X mặc định = false 
+3paper_size string X mặc định = A4 
+Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     download_url string O 
+3.2     file_size_mb string X 
+3.3     expires_at string X 
+3.4     questions_count string X 
+=== PAGE 132 ===
+POST /posts 
+132 Input: API để GV và SV cùng đăng bài 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     post_id string O 
+3.2     content string O 
+3.3     media_urls List<String> O 
+3.4     author array O 
+3.4.1           id string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1content string O 
+2media_urls string O 
+3subject_id string O 
+4post_type string O LEARNING_VIDEO, SOCIAL_POST, 
+QUESTION_APPROVED_NOTIFICATION 
+=== PAGE 133 ===
+POST /posts (2) 
+133 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.4.2           full_name string O 
+3.4.3           avatar_url string O 
+3.4.4           frame_url string O 
+3.5     react_count string O 
+3.6     comment_count string O 
+3.7     reacted_by_me string O trả về “true" ho ặc “false", hi ện tại chỉ like
+3.8     created_at string O 
+3.9     post_type string O 
+3.10      subject_id string X 
+3.11      subject_name string X 
+3.12      subject_code string X 
+3.13      session_id string X id của session đăng câu h ỏi do SV t ạoOutput 
+=== PAGE 134 ===
+GET /posts/{id} 
+134 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     post_id string O 
+3.2     content string O 
+3.3     media_urls List<String> O 
+3.4     author array O 
+3.4.1           id string O Output 
+=== PAGE 135 ===
+GET /posts/{id} (2) 
+135 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.4.2           full_name string O 
+3.4.3           avatar_url string O 
+3.4.4           frame_url string O 
+3.5     react_count integer O 
+3.6     comment_count integer O 
+3.7     reacted_by_me boolean O 
+3.8     is_edited boolean O 
+3.9     created_at string O Output 
+=== PAGE 136 ===
+PUT /posts/{id} 
+136 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     post_id string O 
+3.2     is_edited string O là “true” ho ặc “false" 
+3.3     updated_at string X Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1content string X bắt buộc phải có m ột trong 2 
+2media_urls string X 
+=== PAGE 137 ===
+PUT /posts/{id}/lecturer-notes 
+137 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data null O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1content string O 
+=== PAGE 138 ===
+DELETE /posts/{id} 
+138 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data string O 
+       post_id string O id của bài vi ết đượ c lệnh xoá Output 
+=== PAGE 139 ===
+GET /video_posts 
+139 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O 
+3.1.1           post_id string O 
+3.1.2           content string O 
+3.1.3           react_count string O 
+3.1.4           comment_count string O 
+3.1.5           media_url string O Output No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1subject_id string O 
+=== PAGE 140 ===
+POST /comments 
+140 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     comment_id string O 
+3.2     target_type string O 
+3.3     target_id string O 
+3.4     parent_comment_id string X 
+3.5     content string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1target_type string O POST / QUESTION / SESSION 
+2target_id string O 
+3content string O 
+4parent_comment_id string X 
+5media_url string X chỉ hỗ trợ upload 1 ảnh
+=== PAGE 141 ===
+POST /comments (2) 
+141 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.6     author array O 
+3.6.1           id string O 
+3.6.2           full_name string O 
+3.6.3           avatar_url string O 
+3.6.4           frame_url string O 
+3.7     created_at string O 
+3.8     is_edited string O Output 
+=== PAGE 142 ===
+GET /comments 
+142 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     target_type string O 
+3.2     target_id string O 
+3.3     items List<Object> O MỖI Object có d ạng:
+3.3.1           comment_id string O 
+3.3.2           parent_comment_id string O null n ếu là comment g ốc
+3.3.3           content string O null n ếu chặn / bị chặn / bị xóa
+3.3.4           media_url string O null n ếu chặn / bị chặn / bị xóaNo.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1target_type string O 
+2target_id string O 
+3after string X 
+4limit string O mặc định = 20 
+=== PAGE 143 ===
+GET /comments (2) 
+143 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.3.5           author array O null n ếu chặn / bị chặn
+3.3.5.1                id string O
+author null thì s ẽ không có các tr ường 
+này3.3.5.2                full_name string O
+3.3.5.3                avatar_url string O
+3.3.5.4                frame_url string O
+3.3.6           created_at string O 
+3.3.7           hidden string O true n ếu chặn / bị chặn / bị xóa
+3.3.8           replies List<Object> O null n ếu không có reply nào, Object ở 
+đây chính là 1 comment khác 
+3.4     pagination array O 
+3.4.1           after string O 
+3.4.2           has_next string O Output 
+=== PAGE 144 ===
+PUT /comments/{commentId} 
+144 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     comment_id string O 
+3.2     target_type string O 
+3.3     target_id string O 
+3.4     parent_comment_id string X 
+3.5     content string O 
+3.6     media_url string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1content string O 
+2media_url string X chỉ hỗ trợ upload 1 ảnh
+=== PAGE 145 ===
+DELETE /comments/{commentId} 
+145 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data string O 
+4       comment_id string O id của comment v ừa bị xoáOutput 
+=== PAGE 146 ===
+POST /react 
+146 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     my_reaction string O 
+3.2     reaction_counts array O thống kê s ố lượng reaction t ừng loại
+3.2.1           LIKE string O 
+3.2.2           LOVE integer O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1target_type string O 
+2target_id string O 
+3reaction_type string O NONE, LIKE 
+=== PAGE 147 ===
+POST /react (2) 
+147 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2.3          WOW integer O LIKE + LOVE + WOW + … = total_count 
+3.2.4          … integer O
+3.3     total_count string O Output 
+=== PAGE 148 ===
+GET /activity-feeds 
+148 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object là b ất kỳ đối tượng nào có  
+thể đưa vào news feed c ủa 1 ng ười 
+dùng, có th ể là POST, SUBMISSION  
+SESSION, BADGE, COSMETIC, … chúng  
+có cấu trúc chung nh ư sau: No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X không truy ền -> lấy từ đầu
+2limit string O mặc định = 20 
+Output Input 
+=== PAGE 149 ===
+GET /activity-feeds (2) 
+149 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.1           target_type string O 
+3.1.2           target_id string O 
+3.1.3           actor array O 
+3.1.3.1                id string O 
+3.1.3.2                full_name string O 
+3.1.3.3                avatar_url string O 
+3.1.3.4                frame_url string O 
+3.1.4           action_type string O chi tiết hành động, VD: 
+CREATED_POST, 
+QUESTION_APPROVED, 
+EARNED_BADGE, EARNED_COSMETIC, 
+…
+3.1.5           content Object O Object t ương ứng
+3.1.6           created_at string O 
+3.1.7           weight string O trọng số (dùng để sắp xếp bài vi ết, 
+theo thu ật toán ta l ựa chọn)Output 
+=== PAGE 150 ===
+GET /activity-feeds (3) 
+150 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2     pagination array O 
+3.2.1          after string O 
+3.2.2          has_next string O Output 
+post 
+post_id string 
+text string 
+media_urls List<String> 
+like_count string 
+comment_count string session 
+session_id string 
+topic string 
+title string 
+content string 
+is_anonymous string 
+like_count string 
+comment_count string 
+questions List<Question> Ví dụ 1 vài Object “content”: 
+badge 
+badge_id string 
+badge_name string 
+badge_url string 
+=== PAGE 151 ===
+GET /activity-feeds/new-count 
+151 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     total_new string O 
+3.2     detail array O 
+3.2.1           POST string O
+POST+SUBMISSION+BADGE+COSMETIC
++…=total_new 3.2.2           SUBMISSION string O
+3.2.3           BADGE string O
+3.2.4           COSMETIC string O
+3.2.4           … string O
+3.3     since string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1since string O Unix timestamp milliseconds 
+2include_types string X POST, SUBMISSION, BADGE, COSMETIC, … 
+mặc định: tất cả
+Output Input 
+=== PAGE 152 ===
+GET /search 
+152 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     results List<Object> X 
+3.1.1           post List<Post> X 
+3.1.1.1                post_id string X 
+3.1.1.2                author array X {id, full_name, avatar_url, frame_url} 
+3.1.1.3                content string X 
+3.1.1.4                react_count string X No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1query string O truy v ấn, hiện tại không h ỗ trợ nháy kép để 
+đặc tả toán t ử AND cho keyword 
+2type string X ALL / POST / USER / QUESTION 
+3after string X 
+4limit string O 
+Output Input 
+=== PAGE 153 ===
+GET /search (2) 
+153 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.1.5                 comment_count string X 
+3.1.1.6                 created_at string X 
+3.1.1.7                 relevance_score string X 
+3.1.2           users List<User> X 
+3.1.2.1                 id string X 
+3.1.2.2                 full_name string X 
+3.1.2.3                 code string X MSSV 
+3.1.2.4                 avatar_url string X 
+3.1.2.5                 frame_url string X 
+3.1.2.5                 is_friend boolean X 
+3.1.2.6                 relevance_score double X 
+3.1.3            questions List<Question> X 
+3.1.3.1                 id integer X 
+3.1.3.2                 subject_name string X 
+3.1.3.3                 content string X 
+3.1.3.4                 difficulty string X 
+3.1.3.5                 relevance_score double X 
+=== PAGE 154 ===
+GET /search (3) 
+154 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2      pagination array X 
+3.2.1           after string X 
+3.2.2           has_next string X 
+3.3      total_hits array X 
+3.3.1           posts string X 
+3.3.2           users string X 
+3.3.3           questions string X 
+=== PAGE 155 ===
+GET /search/saved 
+155 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     saved_searches List<Object> O 
+3.1.1           id string O 
+3.1.2           query_text string O 
+3.1.3           last_searched_at string O 
+3.2     trending_searches List<Object> X 
+3.2.1           id string X 
+3.2.2           query_text string X Output 
+=== PAGE 156 ===
+DELETE /search/saved/{id} 
+156 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data string O 
+        saved_id  string X id của phần saved_search đã xoá Output 
+=== PAGE 157 ===
+POST /media/upload 
+157 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     object_key string O 
+3.2     url string O 
+3.3     file_size string O 
+3.4     content_type string O 
+3.5     media_type string O 
+3.6     width string O 
+3.7     height string O 
+3.8     duration_seconds string O null / -1 n ếu là ảnhOutput No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1file MultipartFile O 
+2purpose string O AVATAR / COVER / POST / QUESTION / CHAT 
+=== PAGE 158 ===
+POST /media/presign 
+158 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     presigned_urls List<Object> O 
+3.1.1           object_key string O 
+3.1.2           upload_url string O 
+3.1.3           public_url string O 
+3.1.4           expires_in_seconds string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1files List<Object> O 
+1.1     file_name string O 
+1.2     file_size string O 
+1.3     content_type string O 
+1.4     purpose string O 
+=== PAGE 159 ===
+POST /friendships/request 
+159 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     friendship_id string O 
+     requester_id string O 
+     addressee_id string O 
+     status string O 
+     created_at string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1user_id string O id của người đượ c gửi lời mời
+=== PAGE 160 ===
+POST /friendships/accept 
+160 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     friendship_id string O 
+     requester_id string X người gửi request k ết bạn
+     user_id string O người chấp nhận kết bạn
+     status string O 
+     accepted_at string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1friendship_id string O 
+=== PAGE 161 ===
+POST /friendships/decline 
+161 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     friendship_id string O 
+     requester_id string O 
+     user_id string O 
+     status string O 
+     declined_at string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1friendship_id string O 
+=== PAGE 162 ===
+DELETE /friendships/{friendId} 
+162 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data string O 
+       friendship_id string O Output 
+=== PAGE 163 ===
+GET /friendships: l ấy danh sách b ạn bè 
+163 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object có các tr ường:
+3.1.1           user_id string O 
+3.1.2           full_name string O 
+3.1.3           avatar_url string O 
+3.1.4           frame_url string O 
+3.1.5           friends_since string X 
+3.1.6           mutal_friends_count string X No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string O 
+Output Input 
+=== PAGE 164 ===
+GET /friendships (2) 
+164 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next string O 
+3.3     total_friends string O Output 
+=== PAGE 165 ===
+GET /friendships/requests/received: l ấy danh sách k ết bạn
+165 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object có các tr ường:
+3.1.1           friendship_id string O 
+3.1.2           requester array O 
+3.1.2.1                id string O 
+3.1.2.2                full_name string O 
+3.1.2.3                avatar_url string O 
+3.1.2.4                frame_url string O 
+3.1.3           status string O PENDING 
+3.1.4           created_at string O 
+3.1.5           mutal_friends_count string X No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string O 
+Output Input 
+=== PAGE 166 ===
+GET /friendships/requests/received (2) 
+166 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next string O 
+3.3     total_pending string O Output 
+=== PAGE 167 ===
+GET /friendships/requests/sent: danh sách yêu c ầu kết bạn mà user đã gửi
+167 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O MỖI Object có các tr ường:
+3.1.1           friendship_id string O 
+3.1.2           requestee array O người đượ c nhận request k ết bạn
+3.1.2.1                id string O 
+3.1.2.2                full_name string O 
+3.1.2.3                avatar_url string O 
+3.1.2.4                frame_url string O 
+3.1.3           status string O PENDING 
+3.1.4           created_at string O 
+3.1.5           mutal_friends_count string X No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string O 
+Output Input 
+=== PAGE 168 ===
+GET /friendships/requests/sent (2) 
+168 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next boolean O 
+3.3     total_sent string O Output 
+=== PAGE 169 ===
+POST /follows/{targetUserId} 
+169 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     target_user_id string X 
+     is_following string X 
+     new_followers_count string O 
+     followed_at string X Output 
+=== PAGE 170 ===
+DELETE /follows/{targetUserId} 
+170 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     target_user_id string X 
+     is_following boolean X 
+     new_followers_count string O Output 
+=== PAGE 171 ===
+GET /follows/following: l ấy danh sách đang theo dõi 
+171 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O 
+3.1.1           user_id string O 
+3.1.2           full_name string O 
+3.1.3           avatar_url string O 
+3.1.4           frame_url string O 
+3.1.5           role string O 
+3.1.6           faculty string O 
+3.1.7           code string O MSSV / Mã cán b ộ
+3.1.8           followed_at string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string X mặc định = 20 
+Output Input 
+=== PAGE 172 ===
+GET /follows/following (2) 
+172 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.9           is_following_me string O 
+3.1.10             is_friend string O 
+3.2      pagination array O 
+3.2.1             after string O 
+3.2.2             has_next string O 
+3.3      total_following string O Output 
+=== PAGE 173 ===
+GET /follows/followers: danh sách mà chính user đang theo dõi 
+173 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O 
+3.1.1           user_id string O 
+3.1.2           full_name string O 
+3.1.3           avatar_url string O 
+3.1.4           frame_url string O 
+3.1.5           role string O 
+3.1.6           faculty string O 
+3.1.7           code string O MSSV / Mã cán b ộ
+3.1.8           followed_me_at string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string X mặc định = 20 
+Output Input 
+=== PAGE 174 ===
+GET /follows/followers (2) 
+174 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.9           is_following_back string O 
+3.1.10             is_friend string O 
+3.2      pagination array O 
+3.2.1             after string O 
+3.2.2             has_next string O 
+3.3      total_followers string O Output 
+=== PAGE 175 ===
+GET /users/{userId}/relationship-stats 
+175 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     user_id string O 
+3.2     counts array O 
+3.2.1           followers_count string O 
+3.2.2           following_count string O 
+3.2.3           friends_count string O 
+3.3     relationship_with_me array O 
+3.3.1           is_following string O 
+3.3.2           is_followed_by string O 
+3.3.3           is_friend string O 
+3.3.4           friend_request_status string O 
+3.3.5           is_blocked string O Output 
+=== PAGE 176 ===
+POST /blocks/{targetUserId}: ch ặn một người khác 
+176 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+      blocked_user_id string O 
+      is_blocked string O Output 
+=== PAGE 177 ===
+DELETE /blocks/{targetUserId} 
+177 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+      unblocked_user_id string O 
+      is_blocked string O Output 
+=== PAGE 178 ===
+GET /blocks 
+178 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O 
+3.1.1           user_id string O 
+3.1.2           full_name string O 
+3.1.3           avatar_url string O 
+3.1.4           frame_url string O 
+3.1.5           blocked_at string O 
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next boolean O 
+3.3     total_blocked string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string X mặc định = 20 
+Output Input 
+=== PAGE 179 ===
+POST /report 
+179 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+      report__id string O 
+      target_type string O 
+      target_id string O 
+      status string O 
+      created_at string O Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1violation_type string O SPAM, HARASSMENT, …
+2description string X 
+3evidence_urls List<String> X 
+4target_type string O POST / COMMENT / USER / QUESTION 
+5target_id string O 
+=== PAGE 180 ===
+GET /conversations 
+180 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O 
+3.1.1           conversation_id string O 
+3.1.2           type string O DIRECT / GROUP 
+3.1.3           display_name string O 
+3.1.4           display_avatar_url string O 
+3.1.5           member_count string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string X mặc định = 20 
+Output Input 
+=== PAGE 181 ===
+GET /conversations (2) 
+181 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.6           last_message array O 
+3.1.6.1                id string O 
+3.1.6.2                content string O 
+3.1.7           unread_count string O 
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next string O Output 
+=== PAGE 182 ===
+POST /conversations/direct 
+182 Input 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+     conversation_id string O 
+     type string O DIRECT 
+      members List<Object> O 
+          user_id string O 
+          full_name string O 
+          avatar_url string O 
+          frame_url string O 
+          role string O MEMBER Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1target_user_id string O 
+=== PAGE 183 ===
+GET /conversations/{id}/messages 
+183 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     conversation_id string O 
+3.2     conversation_type string O 
+3.3     messages List<Object> O 
+3.3.1           message_id string O 
+3.3.2           sender_id string O 
+3.3.3           sender_name string O 
+3.3.4           avatar_url string O 
+3.3.5           frame_url string O 
+3.3.6           content string O 
+3.3.7           message_type string O Input 
+Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string X mặc định = 20, max = 100 
+=== PAGE 184 ===
+GET /conversations/{id}/messages (2) 
+184 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+3.3.8           created_at string O 
+3.3.9           media_urls List<String> O 
+3.3.10           replied_message_id string O 
+3.3.11           is_edited string O 
+3.3.12           hidden string O 
+3.3.13           reactions List<Object> O Trước đây định dùng cho c ả group chat 
+3.3.13.1                emoji string O 
+3.3.13.2                count string O 
+3.3.13.3                user_ids List<Integer> O 
+3.3.14           read_by List<Object> O 
+3.3.14.1                user_id string O 
+3.3.14.2                read_at string O 
+3.4     pagination array O 
+3.4.1           after string O 
+3.4.2           has_next string O Output 
+=== PAGE 185 ===
+DELETE /messages/{id} 
+185 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     message_id string O 
+3.2     scope string O 
+3.3     note string O Input 
+Output No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1scope string O ME / EVERYONE 
+=== PAGE 186 ===
+SUB /user/queue/messages 
+186 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1event_type string O NEW_MESSAGE 
+2message_id string O 
+3conversation_id string O 
+4conversation_type string O 
+5sender array O 
+5.1      user_id string O 
+5.2      full_name string O 
+5.3      avatar_url string O 
+5.4      frame_url string O 
+6content string O 
+7message_type string O 
+8media_urls List<String> O 
+9reply_to_message_id string O 
+10created_at string O 
+11is_edited string O Broadcast 
+=== PAGE 187 ===
+SUB /user/queue/messages (2) 
+187 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+12reactions List<Object> O 
+12.1      emoji string O 
+12.2      count string O 
+12.3      user_ids List<Integer> O 
+13read_by List<Object> O 
+13.1      user_id string O 
+13.2      read_at string O Broadcast 
+=== PAGE 188 ===
+SUB /topic/conv.{id}.typing 
+188 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1event_type string O TYPING_STATUS 
+2conversation_id string O 
+3user_id string O 
+4full_name string O 
+5avatar_url string O 
+6frame_url string O 
+7is_typing string O 
+8timestamp string O Broadcast 
+=== PAGE 189 ===
+SEND /app/chat.send 
+189 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1conversation_id string O 
+2content string O 
+3message_type string O 
+4media_urls List<String> O 
+5reply_to_message_id string O Request 
+Broadcast 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1event_type string O NEW_MESSAGE 
+2message_id integer O 
+3coversation_id integer O 
+4conversation_type string O 
+5sender array O 
+5.1      user_id integer O 
+5.2      full_name string O 
+5.3      avatar_url string O 
+5.4      frame_url string O 
+=== PAGE 190 ===
+SEND /app/chat.send (2) 
+190 Broadcast 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+6content string O 
+7message_type string O 
+8media_urls List<String> O 
+9reply_to_message_id string O 
+10created_at string O 
+11is_edited string O 
+12reactions List<Object> O 
+12.1      emoji string O 
+12.2      count string O 
+12.3      user_ids List<Integer> O 
+13read_by List<Object> O 
+13.1      user_id string O 
+13.2      read_at string O 
+=== PAGE 191 ===
+SEND /app/chat.read 
+191 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1conversation_id string O 
+2message_id string O Request 
+Broadcast 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1event_type string O MESSAGE_READ 
+2conversation_id string O 
+3message_id string O 
+4reader array O 
+4.1      user_id string O 
+4.2      full_name string O 
+4.3      avatar_url string O 
+4.4      frame_url string O 
+5read_at string O 
+=== PAGE 192 ===
+SEND /app/chat.typing 
+192 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1conversation_id string O 
+2is_typing string O Request 
+Broadcast 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1event_type string O TYPING_STATUS 
+2conversation_id string O 
+3user_id string O 
+4full_name string O 
+5avatar_url string O 
+6frame_url string O 
+7is_typing string O 
+8timestamp string O 
+=== PAGE 193 ===
+GET /notiﬁcations 
+193 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     items List<Object> O 
+3.1.1           notification_id string O 
+3.1.2           type string O 
+3.1.3           title string O 
+3.1.4           body string O Input 
+Output No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1after string X 
+2limit string X mặc định = 20 
+=== PAGE 194 ===
+GET /notiﬁcations (2) 
+194 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.1.5           icon_url string O 
+3.1.6           read_at string O 
+3.1.7           created_at string O 
+3.1.8           target array O 
+3.1.8.1                type string O 
+3.1.8.2                id string O 
+3.1.8.3                url string O gọi url này, ho ặc tự xây d ựng để đến trang 
+cần đến
+3.1.9           actor array O 
+3.1.9.1                user_id string O 
+3.1.9.2                full_name string O 
+3.1.9.3                avatar_url string O 
+3.1.9.4                frame_url string O 
+3.2     pagination array O 
+3.2.1           after string O 
+3.2.2           has_next boolean O 
+3.3     unread_count string O Output 
+=== PAGE 195 ===
+POST /notiﬁcations/{id}/read 
+195 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     notification_id string O 
+3.2     is_read string O 
+3.3     read_at string O 
+3.4     unread_count string O 
+=== PAGE 196 ===
+POST /notiﬁcations/read-all 
+196 Output 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+1code string O 
+2message string O 
+3data null O 
+=== PAGE 197 ===
+GET /settings/push 
+197 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     push_enabled string O “true" ho ặc “false" 
+3.2     categories Map<K, V> O V: Map<String, Object> 
+V là m ột Map khác có 2 key (K) là 
+enabled và description 
+3.2.1           K string O K: social, academic, gamification, 
+system 
+3.2.1.1                enabled string O “true" ho ặc “false" 
+3.2.1.2                description string O 
+3.3     sound_enabled string O 
+3.4     vibration_enabled string O Output 
+=== PAGE 198 ===
+GET /settings/push 
+198 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+3.6     devices List<Object> O 
+3.6.1           device_id string O uuid 
+3.6.2           device_name string O 
+3.6.3           platform string O 
+3.6.4           last_active_at string O Output 
+=== PAGE 199 ===
+PUT /settings/push 
+199 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1push_enabled string O “true" ho ặc “false" 
+2categories Map<K, V> O V: Map<String, Object> 
+V là m ột Map khác có 2 key (K) là 
+enabled và description 
+2.1     K string O K: social, academic, gamification, 
+system 
+2.1.1           enabled string O “true" ho ặc “false" 
+2.1.2           description string O 
+4sound_enabled string X 
+5vibration_enabled string X Input 
+=== PAGE 200 ===
+PUT /settings/push 
+200 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     push_enabled string O “true" ho ặc “false" 
+3.2     categories Map<K, V> O V: Map<String, Object> 
+V là m ột Map khác có 2 key (K) là 
+enabled và description 
+3.2.1           K string O K: social, academic, gamification, 
+system 
+3.2.1.1                enabled string O “true" ho ặc “false" 
+3.2.1.2                description string O 
+3.3     sound_enabled string O 
+3.4     vibration_enabled string O Output 
+=== PAGE 201 ===
+GET /cosmetics/my-inventory 
+201 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     summary array O 
+3.1.1           total_unlocked string O 
+3.1.2           by_rarity array O 
+3.1.2.1                COMMON string O 
+3.1.2.2                RARE string O 
+3.1.2.3                EPIC string O 
+3.1.2.4                LEGENDARY string O 
+3.1.3           collection_completion_percent string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1type string X AVATAR_FRAME, CHAT_BUBBLE, 
+PROFILE_BADGE 
+2rarity string X COMMON, RARE, EPIC, LEGENDARY 
+3only_unlocked string X mặc định: “true” 
+4after string X 
+5limit string X 
+=== PAGE 202 ===
+GET /cosmetics/my-inventory (2) 
+202 No.Tên tham s ố Kiểu dữ liệu Bắt buộc Mô tả
+3.2     currently_equipped Map<K, V> O V: Map<String, Object> 
+3.2.1           K string O K: AVATAR_FRAME, CHAT_BUBBLE, 
+PROFILE_PIN 
+3.2.1.1                cosmetic_id string O 
+3.3     inventory List<Object> O 
+3.3.1           cosmetic_id string O 
+3.3.2           name string O 
+3.3.3           description string O 
+3.3.4           type string O 
+3.3.5           rarity string O 
+3.3.6           asset_url string O 
+3.3.7           unlocked_at string O 
+3.3.8           accquire_method string O ACHIEVEMENT, SHOP_PURCHASE, 
+EVENT 
+3.3.9           available_until string O 
+3.4     pagination array O 
+3.4.1           after string O 
+3.4.2           has_next string O Output 
+=== PAGE 203 ===
+GET /cosmetics/shop 
+203 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     user_points string O 
+3.2     items List<CosmeticItem> O 
+3.2.1           cosmetic_id string O 
+3.2.2           name string O 
+3.2.3           type string O 
+3.2.4           rarity string O 
+3.2.5           asset_url string O 
+3.2.6           price string O No.Tham s ố truy v ấn Kiểu dữ liệu Bắt buộc Mô tả
+1category string X AVATAR_FRAME, CHAT_BUBBLE, 
+PROFILE_BADGE, FEATURED, LIMITED_TIME 
+2sort_by string X featured, price_asc, price_desc, newest, rarity 
+3after string X 
+4limit string X 
+=== PAGE 204 ===
+GET /cosmetics/shop (2) 
+204 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+3.2.7           original_price string O 
+3.2.8           available_until string O limited-time items 
+3.2.9           accquired_at string O 
+3.2.10           prerequisites array O 
+3.2.10.1                description string O 
+3.2.10.2                met string O 
+3.4     pagination array O 
+3.4.1           after string O 
+3.4.2           has_next string O 
+=== PAGE 205 ===
+PUT /cosmetics/equip 
+205 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1cosmetic_id string O 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     cosmetic_id string O 
+3.2     name string O 
+3.3     type string O 
+3.4     asset_url string O 
+3.5     equipped_at string O 
+3.6     previous_item array O 
+3.6.1           cosmetic_id string O 
+3.6.2           name string O 
+3.7     profile_updated array O 
+3.7.1           url string O đườ ng dẫn trong profile user 
+đượ c update, nên ghi rõ: 
+frame_url ho ặc chat_bubble_url 
+hoặc profile_pin_url, …
+=== PAGE 206 ===
+PUT /cosmetics/unequip 
+206 No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1cosmetic_id string O 
+No.Tên tham s ố Kiểu dữ liệu Bắt buộcMô tả
+1code string O 
+2message string O 
+3data array O 
+3.1     slot string O 
+3.2     unequipped_item array O 
+3.2.1           cosmetic_id string O 
+3.2.2           name string O 
+3.3     profile_updated array O 
+3.3.1           url string O đườ ng dẫn trong profile user 
+đượ c update, nên ghi rõ: 
+frame_url ho ặc chat_bubble_url 
+hoặc profile_pin_url, …
+=== PAGE 207 ===
+207 THANK YOU ! 
