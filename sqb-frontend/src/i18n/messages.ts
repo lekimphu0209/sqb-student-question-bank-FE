@@ -12,4 +12,9 @@ export const MESSAGES = {
   loginFailed: 'Tài khoản hoặc mật khẩu không chính xác.',
   noMoreData: 'Đã hiển thị hết nội dung.',
   empty: 'Chưa có dữ liệu.',
+  sessionExpired: 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
+  uploadFailed: 'Tải ảnh lên thất bại. Vui lòng thử lại.',
+  gifNotAllowed: 'Không hỗ trợ ảnh GIF.',
+  imageOnly: 'Chỉ hỗ trợ đính kèm ảnh.',
+  saved: 'Đã lưu.',
 }

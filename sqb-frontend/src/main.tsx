@@ -10,7 +10,27 @@ import PostDetailPage from '@/pages/PostDetailPage'
 import ProfilePage from '@/pages/ProfilePage'
 import ProposePage from '@/pages/ProposePage'
 import MySubmissionsPage from '@/pages/MySubmissionsPage'
+import SearchPage from '@/pages/SearchPage'
+import FriendsPage from '@/pages/FriendsPage'
+import NotificationsPage from '@/pages/NotificationsPage'
+import MessagesPage from '@/pages/MessagesPage'
+import ChatPage from '@/pages/ChatPage'
+import BlockedPage from '@/pages/BlockedPage'
+import PushSettingsPage from '@/pages/PushSettingsPage'
+import DevicesPage from '@/pages/DevicesPage'
+import PracticePage from '@/pages/PracticePage'
+import GamesPage from '@/pages/GamesPage'
+import LecturerReviewPage from '@/pages/LecturerReviewPage'
+import LecturerReviewDetailPage from '@/pages/LecturerReviewDetailPage'
+import ExamsPage from '@/pages/ExamsPage'
+import ExamNewPage from '@/pages/ExamNewPage'
+import VideosPage from '@/pages/VideosPage'
+import { ErrorBox } from '@/components/ui'
+import { initTheme } from '@/lib/theme'
 import './index.css'
+
+// Áp theme (light/dark) trước khi render
+initTheme()
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000, refetchOnWindowFocus: false } },
@@ -19,6 +39,12 @@ const queryClient = new QueryClient({
 function RequireAuth() {
   const token = useAuthStore((s) => s.accessToken)
   return token ? <Outlet /> : <Navigate to="/login" replace />
+}
+
+function RequireLecturer() {
+  const role = useAuthStore((s) => s.user?.role)
+  if (role === 'LECTURER' || role === 'ADMIN') return <Outlet />
+  return <ErrorBox error={new Error('Trang này chỉ dành cho giảng viên.')} />
 }
 
 const router = createBrowserRouter([
@@ -30,11 +56,31 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
           { path: '/', element: <HomePage /> },
+          { path: '/search', element: <SearchPage /> },
+          { path: '/friends', element: <FriendsPage /> },
+          { path: '/notifications', element: <NotificationsPage /> },
+          { path: '/messages', element: <MessagesPage /> },
+          { path: '/messages/:id', element: <ChatPage /> },
           { path: '/posts/:id', element: <PostDetailPage /> },
+          { path: '/videos', element: <VideosPage /> },
           { path: '/me', element: <ProfilePage /> },
           { path: '/users/:userId', element: <ProfilePage /> },
           { path: '/questions/propose', element: <ProposePage /> },
           { path: '/questions/my-submissions', element: <MySubmissionsPage /> },
+          { path: '/sessions/:id/practice', element: <PracticePage /> },
+          { path: '/games', element: <GamesPage /> },
+          { path: '/settings/blocked', element: <BlockedPage /> },
+          { path: '/settings/push', element: <PushSettingsPage /> },
+          { path: '/settings/devices', element: <DevicesPage /> },
+          {
+            element: <RequireLecturer />,
+            children: [
+              { path: '/lecturer/review', element: <LecturerReviewPage /> },
+              { path: '/lecturer/review/:sessionId', element: <LecturerReviewDetailPage /> },
+              { path: '/lecturer/exams', element: <ExamsPage /> },
+              { path: '/lecturer/exams/new', element: <ExamNewPage /> },
+            ],
+          },
         ],
       },
     ],

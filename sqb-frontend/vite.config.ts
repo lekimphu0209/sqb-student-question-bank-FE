@@ -18,6 +18,14 @@ export default defineConfig(({ mode }) => {
         changeOrigin: true,
         secure: true,
         ws: true,
+        // Backend chặn request có Origin/Referer lạ (403) — rewrite về cùng origin backend
+        headers: { Origin: backend, Referer: `${backend}/` },
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.setHeader('origin', backend)
+            proxyReq.setHeader('referer', `${backend}/`)
+          })
+        },
       },
     },
   },

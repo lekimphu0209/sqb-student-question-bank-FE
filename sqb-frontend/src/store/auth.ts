@@ -18,6 +18,7 @@ interface AuthState {
   user: AuthUser | null
   deviceId: string
   setAuth: (user: AuthUser, accessToken: string, refreshToken: string | null) => void
+  setTokens: (accessToken: string, refreshToken: string | null) => void
   logout: () => void
 }
 
@@ -33,6 +34,7 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       deviceId: makeDeviceId(),
       setAuth: (user, accessToken, refreshToken) => set({ user, accessToken, refreshToken }),
+      setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
       logout: () => set({ user: null, accessToken: null, refreshToken: null }),
     }),
     { name: 'sqb-auth' },

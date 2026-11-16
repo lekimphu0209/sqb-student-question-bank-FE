@@ -23,11 +23,8 @@ export default function LoginPage() {
       setErrors({ email: emailErr ?? undefined, password: passErr ?? undefined })
       return
     }
-    // 2. Kiểm tra mạng
-    if (!navigator.onLine) {
-      setErrors({ form: MESSAGES.connectionError })
-      return
-    }
+    // 2. Không check navigator.onLine (dễ false-positive khi vừa đổi mạng/VPN)
+    // axios sẽ trả CLIENT_NETWORK + auto-retry nếu thật sự offline
     setErrors({})
     setLoading(true)
     try {
@@ -43,6 +40,7 @@ export default function LoginPage() {
       setAuth(user, access_token, refresh_token)
       navigate('/')
     } catch (err) {
+      console.error('[login]', err)
       const msg = err instanceof ApiError && err.code === '9990' ? MESSAGES.loginFailed : (err as Error).message
       setErrors({ form: msg })
     } finally {
