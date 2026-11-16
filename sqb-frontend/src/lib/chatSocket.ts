@@ -15,6 +15,9 @@ export interface ChatSocketHandlers {
 }
 
 function wsUrl(): string {
+  // VITE_WS_URL: deploy tĩnh (Vercel/CF Pages) set thẳng wss://backend — serverless không proxy WS
+  const explicit: string | undefined = import.meta.env.VITE_WS_URL
+  if (explicit) return explicit
   const base: string = import.meta.env.VITE_API_BASE || '/api/v1'
   if (base.startsWith('http')) return `${base.replace(/^http/, 'ws')}/ws`
   const proto = location.protocol === 'https:' ? 'wss' : 'ws'
