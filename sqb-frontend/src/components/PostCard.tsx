@@ -8,7 +8,8 @@ import { countWords, LIMITS, validatePostContent } from '@/lib/validation'
 import { Avatar, Modal, timeAgo } from './ui'
 import ReportModal from './ReportModal'
 import Lightbox from './Lightbox'
-import { Flag, MessageCircle, MoreHorizontal, Pencil, ThumbsUp, Trash2 } from 'lucide-react'
+import { Flag, Link2, MessageCircle, MoreHorizontal, Pencil, ThumbsUp, Trash2 } from 'lucide-react'
+import { toast } from '@/lib/toast'
 
 const COLLAPSE_CHARS = 300
 
@@ -109,6 +110,18 @@ export default function PostCard({ post }: { post: Post }) {
           </button>
           {menuOpen && (
             <div className="absolute right-0 top-full z-20 card !p-1 w-44 shadow-lg">
+              <button
+                className="w-full text-left px-3 py-2 text-sm rounded hover:bg-bg"
+                onClick={() => {
+                  setMenuOpen(false)
+                  navigator.clipboard
+                    .writeText(`${location.origin}/posts/${post.post_id}`)
+                    .then(() => toast('Đã sao chép liên kết', 'success'))
+                    .catch(() => toast('Không sao chép được liên kết', 'error'))
+                }}
+              >
+                <Link2 size={15} className="inline mr-2 -mt-0.5" />Sao chép liên kết
+              </button>
               {isOwner ? (
                 <>
                   <button
