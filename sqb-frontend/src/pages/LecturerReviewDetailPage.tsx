@@ -2,18 +2,100 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { reviewApi } from '@/api/endpoints'
-import type { ReviewQuestion } from '@/api/types'
+import type { PracticeOption, PracticeQuestion, ReviewQuestion } from '@/api/types'
 import { Badge, CardSkeleton, EmptyState, ErrorBox, Modal } from '@/components/ui'
-import { AlertTriangle, ArrowLeft, Check, X } from 'lucide-react'
+import { AlertTriangle, ArrowLeft, Check, Pencil, X } from 'lucide-react'
+
+// Modal sửa câu hỏi trước khi duyệt (PUT /questions/{id})
+function EditQuestionModal({
+  q,
+  onClose,
+  onSaved,
+}: {
+  q: ReviewQuestion
+  onClose: () => void
+  onSaved: () => void
+}) {
+  const [content, setContent] = useState(q.content)
+  const [opts, setOpts] = useState<PracticeOption[]>(q.options.map((o) => ({ ...o })))
+  const [explanation, setExplanation] = useState(q.explanation ?? '')
+  const [err, setErr] = useState<string | null>(null)
+
+  const save = useMutation({
+    mutationFn: () => {
+      const body = {
+        content: content.trim(),
+        options: opts,
+        correct_answer: opts.find((o) => o.is_correct)?.key ?? q.correct_answer,
+        explanation: explanation.trim(),
+      }
+      return reviewApi.editQuestion(q.question_id, body as Partial<PracticeQuestion>)
+    },
+    onSuccess: onSaved,
+    onError: (e: Error) => setErr(e.message),
+  })
+
+  return (
+    <Modal open onClose={onClose} title={`Sửa câu #${q.question_id}`}>
+      <div className="space-y-3">
+        <div>
+          <label className="label">Nội dung câu hỏi</label>
+          <textarea className="input min-h-[80px]" value={content} onChange={(e) => setContent(e.target.value)} />
+        </div>
+        <div>
+          <label className="label">Đáp án (chọn đáp án đúng)</label>
+          <div className="space-y-2">
+            {opts.map((o, i) => (
+              <div key={o.key} className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="correct"
+                  className="accent-success"
+                  checked={!!o.is_correct}
+                  onChange={() => setOpts((s) => s.map((x, j) => ({ ...x, is_correct: j === i })))}
+                />
+                <span className="font-semibold text-sm w-4">{o.key}.</span>
+                <input
+                  className="input !py-1.5 text-sm"
+                  value={o.text}
+                  onChange={(e) => setOpts((s) => s.map((x, j) => (j === i ? { ...x, text: e.target.value } : x)))}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className="label">Giải thích</label>
+          <textarea
+            className="input min-h-[60px]"
+            value={explanation}
+            onChange={(e) => setExplanation(e.target.value)}
+          />
+        </div>
+        {err && <p className="error-text">{err}</p>}
+        <div className="flex justify-end gap-2">
+          <button className="btn-ghost" onClick={onClose}>
+            Huỷ
+          </button>
+          <button className="btn-primary" disabled={!content.trim() || save.isPending} onClick={() => save.mutate()}>
+            {save.isPending ? 'Đang lưu...' : 'Lưu thay đổi'}
+          </button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
 
 function QuestionReviewCard({
   q,
   selected,
   onToggle,
+  onEdit,
 }: {
   q: ReviewQuestion
   selected: boolean
   onToggle: () => void
+  onEdit: () => void
 }) {
   const reviewed = !!q.status && q.status !== 'PENDING'
   return (
@@ -30,6 +112,11 @@ function QuestionReviewCard({
           <div className="flex items-center gap-2">
             <span className="font-semibold text-sm">Câu #{q.question_id}</span>
             <Badge tone={q.status === 'APPROVED' ? 'success' : q.status === 'REJECTED' ? 'danger' : 'muted'}>{q.status}</Badge>
+            {!reviewed && (
+              <button className="btn-ghost !p-1 text-xs ml-auto" onClick={onEdit} title="Sửa câu hỏi">
+                <Pencil size={14} />
+              </button>
+            )}
           </div>
           <p className="whitespace-pre-wrap text-sm">{q.content}</p>
           {q.image_urls?.map((u, i) => (
@@ -60,6 +147,7 @@ export default function LecturerReviewDetailPage() {
   const [rejectOpen, setRejectOpen] = useState(false)
   const [reason, setReason] = useState('')
   const [done, setDone] = useState<string | null>(null)
+  const [editQ, setEditQ] = useState<ReviewQuestion | null>(null)
 
   const q = useQuery({
     queryKey: ['review-session', sessionId],
@@ -180,8 +268,21 @@ export default function LecturerReviewDetailPage() {
           q={item}
           selected={selected.has(item.question_id)}
           onToggle={() => toggle(item.question_id)}
+          onEdit={() => setEditQ(item)}
         />
       ))}
+
+      {editQ && (
+        <EditQuestionModal
+          q={editQ}
+          onClose={() => setEditQ(null)}
+          onSaved={() => {
+            setEditQ(null)
+            invalidate()
+            setDone('Đã lưu chỉnh sửa câu hỏi.')
+          }}
+        />
+      )}
 
       <Modal open={rejectOpen} onClose={() => setRejectOpen(false)} title={`Từ chối ${ids.length} câu hỏi`}>
         <textarea
