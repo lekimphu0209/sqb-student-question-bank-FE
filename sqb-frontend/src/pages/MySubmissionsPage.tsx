@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { sessionApi } from '@/api/endpoints'
 import { EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
@@ -16,7 +17,11 @@ export default function MySubmissionsPage() {
       <h1 className="text-xl font-bold">Phiên đề xuất của tôi</h1>
       {items.length === 0 && <EmptyState icon={<ClipboardList size={32} />}>Bạn chưa đề xuất câu hỏi nào.</EmptyState>}
       {items.map((s) => (
-        <div key={s.session_id} className="card flex items-center justify-between">
+        <Link
+          key={s.session_id}
+          to={`/questions/my-submissions/${s.session_id}`}
+          className="card flex items-center justify-between hover:border-primary transition"
+        >
           <div>
             <div className="font-semibold">
               #{s.session_id} · {s.subject_name}
@@ -30,7 +35,7 @@ export default function MySubmissionsPage() {
             <span className="inline-flex items-center gap-1"><ThumbsUp size={13} />{s.react_count ?? 0}</span>
             <span className="inline-flex items-center gap-1"><MessageCircle size={13} />{s.comment_count ?? 0}</span>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   )

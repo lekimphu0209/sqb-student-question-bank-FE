@@ -11,6 +11,7 @@ import PostDetailPage from '@/pages/PostDetailPage'
 import ProfilePage from '@/pages/ProfilePage'
 import ProposePage from '@/pages/ProposePage'
 import MySubmissionsPage from '@/pages/MySubmissionsPage'
+import SubmissionDetailPage from '@/pages/SubmissionDetailPage'
 import SearchPage from '@/pages/SearchPage'
 import FriendsPage from '@/pages/FriendsPage'
 import NotificationsPage from '@/pages/NotificationsPage'
@@ -65,6 +66,7 @@ const router = createBrowserRouter([
           { path: '/users/:userId', element: <ProfilePage /> },
           { path: '/questions/propose', element: <ProposePage /> },
           { path: '/questions/my-submissions', element: <MySubmissionsPage /> },
+          { path: '/questions/my-submissions/:sessionId', element: <SubmissionDetailPage /> },
           { path: '/sessions/:id/practice', element: <PracticePage /> },
           { path: '/games', element: <GamesPage /> },
           { path: '/settings/blocked', element: <BlockedPage /> },
