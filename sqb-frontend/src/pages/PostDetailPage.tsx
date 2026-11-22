@@ -9,7 +9,9 @@ import ReportModal from '@/components/ReportModal'
 import { Avatar, EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
 import { validateComment } from '@/lib/validation'
 import { applyEmotes, insertAtCursor } from '@/lib/emote'
+import { uploadImages, validateImages } from '@/lib/upload'
 import { useAuthStore } from '@/store/auth'
+import { ImagePlus, X } from 'lucide-react'
 
 function CommentItem({
   c,
@@ -132,9 +134,11 @@ export default function PostDetailPage() {
   const postId = Number(id)
   const qc = useQueryClient()
   const [text, setText] = useState('')
+  const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [reportId, setReportId] = useState<number | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   const post = useQuery({ queryKey: ['post', postId], queryFn: () => postApi.byId(postId) })
   const comments = useQuery({
@@ -157,9 +161,18 @@ export default function PostDetailPage() {
   }
 
   const add = useMutation({
-    mutationFn: () => commentApi.create({ target_type: 'POST', target_id: postId, content: applyEmotes(text.trim()) }),
+    mutationFn: async () => {
+      const media_urls = file ? await uploadImages([file], 'COMMENT') : undefined
+      return commentApi.create({
+        target_type: 'POST',
+        target_id: postId,
+        content: applyEmotes(text.trim()),
+        media_urls,
+      })
+    },
     onSuccess: () => {
       setText('')
+      setFile(null)
       setError(null)
       invalidate()
     },
@@ -194,7 +207,36 @@ export default function PostDetailPage() {
 
       <div className="card space-y-4">
         <h2 className="font-semibold">Bình luận</h2>
+        {file && (
+          <div className="relative inline-block">
+            <img src={URL.createObjectURL(file)} alt="" className="h-20 rounded" />
+            <button
+              className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-surface border border-border text-textMuted flex items-center justify-center"
+              onClick={() => setFile(null)}
+              aria-label="Bỏ ảnh"
+            >
+              <X size={12} />
+            </button>
+          </div>
+        )}
         <div className="flex gap-2 items-center">
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0]
+              e.target.value = ''
+              if (!f) return
+              const msg = validateImages([f], 1)
+              if (msg) setError(msg)
+              else setFile(f)
+            }}
+          />
+          <button className="btn-ghost !p-2 text-textMuted" onClick={() => fileRef.current?.click()} aria-label="Đính kèm ảnh">
+            <ImagePlus size={18} />
+          </button>
           <input
             ref={inputRef}
             className="input"

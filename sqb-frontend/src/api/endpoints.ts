@@ -110,8 +110,13 @@ export const videoApi = {
 export const commentApi = {
   list: (target_type: 'POST' | 'SESSION' | 'QUESTION', target_id: number, after?: string | null, limit = 20) =>
     get<CursorPage<Comment>>('/comments', { target_type, target_id, after, limit }),
-  create: (body: { target_type: 'POST' | 'SESSION' | 'QUESTION'; target_id: number; content: string; parent_comment_id?: number }) =>
-    post<Comment>('/comments', body),
+  create: (body: {
+    target_type: 'POST' | 'SESSION' | 'QUESTION'
+    target_id: number
+    content: string
+    parent_comment_id?: number
+    media_urls?: string[]
+  }) => post<Comment>('/comments', body),
   update: (comment_id: number, body: { content: string }) => put<Comment>(`/comments/${comment_id}`, body),
   remove: (comment_id: number) => del<null>(`/comments/${comment_id}`),
 }

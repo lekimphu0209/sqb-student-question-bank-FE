@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Send, Trash2 } from 'lucide-react'
+import { ImagePlus, Send, Trash2, X } from 'lucide-react'
 import { commentApi } from '@/api/endpoints'
 import type { Comment } from '@/api/types'
 import { useAuthStore } from '@/store/auth'
 import { applyEmotes } from '@/lib/emote'
+import { uploadImages, validateImages } from '@/lib/upload'
 import { Avatar, ErrorBox, Spinner, timeAgo } from '@/components/ui'
 
 function CommentRow({
@@ -29,6 +30,7 @@ function CommentRow({
         <div className="text-sm">
           {c.hidden || !c.content ? <i className="text-textMuted">Bình luận đã bị ẩn</i> : c.content}
         </div>
+        {c.media_url && <img src={c.media_url} alt="" className="mt-1 max-h-40 rounded" />}
       </div>
       {mine && (
         <button
@@ -55,17 +57,27 @@ export default function CommentThread({
   const me = useAuthStore((s) => s.user)
   const qc = useQueryClient()
   const [text, setText] = useState('')
+  const [file, setFile] = useState<File | null>(null)
   const [err, setErr] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
   const list = useQuery({
     queryKey: ['comments', targetType, targetId],
     queryFn: () => commentApi.list(targetType, targetId),
   })
   const invalidate = () => qc.invalidateQueries({ queryKey: ['comments', targetType, targetId] })
   const add = useMutation({
-    mutationFn: () =>
-      commentApi.create({ target_type: targetType, target_id: targetId, content: applyEmotes(text.trim()) }),
+    mutationFn: async () => {
+      const media_urls = file ? await uploadImages([file], 'COMMENT') : undefined
+      return commentApi.create({
+        target_type: targetType,
+        target_id: targetId,
+        content: applyEmotes(text.trim()),
+        media_urls,
+      })
+    },
     onSuccess: () => {
       setText('')
+      setFile(null)
       setErr(null)
       invalidate()
     },
@@ -99,7 +111,36 @@ export default function CommentThread({
           ))}
         </div>
       ))}
+      {file && (
+        <div className="relative inline-block">
+          <img src={URL.createObjectURL(file)} alt="" className="h-16 rounded" />
+          <button
+            className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-surface border border-border text-textMuted flex items-center justify-center"
+            onClick={() => setFile(null)}
+            aria-label="Bỏ ảnh"
+          >
+            <X size={12} />
+          </button>
+        </div>
+      )}
       <div className="flex gap-2 items-center">
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const f = e.target.files?.[0]
+            e.target.value = ''
+            if (!f) return
+            const msg = validateImages([f], 1)
+            if (msg) setErr(msg)
+            else setFile(f)
+          }}
+        />
+        <button className="btn-ghost !p-2 text-textMuted" onClick={() => fileRef.current?.click()} aria-label="Đính kèm ảnh">
+          <ImagePlus size={17} />
+        </button>
         <input
           className="input !py-1.5 text-sm"
           placeholder="Viết bình luận..."
