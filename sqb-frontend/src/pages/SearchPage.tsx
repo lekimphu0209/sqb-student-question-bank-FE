@@ -3,7 +3,8 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { searchApi } from '@/api/endpoints'
 import type { SearchResultItem, SearchType } from '@/api/types'
-import { Avatar, CardSkeleton, EmptyState, ErrorBox, Tabs, timeAgo, Badge } from '@/components/ui'
+import { Avatar, CardSkeleton, EmptyState, ErrorBox, Spinner, Tabs, timeAgo, Badge } from '@/components/ui'
+import { useInfiniteScroll } from '@/lib/infiniteScroll'
 import { MessageCircle, Star, ThumbsUp, X } from 'lucide-react'
 
 const TABS: { key: SearchType; label: string }[] = [
@@ -104,6 +105,7 @@ export default function SearchPage() {
     getNextPageParam: (last) => (last.pagination.has_next ? last.pagination.after : undefined),
     enabled: !!query,
   })
+  const sentinel = useInfiniteScroll(results)
 
   const removeSaved = useMutation({
     mutationFn: (id: number) => searchApi.removeSaved(id),
@@ -184,11 +186,9 @@ export default function SearchPage() {
           {items.map((it, i) => (
             <ResultCard key={`${it.type}-${i}`} item={it} />
           ))}
-          {results.hasNextPage && (
-            <button className="btn-ghost w-full" onClick={() => results.fetchNextPage()} disabled={results.isFetchingNextPage}>
-              {results.isFetchingNextPage ? 'Đang tải...' : 'Tải thêm'}
-            </button>
-          )}
+          <div ref={sentinel} className="py-2 flex justify-center">
+            {results.isFetchingNextPage && <Spinner label="" />}
+          </div>
         </>
       )}
     </>

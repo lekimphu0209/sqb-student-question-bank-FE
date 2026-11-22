@@ -8,6 +8,7 @@ import PostCard from '@/components/PostCard'
 import ReportModal from '@/components/ReportModal'
 import { Avatar, EmptyState, ErrorBox, Modal, Spinner } from '@/components/ui'
 import { uploadImages } from '@/lib/upload'
+import { useInfiniteScroll } from '@/lib/infiniteScroll'
 import { toast } from '@/lib/toast'
 import { Award, FileText, ImagePlus, MessageCircle, Pencil } from 'lucide-react'
 
@@ -78,12 +79,14 @@ function RelationActions({ userId }: { userId: number }) {
 
 // Modal danh sách followers/following của chính mình (GET /follows/followers|following)
 function FollowListModal({ tab, onClose }: { tab: 'followers' | 'following'; onClose: () => void }) {
-  const q = useQuery({
+  const q = useInfiniteQuery({
     queryKey: ['follow-list', tab],
-    queryFn: (): Promise<CursorPage<FollowUser>> =>
-      tab === 'followers' ? followApi.followers(null, 50) : followApi.following(null, 50),
+    queryFn: ({ pageParam }): Promise<CursorPage<FollowUser>> =>
+      tab === 'followers' ? followApi.followers(pageParam, 20) : followApi.following(pageParam, 20),
+    initialPageParam: null as string | number | null,
+    getNextPageParam: (last) => (last.pagination.has_next ? last.pagination.after : undefined),
   })
-  const items = q.data?.items ?? []
+  const items = q.data?.pages.flatMap((p) => p.items) ?? []
   return (
     <Modal open onClose={onClose} title={tab === 'followers' ? 'Người theo dõi' : 'Đang theo dõi'}>
       {q.isPending && <Spinner />}
@@ -109,6 +112,15 @@ function FollowListModal({ tab, onClose }: { tab: 'followers' | 'following'; onC
           </Link>
         ))}
       </div>
+      {q.hasNextPage && (
+        <button
+          className="btn-ghost w-full text-sm"
+          onClick={() => q.fetchNextPage()}
+          disabled={q.isFetchingNextPage}
+        >
+          {q.isFetchingNextPage ? 'Đang tải...' : 'Tải thêm'}
+        </button>
+      )}
     </Modal>
   )
 }
@@ -221,6 +233,7 @@ export default function ProfilePage() {
     initialPageParam: null as string | null,
     getNextPageParam: (last) => (last.pagination.has_next ? last.pagination.after : undefined),
   })
+  const sentinel = useInfiniteScroll(posts)
 
   if (profile.isPending) return <Spinner />
   if (profile.isError) return <ErrorBox error={profile.error} onRetry={() => profile.refetch()} />
@@ -311,11 +324,9 @@ export default function ProfilePage() {
       {items.map((post) => (
         <PostCard key={post.post_id} post={post} />
       ))}
-      {posts.hasNextPage && (
-        <button className="btn-ghost w-full" onClick={() => posts.fetchNextPage()}>
-          Tải thêm
-        </button>
-      )}
+      <div ref={sentinel} className="py-2 flex justify-center">
+        {posts.isFetchingNextPage && <Spinner label="" />}
+      </div>
       {isMe && <EditProfileModal profile={p} open={editOpen} onClose={() => setEditOpen(false)} />}
       {isMe && followTab && <FollowListModal tab={followTab} onClose={() => setFollowTab(null)} />}
     </>

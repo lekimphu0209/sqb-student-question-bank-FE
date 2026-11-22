@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { notiApi } from '@/api/endpoints'
 import type { NotificationItem } from '@/api/types'
-import { Avatar, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
+import { useInfiniteScroll } from '@/lib/infiniteScroll'
+import { Avatar, CardSkeleton, EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
 import {
   AlertTriangle, BarChart3, Bell, BellOff, CheckCircle2, Medal, MessageCircle, Trophy, UserPlus,
   type LucideIcon,
@@ -28,6 +29,7 @@ export default function NotificationsPage() {
     initialPageParam: null as string | number | null,
     getNextPageParam: (last) => (last.pagination.has_next ? last.pagination.after : undefined),
   })
+  const sentinel = useInfiniteScroll(q)
 
   const read = useMutation({
     mutationFn: (id: number) => notiApi.read(id),
@@ -104,11 +106,9 @@ export default function NotificationsPage() {
         ))}
       </div>
 
-      {q.hasNextPage && (
-        <button className="btn-ghost w-full" onClick={() => q.fetchNextPage()} disabled={q.isFetchingNextPage}>
-          {q.isFetchingNextPage ? 'Đang tải...' : 'Tải thêm'}
-        </button>
-      )}
+      <div ref={sentinel} className="py-2 flex justify-center">
+        {q.isFetchingNextPage && <Spinner label="" />}
+      </div>
     </>
   )
 }

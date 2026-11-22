@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { Mail } from 'lucide-react'
 import { convApi } from '@/api/endpoints'
-import { Avatar, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
+import { useInfiniteScroll } from '@/lib/infiniteScroll'
+import { Avatar, CardSkeleton, EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
 
 export default function MessagesPage() {
   const q = useInfiniteQuery({
@@ -11,6 +12,7 @@ export default function MessagesPage() {
     initialPageParam: null as string | number | null,
     getNextPageParam: (last) => (last.pagination.has_next ? last.pagination.after : undefined),
   })
+  const sentinel = useInfiniteScroll(q)
 
   const items = q.data?.pages.flatMap((p) => p.items) ?? []
 
@@ -53,11 +55,9 @@ export default function MessagesPage() {
         ))}
       </div>
 
-      {q.hasNextPage && (
-        <button className="btn-ghost w-full" onClick={() => q.fetchNextPage()} disabled={q.isFetchingNextPage}>
-          {q.isFetchingNextPage ? 'Đang tải...' : 'Tải thêm'}
-        </button>
-      )}
+      <div ref={sentinel} className="py-2 flex justify-center">
+        {q.isFetchingNextPage && <Spinner label="" />}
+      </div>
     </>
   )
 }

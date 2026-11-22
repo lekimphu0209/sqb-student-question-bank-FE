@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { subjectApi, videoApi } from '@/api/endpoints'
 import type { VideoPostItem } from '@/api/types'
+import { useInfiniteScroll } from '@/lib/infiniteScroll'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
 import { Clock, MessageCircle, ThumbsUp, Video } from 'lucide-react'
 
@@ -67,6 +68,7 @@ export default function VideosPage() {
     initialPageParam: null as string | number | null,
     getNextPageParam: (last) => (last.pagination.has_next ? last.pagination.after : undefined),
   })
+  const sentinel = useInfiniteScroll(q)
 
   const items = q.data?.pages.flatMap((p) => p.items) ?? []
 
@@ -101,11 +103,9 @@ export default function VideosPage() {
         <VideoCard key={v.post_id} v={v} />
       ))}
 
-      {q.hasNextPage && (
-        <button className="btn-ghost w-full" disabled={q.isFetchingNextPage} onClick={() => q.fetchNextPage()}>
-          {q.isFetchingNextPage ? <Spinner label="" /> : 'Xem thêm video'}
-        </button>
-      )}
+      <div ref={sentinel} className="py-2 flex justify-center">
+        {q.isFetchingNextPage && <Spinner label="" />}
+      </div>
     </>
   )
 }
