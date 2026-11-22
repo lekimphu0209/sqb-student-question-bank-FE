@@ -11,6 +11,7 @@ export const themes = {
     border: '#CED0D4',
     danger: '#E41E3F',
     success: '#31A24C',
+    warning: '#F7B928',
     like: '#1877F2',
   },
   dark: {
@@ -22,6 +23,7 @@ export const themes = {
     textMuted: '#B0B3B8',
     border: '#3E4042',
     danger: '#F35369',
+    warning: '#F7B928',
     success: '#45BD62',
     like: '#5890FF',
   },

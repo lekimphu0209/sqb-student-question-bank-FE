@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { badgeApi, gameApi, subjectApi } from '@/api/endpoints'
 import { Avatar, Badge, CardSkeleton, EmptyState, ErrorBox, Tabs, timeAgo } from '@/components/ui'
+import { CheckCircle2, Medal, PartyPopper } from 'lucide-react'
+
+// Màu huy chương top 1-3 (vàng/bạc/đồng) — hex trung tính, không đụng token theme
+const MEDAL_CLASS = ['text-yellow-500', 'text-slate-400', 'text-amber-600']
 
 const TABS = [
   { key: 'leaderboard', label: 'Bảng xếp hạng' },
@@ -64,8 +68,8 @@ function LeaderboardTab() {
                 to={`/users/${e.user_id}`}
                 className={`flex items-center gap-3 px-4 py-2.5 hover:bg-bg/60 ${e.is_current_user ? 'bg-primary/5' : ''}`}
               >
-                <span className={`w-8 text-center font-bold ${e.rank <= 3 ? 'text-primary' : 'text-textMuted'}`}>
-                  {e.rank <= 3 ? ['🥇', '🥈', '🥉'][e.rank - 1] : `#${e.rank}`}
+                <span className={`w-8 flex justify-center font-bold ${e.rank <= 3 ? MEDAL_CLASS[e.rank - 1] : 'text-textMuted'}`}>
+                  {e.rank <= 3 ? <Medal size={20} /> : `#${e.rank}`}
                 </span>
                 <Avatar src={e.avatar_url} name={e.full_name} size={36} />
                 <div className="flex-1 min-w-0">
@@ -117,7 +121,7 @@ function BadgesTab() {
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {q.data.map((b) => (
         <div key={b.badge_id} className="card text-center space-y-1">
-          {b.icon_url ? <img src={b.icon_url} alt="" className="w-14 h-14 mx-auto" /> : <span className="text-4xl">🏅</span>}
+          {b.icon_url ? <img src={b.icon_url} alt="" className="w-14 h-14 mx-auto" /> : <Medal size={56} className="mx-auto text-primary" />}
           <div className="font-semibold text-sm">{b.name}</div>
           <Badge tone={TIER_TONE[b.badge_tier] ?? 'muted'}>{b.badge_tier}</Badge>
           <div className="text-xs text-textMuted">{b.description}</div>
@@ -147,7 +151,7 @@ export default function GamesPage() {
             <div className="text-xs text-textMuted">Chuỗi hiện tại: {checkInStatus.data.current_streak} ngày</div>
           </div>
           {checkInStatus.data.has_checked_in_today ? (
-            <span className="text-success text-sm">✓ Đã điểm danh</span>
+            <span className="text-success text-sm flex items-center gap-1"><CheckCircle2 size={16} /> Đã điểm danh</span>
           ) : (
             <button className="btn-primary" onClick={() => checkIn.mutate()} disabled={checkIn.isPending}>
               {checkIn.isPending ? '...' : 'Điểm danh'}
@@ -155,7 +159,12 @@ export default function GamesPage() {
           )}
         </div>
       )}
-      {checkIn.isSuccess && <div className="card text-sm text-success">🎉 {checkIn.data.message || `+${checkIn.data.coin_earned} xu`} — số dư {checkIn.data.current_coin_balance} xu</div>}
+      {checkIn.isSuccess && (
+        <div className="card text-sm text-success flex items-center gap-2">
+          <PartyPopper size={16} className="shrink-0" />
+          {checkIn.data.message || `+${checkIn.data.coin_earned} xu`} — số dư {checkIn.data.current_coin_balance} xu
+        </div>
+      )}
 
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === 'leaderboard' && <LeaderboardTab />}

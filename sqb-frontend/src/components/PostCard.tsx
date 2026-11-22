@@ -8,6 +8,7 @@ import { countWords, LIMITS, validatePostContent } from '@/lib/validation'
 import { Avatar, Modal, timeAgo } from './ui'
 import ReportModal from './ReportModal'
 import Lightbox from './Lightbox'
+import { Flag, MessageCircle, MoreHorizontal, Pencil, ThumbsUp, Trash2 } from 'lucide-react'
 
 const COLLAPSE_CHARS = 300
 
@@ -103,8 +104,8 @@ export default function PostCard({ post }: { post: Post }) {
 
         {/* Menu ⋯ */}
         <div ref={menuRef} className="relative">
-          <button className="btn-ghost px-2 text-lg" onClick={() => setMenuOpen((o) => !o)} aria-label="Tuỳ chọn bài viết">
-            ⋯
+          <button className="btn-ghost px-2" onClick={() => setMenuOpen((o) => !o)} aria-label="Tuỳ chọn bài viết">
+            <MoreHorizontal size={20} />
           </button>
           {menuOpen && (
             <div className="absolute right-0 top-full z-20 card !p-1 w-44 shadow-lg">
@@ -118,7 +119,7 @@ export default function PostCard({ post }: { post: Post }) {
                       setEditing(true)
                     }}
                   >
-                    ✏️ Chỉnh sửa
+                    <Pencil size={15} className="inline mr-2 -mt-0.5" />Chỉnh sửa
                   </button>
                   <button
                     className="w-full text-left px-3 py-2 text-sm rounded hover:bg-bg text-danger"
@@ -127,7 +128,7 @@ export default function PostCard({ post }: { post: Post }) {
                       setDeleteOpen(true)
                     }}
                   >
-                    🗑 Xoá bài viết
+                    <Trash2 size={15} className="inline mr-2 -mt-0.5" />Xoá bài viết
                   </button>
                 </>
               ) : (
@@ -138,7 +139,7 @@ export default function PostCard({ post }: { post: Post }) {
                     setReportOpen(true)
                   }}
                 >
-                  🚩 Báo cáo bài viết
+                  <Flag size={15} className="inline mr-2 -mt-0.5" />Báo cáo bài viết
                 </button>
               )}
             </div>
@@ -199,10 +200,12 @@ export default function PostCard({ post }: { post: Post }) {
             onClick={() => like.mutate()}
             disabled={like.isPending}
           >
-            👍 Thích
+            <ThumbsUp size={16} className={`mr-1.5 ${liked ? 'fill-current' : ''}`} />
+            Thích
           </button>
           <Link to={`/posts/${post.post_id}`} className="btn-ghost">
-            💬 {post.comment_count} bình luận
+            <MessageCircle size={16} className="mr-1.5" />
+            {post.comment_count} bình luận
           </Link>
         </div>
       </footer>

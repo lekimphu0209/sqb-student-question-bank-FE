@@ -18,7 +18,12 @@ const themeColors = Object.fromEntries(
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
-    extend: { colors: themeColors },
+    extend: {
+      colors: themeColors,
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

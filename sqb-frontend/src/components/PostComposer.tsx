@@ -5,6 +5,7 @@ import { countWords, LIMITS, validatePostContent } from '@/lib/validation'
 import { uploadImages, validateImages } from '@/lib/upload'
 import { applyEmotes, insertAtCursor } from '@/lib/emote'
 import EmoteButton from './EmoteButton'
+import { ImagePlus, X } from 'lucide-react'
 
 export default function PostComposer() {
   const [content, setContent] = useState('')
@@ -74,7 +75,7 @@ export default function PostComposer() {
                 onClick={() => setFiles((fs) => fs.filter((_, idx) => idx !== i))}
                 aria-label="Xoá ảnh"
               >
-                ✕
+                <X size={12} />
               </button>
             </div>
           ))}
@@ -87,7 +88,7 @@ export default function PostComposer() {
             {words}/{LIMITS.postWords} từ
           </span>
           <button className="btn-ghost px-2" onClick={() => fileRef.current?.click()} disabled={files.length >= LIMITS.maxImages}>
-            📷 Ảnh ({files.length}/{LIMITS.maxImages})
+            <ImagePlus size={16} className="mr-1" />Ảnh ({files.length}/{LIMITS.maxImages})
           </button>
           <EmoteButton onPick={(emoji) => { setContent((t) => insertAtCursor(textRef.current, t, emoji)); textRef.current?.focus() }} />
           <input

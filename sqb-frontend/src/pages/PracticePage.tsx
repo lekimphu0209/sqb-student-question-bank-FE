@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { practiceApi } from '@/api/endpoints'
 import type { AnswerResult, PracticeQuestion } from '@/api/types'
 import { Badge, CardSkeleton, EmptyState, ErrorBox } from '@/components/ui'
+import { Check, CheckCircle2, MessageCircle, Star, ThumbsUp, XCircle } from 'lucide-react'
 
 const DIFF_LABEL: Record<string, string> = { EASY: 'Dễ', MEDIUM: 'Trung bình', HARD: 'Khó', UNCLASSIFIED: 'Chưa phân loại' }
 
@@ -93,7 +94,9 @@ function QuestionCard({ q, index }: { q: PracticeQuestion; index: number }) {
 
       {result && (
         <div className={`rounded-lg p-3 text-sm ${result.is_correct ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
-          <b>{result.is_correct ? '✓ Chính xác!' : '✗ Sai rồi.'}</b>
+          <b className="flex items-center gap-1">
+            {result.is_correct ? <><CheckCircle2 size={16} /> Chính xác!</> : <><XCircle size={16} /> Sai rồi.</>}
+          </b>
           {!result.is_correct && <span className="ml-1">Đáp án đúng: {result.correct_answer}</span>}
           {result.explanation && <p className="mt-1 text-text">{result.explanation}</p>}
         </div>
@@ -113,10 +116,10 @@ function QuestionCard({ q, index }: { q: PracticeQuestion; index: number }) {
               <button
                 key={v}
                 onClick={() => setRating(v)}
-                className={`text-xl ${rating !== null && v <= rating ? 'text-primary' : 'text-border'}`}
+                className={rating !== null && v <= rating ? 'text-primary' : 'text-border'}
                 aria-label={`${v} sao`}
               >
-                ★
+                <Star size={22} className={rating !== null && v <= rating ? 'fill-current' : ''} />
               </button>
             ))}
           </div>
@@ -138,10 +141,16 @@ function QuestionCard({ q, index }: { q: PracticeQuestion; index: number }) {
           {rate.isError && <p className="error-text">{(rate.error as Error).message}</p>}
         </div>
       )}
-      {rated && <p className="text-xs text-textMuted">✓ Bạn đã đánh giá câu hỏi này.</p>}
+      {rated && (
+        <p className="text-xs text-textMuted flex items-center gap-1">
+          <Check size={13} /> Bạn đã đánh giá câu hỏi này.
+        </p>
+      )}
 
-      <div className="text-xs text-textMuted">
-        👍 {q.react_count} · 💬 {q.comment_count} · ⭐ {q.rating_count} đánh giá
+      <div className="text-xs text-textMuted flex items-center gap-3">
+        <span className="inline-flex items-center gap-1"><ThumbsUp size={12} />{q.react_count}</span>
+        <span className="inline-flex items-center gap-1"><MessageCircle size={12} />{q.comment_count}</span>
+        <span className="inline-flex items-center gap-1"><Star size={12} />{q.rating_count} đánh giá</span>
       </div>
     </div>
   )

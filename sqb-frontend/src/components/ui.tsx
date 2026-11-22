@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { X } from 'lucide-react'
 import { ApiError } from '@/api/client'
 import { MESSAGES } from '@/i18n/messages'
 
@@ -123,7 +124,7 @@ export function Modal({
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">{title}</h3>
           <button className="btn-ghost px-2" onClick={onClose} aria-label="Đóng">
-            ✕
+            <X size={18} />
           </button>
         </div>
         {children}

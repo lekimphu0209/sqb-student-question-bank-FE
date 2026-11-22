@@ -5,33 +5,37 @@ import { useAuthStore } from '@/store/auth'
 import { authApi, notiApi, gameApi } from '@/api/endpoints'
 import { getTheme, toggleTheme } from '@/lib/theme'
 import { Avatar } from './ui'
+import {
+  Home, Search, Users, MessageCircle, Clapperboard, PenLine, BookOpen, Gamepad2,
+  CheckSquare, FileText, Ban, Bell, Smartphone, Sun, Moon, Menu, X, CheckCircle2, LogOut,
+} from 'lucide-react'
 
 // Điều hướng sidebar trái — hiển thị theo role
 const NAV_COMMON = [
-  { to: '/', label: 'Trang chủ', icon: '🏠' },
-  { to: '/search', label: 'Tìm kiếm', icon: '🔍' },
-  { to: '/friends', label: 'Bạn bè', icon: '👥' },
-  { to: '/messages', label: 'Tin nhắn', icon: '💬' },
-  { to: '/videos', label: 'Video bài giảng', icon: '🎬' },
-  { to: '/questions/propose', label: 'Đề xuất câu hỏi', icon: '✍️' },
-  { to: '/questions/my-submissions', label: 'Phiên của tôi', icon: '📚' },
-  { to: '/games', label: 'Minigame & BXH', icon: '🎮' },
+  { to: '/', label: 'Trang chủ', Icon: Home },
+  { to: '/search', label: 'Tìm kiếm', Icon: Search },
+  { to: '/friends', label: 'Bạn bè', Icon: Users },
+  { to: '/messages', label: 'Tin nhắn', Icon: MessageCircle },
+  { to: '/videos', label: 'Video bài giảng', Icon: Clapperboard },
+  { to: '/questions/propose', label: 'Đề xuất câu hỏi', Icon: PenLine },
+  { to: '/questions/my-submissions', label: 'Phiên của tôi', Icon: BookOpen },
+  { to: '/games', label: 'Minigame & BXH', Icon: Gamepad2 },
 ]
 const NAV_LECTURER = [
-  { to: '/lecturer/review', label: 'Duyệt câu hỏi', icon: '✅' },
-  { to: '/lecturer/exams', label: 'Đề thi', icon: '📝' },
+  { to: '/lecturer/review', label: 'Duyệt câu hỏi', Icon: CheckSquare },
+  { to: '/lecturer/exams', label: 'Đề thi', Icon: FileText },
 ]
 const NAV_SETTINGS = [
-  { to: '/settings/blocked', label: 'Đã chặn', icon: '🚫' },
-  { to: '/settings/push', label: 'Thông báo đẩy', icon: '🔔' },
-  { to: '/settings/devices', label: 'Thiết bị', icon: '📱' },
+  { to: '/settings/blocked', label: 'Đã chặn', Icon: Ban },
+  { to: '/settings/push', label: 'Thông báo đẩy', Icon: Bell },
+  { to: '/settings/devices', label: 'Thiết bị', Icon: Smartphone },
 ]
 // Mục chính trên thanh nav mobile (phần còn lại nằm trong drawer "Menu")
 const NAV_MOBILE = [
-  { to: '/', label: 'Trang chủ', icon: '🏠' },
-  { to: '/search', label: 'Tìm kiếm', icon: '🔍' },
-  { to: '/friends', label: 'Bạn bè', icon: '👥' },
-  { to: '/messages', label: 'Tin nhắn', icon: '💬' },
+  { to: '/', label: 'Trang chủ', Icon: Home },
+  { to: '/search', label: 'Tìm kiếm', Icon: Search },
+  { to: '/friends', label: 'Bạn bè', Icon: Users },
+  { to: '/messages', label: 'Tin nhắn', Icon: MessageCircle },
 ]
 
 function LeaderboardWidget() {
@@ -75,7 +79,9 @@ function CheckInWidget() {
         <span className="text-xs text-textMuted">Chuỗi {q.data.current_streak} ngày</span>
       </div>
       {q.data.has_checked_in_today ? (
-        <p className="text-success text-sm">✓ Đã điểm danh hôm nay</p>
+        <p className="text-success text-sm flex items-center gap-1">
+          <CheckCircle2 size={16} /> Đã điểm danh hôm nay
+        </p>
       ) : (
         <button className="btn-primary w-full" onClick={() => checkIn.mutate()} disabled={checkIn.isPending}>
           {checkIn.isPending ? 'Đang điểm danh...' : 'Điểm danh nhận xu'}
@@ -142,13 +148,13 @@ export default function Layout() {
               title={dark ? 'Chế độ sáng' : 'Chế độ tối'}
               onClick={() => setDark(toggleTheme() === 'dark')}
             >
-              {dark ? '☀️' : '🌙'}
+              {dark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <Link to="/messages" className="btn-ghost relative" aria-label="Tin nhắn">
-              💬
+              <MessageCircle size={20} />
             </Link>
             <Link to="/notifications" className="btn-ghost relative" aria-label="Thông báo">
-              🔔
+              <Bell size={20} />
               {unread > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 bg-danger text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center">
                   {unread > 99 ? '99+' : unread}
@@ -158,8 +164,9 @@ export default function Layout() {
             <Link to="/me" className="ml-1" aria-label="Trang cá nhân">
               <Avatar src={user?.avatar_url} name={user?.username ?? '?'} size={36} />
             </Link>
-            <button className="btn-ghost text-sm" onClick={onLogout}>
-              Đăng xuất
+            <button className="btn-ghost text-sm" onClick={onLogout} aria-label="Đăng xuất">
+              <LogOut size={18} className="sm:hidden" />
+              <span className="hidden sm:inline">Đăng xuất</span>
             </button>
           </div>
         </div>
@@ -181,7 +188,7 @@ export default function Layout() {
                   }`
                 }
               >
-                <span className="w-6 text-center">{n.icon}</span>
+                <n.Icon size={18} className="shrink-0" />
                 {n.label}
               </NavLink>
             ))}
@@ -213,7 +220,7 @@ export default function Layout() {
               `flex-1 flex flex-col items-center py-1.5 text-[10px] ${isActive ? 'text-primary' : 'text-textMuted'}`
             }
           >
-            <span className="text-lg leading-tight">{n.icon}</span>
+            <n.Icon size={20} />
             {n.label}
           </NavLink>
         ))}
@@ -221,7 +228,7 @@ export default function Layout() {
           className="flex-1 flex flex-col items-center py-1.5 text-[10px] text-textMuted"
           onClick={() => setMenuOpen(true)}
         >
-          <span className="text-lg leading-tight">☰</span>
+          <Menu size={20} />
           Menu
         </button>
       </nav>
@@ -233,7 +240,9 @@ export default function Layout() {
           <div className="absolute right-0 top-0 bottom-0 w-72 bg-surface p-4 overflow-y-auto">
             <div className="flex items-center justify-between mb-3">
               <span className="font-bold">Menu</span>
-              <button className="btn-ghost px-2" onClick={() => setMenuOpen(false)}>✕</button>
+              <button className="btn-ghost px-2" onClick={() => setMenuOpen(false)} aria-label="Đóng menu">
+                <X size={18} />
+              </button>
             </div>
             <nav className="space-y-1" onClick={() => setMenuOpen(false)}>
               {navItems.map((n) => (
@@ -247,7 +256,7 @@ export default function Layout() {
                     }`
                   }
                 >
-                  <span className="w-6 text-center">{n.icon}</span>
+                  <n.Icon size={18} className="shrink-0" />
                   {n.label}
                 </NavLink>
               ))}

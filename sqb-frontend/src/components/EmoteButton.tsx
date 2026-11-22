@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Smile } from 'lucide-react'
 import { EMOTES } from '@/lib/emote'
 
 // Nút 😊 mở popover chọn emote; gọi onPick(emoji) — caller chèn vào vị trí con trỏ.
@@ -24,7 +25,7 @@ export default function EmoteButton({ onPick }: { onPick: (emoji: string) => voi
         title="Chèn biểu cảm (hoặc gõ :code:, :) ...)"
         onClick={() => setOpen((o) => !o)}
       >
-        😊
+        <Smile size={20} />
       </button>
       {open && (
         <div className="absolute bottom-full mb-1 left-0 z-20 card !p-2 w-64 grid grid-cols-8 gap-0.5 shadow-lg">

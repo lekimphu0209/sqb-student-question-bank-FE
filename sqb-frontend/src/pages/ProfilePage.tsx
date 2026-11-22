@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/auth'
 import PostCard from '@/components/PostCard'
 import ReportModal from '@/components/ReportModal'
 import { Avatar, EmptyState, ErrorBox, Spinner } from '@/components/ui'
+import { MessageCircle } from 'lucide-react'
 
 // Nút hành động quan hệ trên profile người khác (BF-07)
 function RelationActions({ userId }: { userId: number }) {
@@ -57,7 +58,7 @@ function RelationActions({ userId }: { userId: number }) {
           <button className="btn-ghost" disabled={busy} onClick={() => follow.mutate()}>Theo dõi</button>
         )}
 
-        <button className="btn-ghost" disabled={busy} onClick={() => chat.mutate()}>💬 Nhắn tin</button>
+        <button className="btn-ghost" disabled={busy} onClick={() => chat.mutate()}><MessageCircle size={16} className="mr-1" />Nhắn tin</button>
 
         {r.blocked ? (
           <button className="btn-ghost text-danger" disabled={busy} onClick={() => unblock.mutate()}>Bỏ chặn</button>

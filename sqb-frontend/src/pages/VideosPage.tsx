@@ -4,6 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { subjectApi, videoApi } from '@/api/endpoints'
 import type { VideoPostItem } from '@/api/types'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
+import { Clock, MessageCircle, ThumbsUp } from 'lucide-react'
 
 function formatDuration(sec?: number): string | null {
   if (!sec) return null
@@ -40,9 +41,12 @@ function VideoCard({ v }: { v: VideoPostItem }) {
       )}
 
       <div className="flex items-center justify-between text-xs text-textMuted">
-        <span>
-          👍 {v.react_count} · 💬 {v.comment_count}
-          {formatDuration(video?.duration) && ` · ⏱ ${formatDuration(video.duration)}`}
+        <span className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1"><ThumbsUp size={13} />{v.react_count}</span>
+          <span className="inline-flex items-center gap-1"><MessageCircle size={13} />{v.comment_count}</span>
+          {formatDuration(video?.duration) && (
+            <span className="inline-flex items-center gap-1"><Clock size={13} />{formatDuration(video.duration)}</span>
+          )}
         </span>
         <Link to={`/posts/${v.post_id}`} className="text-primary hover:underline">
           Xem chi tiết

@@ -3,15 +3,19 @@ import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-q
 import { notiApi } from '@/api/endpoints'
 import type { NotificationItem } from '@/api/types'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
+import {
+  AlertTriangle, BarChart3, Bell, CheckCircle2, Medal, MessageCircle, Trophy, UserPlus,
+  type LucideIcon,
+} from 'lucide-react'
 
-const ICONS: Record<string, string> = {
-  FRIEND_REQUEST: '👥',
-  NEW_COMMENT: '💬',
-  QUESTION_APPROVED: '✅',
-  EARNED_BADGE: '🏅',
-  QUESTION_ERROR_PENALTY: '⚠️',
-  GAME5_SEMESTER_RECAP: '📊',
-  LEADERBOARD_HONOR: '🏆',
+const ICONS: Record<string, LucideIcon> = {
+  FRIEND_REQUEST: UserPlus,
+  NEW_COMMENT: MessageCircle,
+  QUESTION_APPROVED: CheckCircle2,
+  EARNED_BADGE: Medal,
+  QUESTION_ERROR_PENALTY: AlertTriangle,
+  GAME5_SEMESTER_RECAP: BarChart3,
+  LEADERBOARD_HONOR: Trophy,
 }
 
 export default function NotificationsPage() {
@@ -72,14 +76,23 @@ export default function NotificationsPage() {
             className={`card w-full text-left flex gap-3 items-start transition-colors hover:bg-bg/60 ${!n.read_at ? 'border-l-4 border-l-primary' : ''}`}
           >
             <div className="relative shrink-0">
-              {n.actor?.avatar_url ? (
-                <Avatar src={n.actor.avatar_url} name={n.actor.full_name} />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-lg">
-                  {ICONS[n.type] ?? '🔔'}
-                </div>
-              )}
-              <span className="absolute -bottom-1 -right-1 text-sm">{ICONS[n.type] ?? '🔔'}</span>
+              {(() => {
+                const Icon = ICONS[n.type] ?? Bell
+                return (
+                  <>
+                    {n.actor?.avatar_url ? (
+                      <Avatar src={n.actor.avatar_url} name={n.actor.full_name} />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                        <Icon size={18} />
+                      </div>
+                    )}
+                    <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-surface border border-border text-textMuted flex items-center justify-center">
+                      <Icon size={12} />
+                    </span>
+                  </>
+                )
+              })()}
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-sm font-semibold">{n.title}</div>

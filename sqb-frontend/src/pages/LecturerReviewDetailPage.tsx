@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { reviewApi } from '@/api/endpoints'
 import type { ReviewQuestion } from '@/api/types'
 import { Badge, CardSkeleton, EmptyState, ErrorBox, Modal } from '@/components/ui'
+import { AlertTriangle, Check, X } from 'lucide-react'
 
 function QuestionReviewCard({
   q,
@@ -40,7 +41,7 @@ function QuestionReviewCard({
                 key={o.key}
                 className={`text-sm rounded px-2 py-1 ${o.is_correct ? 'bg-success/10 text-success font-medium' : 'bg-bg'}`}
               >
-                <b>{o.key}.</b> {o.text} {o.is_correct && '✓'}
+                <b>{o.key}.</b> {o.text} {o.is_correct && <Check size={13} className="inline -mt-0.5" />}
               </div>
             ))}
           </div>
@@ -126,7 +127,10 @@ export default function LecturerReviewDetailPage() {
 
       {q.data.duplicate_warnings?.length > 0 && (
         <div className="card border-warning bg-warning/5 text-sm">
-          <b>⚠ Cảnh báo trùng lặp ({q.data.duplicate_warnings.length}):</b>
+          <b className="flex items-center gap-1">
+            <AlertTriangle size={15} className="text-warning" />
+            Cảnh báo trùng lặp ({q.data.duplicate_warnings.length}):
+          </b>
           <ul className="list-disc pl-5 mt-1">
             {q.data.duplicate_warnings.map((w, i) => (
               <li key={i}>
@@ -144,10 +148,10 @@ export default function LecturerReviewDetailPage() {
           <span className="text-sm font-semibold">Đã chọn {ids.length} câu</span>
           <div className="flex gap-2">
             <button className="btn-primary" disabled={approve.isPending} onClick={() => approve.mutate(ids)}>
-              ✓ Duyệt
+              <Check size={15} className="mr-1" />Duyệt
             </button>
             <button className="btn-ghost text-danger" onClick={() => setRejectOpen(true)}>
-              ✗ Từ chối
+              <X size={15} className="mr-1" />Từ chối
             </button>
           </div>
         </div>

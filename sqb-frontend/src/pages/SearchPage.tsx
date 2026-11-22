@@ -4,6 +4,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import { searchApi } from '@/api/endpoints'
 import type { SearchResultItem, SearchType } from '@/api/types'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, Tabs, timeAgo, Badge } from '@/components/ui'
+import { MessageCircle, Star, ThumbsUp, X } from 'lucide-react'
 
 const TABS: { key: SearchType; label: string }[] = [
   { key: 'ALL', label: 'Tất cả' },
@@ -38,7 +39,10 @@ function ResultCard({ item }: { item: SearchResultItem }) {
           <span className="text-xs text-textMuted">{timeAgo(p.created_at)}</span>
         </div>
         <p className="text-sm line-clamp-3">{p.content}</p>
-        <div className="text-xs text-textMuted">👍 {p.react_count} · 💬 {p.comment_count}</div>
+        <div className="text-xs text-textMuted flex items-center gap-3">
+          <span className="inline-flex items-center gap-1"><ThumbsUp size={12} />{p.react_count}</span>
+          <span className="inline-flex items-center gap-1"><MessageCircle size={12} />{p.comment_count}</span>
+        </div>
       </Link>
     )
   }
@@ -51,7 +55,10 @@ function ResultCard({ item }: { item: SearchResultItem }) {
           <span className="text-textMuted">{q.subject_name} · {q.difficulty}</span>
         </div>
         <p className="text-sm line-clamp-3">{q.content}</p>
-        <div className="text-xs text-textMuted">⭐ {q.avg_rating?.toFixed(1)} ({q.rating_count}) · 👍 {q.react_count}</div>
+        <div className="text-xs text-textMuted flex items-center gap-3">
+          <span className="inline-flex items-center gap-1"><Star size={12} />{q.avg_rating?.toFixed(1)} ({q.rating_count})</span>
+          <span className="inline-flex items-center gap-1"><ThumbsUp size={12} />{q.react_count}</span>
+        </div>
       </Link>
     )
   }
@@ -64,7 +71,10 @@ function ResultCard({ item }: { item: SearchResultItem }) {
           <span className="text-textMuted">{s.subject_name}</span>
         </div>
         <p className="font-semibold text-sm">{s.title}</p>
-        <div className="text-xs text-textMuted">{s.question_count} câu · 👍 {s.react_count}</div>
+        <div className="text-xs text-textMuted flex items-center gap-3">
+          <span>{s.question_count} câu</span>
+          <span className="inline-flex items-center gap-1"><ThumbsUp size={12} />{s.react_count}</span>
+        </div>
       </Link>
     )
   }
@@ -136,7 +146,7 @@ export default function SearchPage() {
                         <button className="hover:text-primary" onClick={() => { setInput(s.query_text); doSearch(s.query_text) }}>
                           {s.query_text}
                         </button>
-                        <button className="text-textMuted hover:text-danger" onClick={() => removeSaved.mutate(s.saved_search_id)}>✕</button>
+                        <button className="text-textMuted hover:text-danger" onClick={() => removeSaved.mutate(s.saved_search_id)} aria-label="Xoá tìm kiếm đã lưu"><X size={12} /></button>
                       </span>
                     ))}
                   </div>

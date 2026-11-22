@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { sessionApi } from '@/api/endpoints'
 import { EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
+import { MessageCircle, ThumbsUp } from 'lucide-react'
 
 export default function MySubmissionsPage() {
   const q = useQuery({ queryKey: ['my-submissions'], queryFn: () => sessionApi.mySubmissions(null, 20) })
@@ -25,8 +26,9 @@ export default function MySubmissionsPage() {
               {s.status && ` · ${s.status}`}
             </div>
           </div>
-          <div className="text-sm text-textMuted">
-            👍 {s.react_count ?? 0} · 💬 {s.comment_count ?? 0}
+          <div className="text-sm text-textMuted flex items-center gap-3">
+            <span className="inline-flex items-center gap-1"><ThumbsUp size={13} />{s.react_count ?? 0}</span>
+            <span className="inline-flex items-center gap-1"><MessageCircle size={13} />{s.comment_count ?? 0}</span>
           </div>
         </div>
       ))}

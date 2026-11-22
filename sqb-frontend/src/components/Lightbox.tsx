@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 // Lightbox xem ảnh kiểu FB: overlay tối, ảnh giữa màn hình, mũi tên chuyển ảnh, ✕/ESC đóng.
 export default function Lightbox({
@@ -33,7 +34,7 @@ export default function Lightbox({
         onClick={onClose}
         aria-label="Đóng"
       >
-        ✕
+        <X size={22} className="mx-auto" />
       </button>
       {index > 0 && (
         <button
@@ -44,7 +45,7 @@ export default function Lightbox({
           }}
           aria-label="Ảnh trước"
         >
-          ‹
+          <ChevronLeft size={30} className="mx-auto" />
         </button>
       )}
       <img
@@ -62,7 +63,7 @@ export default function Lightbox({
           }}
           aria-label="Ảnh sau"
         >
-          ›
+          <ChevronRight size={30} className="mx-auto" />
         </button>
       )}
       <span className="absolute bottom-4 text-white/70 text-sm">

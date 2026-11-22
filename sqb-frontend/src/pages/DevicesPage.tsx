@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { deviceApi } from '@/api/endpoints'
 import { CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
+import { Globe, Monitor, Smartphone, type LucideIcon } from 'lucide-react'
 
-const PLATFORM_ICON: Record<string, string> = { WEB: '🌐', IOS: '📱', ANDROID: '📱', DESKTOP: '💻' }
+const PLATFORM_ICON: Record<string, LucideIcon> = { WEB: Globe, IOS: Smartphone, ANDROID: Smartphone, DESKTOP: Monitor }
 
 export default function DevicesPage() {
   const qc = useQueryClient()
@@ -25,7 +26,9 @@ export default function DevicesPage() {
 
       {q.data?.devices.map((d) => (
         <div key={d.user_device_id} className="card flex items-center gap-3">
-          <span className="text-2xl">{PLATFORM_ICON[d.platform] ?? '📱'}</span>
+          <span className="w-10 h-10 rounded-full bg-bg text-textMuted flex items-center justify-center">
+            {(() => { const I = PLATFORM_ICON[d.platform] ?? Smartphone; return <I size={20} /> })()}
+          </span>
           <div className="flex-1 min-w-0">
             <div className="font-semibold text-sm">
               {d.device_name || d.platform}

@@ -47,7 +47,7 @@ export default function LecturerReviewPage() {
 
       {q.isPending && <CardSkeleton />}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
-      {q.isSuccess && items.length === 0 && <EmptyState>Không có phiên nào chờ duyệt. 🎉</EmptyState>}
+      {q.isSuccess && items.length === 0 && <EmptyState>Không có phiên nào chờ duyệt.</EmptyState>}
 
       {items.map((s) => (
         <Link key={s.session_id} to={`/lecturer/review/${s.session_id}`} className="card block hover:bg-bg/50 space-y-2">
