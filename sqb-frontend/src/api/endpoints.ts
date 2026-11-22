@@ -112,6 +112,7 @@ export const commentApi = {
     get<CursorPage<Comment>>('/comments', { target_type, target_id, after, limit }),
   create: (body: { target_type: 'POST' | 'SESSION' | 'QUESTION'; target_id: number; content: string; parent_comment_id?: number }) =>
     post<Comment>('/comments', body),
+  update: (comment_id: number, body: { content: string }) => put<Comment>(`/comments/${comment_id}`, body),
   remove: (comment_id: number) => del<null>(`/comments/${comment_id}`),
 }
 export const reactApi = {
