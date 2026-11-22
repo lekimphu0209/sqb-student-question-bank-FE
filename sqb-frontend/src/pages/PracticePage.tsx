@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { practiceApi } from '@/api/endpoints'
 import type { AnswerResult, PracticeQuestion } from '@/api/types'
-import { Badge, CardSkeleton, EmptyState, ErrorBox } from '@/components/ui'
-import { Check, CheckCircle2, MessageCircle, Star, ThumbsUp, XCircle } from 'lucide-react'
+import CommentThread from '@/components/CommentThread'
+import { Badge, CardSkeleton, EmptyState, ErrorBox, Spinner } from '@/components/ui'
+import { BarChart3, Check, CheckCircle2, MessageCircle, Star, ThumbsUp, XCircle } from 'lucide-react'
 
 const DIFF_LABEL: Record<string, string> = { EASY: 'Dễ', MEDIUM: 'Trung bình', HARD: 'Khó', UNCLASSIFIED: 'Chưa phân loại' }
 
@@ -16,8 +17,32 @@ function QuestionCard({ q, index }: { q: PracticeQuestion; index: number }) {
   const [isError, setIsError] = useState(false)
   const [rateComment, setRateComment] = useState('')
   const [rated, setRated] = useState(q.my_interaction?.rated ?? false)
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState(q.react_count)
+  const [statsOpen, setStatsOpen] = useState(false)
+  const [commentsOpen, setCommentsOpen] = useState(false)
 
   const answered = q.my_interaction?.answered || !!result
+
+  // Like/unlike câu hỏi (POST /react target QUESTION)
+  const like = useMutation({
+    mutationFn: () => practiceApi.reactQuestion(q.question_id, liked ? 'NONE' : 'LIKE'),
+    onMutate: () => {
+      setLiked(!liked)
+      setLikeCount((c) => c + (liked ? -1 : 1))
+    },
+    onError: () => {
+      setLiked(liked)
+      setLikeCount((c) => c + (liked ? 1 : -1))
+    },
+  })
+
+  // Thống kê câu hỏi sau khi đã trả lời (GET /questions/{id}/statistics)
+  const stats = useQuery({
+    queryKey: ['q-stats', q.question_id],
+    queryFn: () => practiceApi.statistics(q.question_id),
+    enabled: statsOpen,
+  })
 
   const answer = useMutation({
     mutationFn: () => practiceApi.answer(q.question_id, selected, q.updated_at),
@@ -147,11 +172,69 @@ function QuestionCard({ q, index }: { q: PracticeQuestion; index: number }) {
         </p>
       )}
 
-      <div className="text-xs text-textMuted flex items-center gap-3">
-        <span className="inline-flex items-center gap-1"><ThumbsUp size={12} />{q.react_count}</span>
-        <span className="inline-flex items-center gap-1"><MessageCircle size={12} />{q.comment_count}</span>
-        <span className="inline-flex items-center gap-1"><Star size={12} />{q.rating_count} đánh giá</span>
+      <div className="flex items-center gap-1 text-xs text-textMuted border-t border-border pt-2">
+        <button
+          className={`btn-ghost !px-2 !py-1 text-xs inline-flex items-center gap-1 ${liked ? 'text-primary' : ''}`}
+          onClick={() => like.mutate()}
+        >
+          <ThumbsUp size={13} className={liked ? 'fill-current' : ''} />
+          {likeCount}
+        </button>
+        <button
+          className="btn-ghost !px-2 !py-1 text-xs inline-flex items-center gap-1"
+          onClick={() => setCommentsOpen((v) => !v)}
+        >
+          <MessageCircle size={13} />
+          {q.comment_count} bình luận
+        </button>
+        {answered && (
+          <button
+            className="btn-ghost !px-2 !py-1 text-xs inline-flex items-center gap-1"
+            onClick={() => setStatsOpen((v) => !v)}
+          >
+            <BarChart3 size={13} />
+            Thống kê
+          </button>
+        )}
+        <span className="inline-flex items-center gap-1 ml-auto">
+          <Star size={12} />
+          {q.rating_count} đánh giá
+        </span>
       </div>
+
+      {statsOpen && (
+        <div className="rounded-lg bg-bg p-3 space-y-2 text-sm">
+          {stats.isPending && <Spinner label="" />}
+          {stats.isError && <ErrorBox error={stats.error} onRetry={() => stats.refetch()} />}
+          {stats.data && (
+            <>
+              <div className="font-semibold">
+                {stats.data.total_answer} lượt trả lời ·{' '}
+                {Math.round(stats.data.correct_rate <= 1 ? stats.data.correct_rate * 100 : stats.data.correct_rate)}% đúng
+              </div>
+              {Object.entries(stats.data.option_distribution ?? {}).map(([k, v]) => {
+                const pct = stats.data.total_answer ? Math.round((v / stats.data.total_answer) * 100) : 0
+                return (
+                  <div key={k} className="flex items-center gap-2">
+                    <span className="w-4 font-semibold">{k}</span>
+                    <div className="flex-1 h-2 rounded bg-border/60 overflow-hidden">
+                      <div className="h-full bg-primary" style={{ width: `${pct}%` }} />
+                    </div>
+                    <span className="w-16 text-right text-xs text-textMuted">
+                      {v} ({pct}%)
+                    </span>
+                  </div>
+                )
+              })}
+              <div className="text-xs text-textMuted">
+                Đánh giá TB {stats.data.rating_summary?.avg_rating?.toFixed(1) ?? '—'} ·{' '}
+                {stats.data.rating_summary?.total_ratings ?? 0} lượt
+              </div>
+            </>
+          )}
+        </div>
+      )}
+      {commentsOpen && <CommentThread targetType="QUESTION" targetId={q.question_id} />}
     </div>
   )
 }
