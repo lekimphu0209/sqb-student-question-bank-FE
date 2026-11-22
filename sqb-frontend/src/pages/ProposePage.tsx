@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { sessionApi } from '@/api/endpoints'
+import { sessionApi, subjectApi } from '@/api/endpoints'
 import type { ProposeQuestion } from '@/api/types'
 import { ErrorBox, Spinner } from '@/components/ui'
 
@@ -20,6 +20,8 @@ function emptyQuestion(): ProposeQuestion {
 export default function ProposePage() {
   const navigate = useNavigate()
   const subjects = useQuery({ queryKey: ['enrolled-subjects'], queryFn: sessionApi.enrolledSubjects })
+  // Backend chưa deploy /sessions/my-enrolled-subjects (404) → fallback danh sách môn public
+  const subjectsFallback = useQuery({ queryKey: ['subjects'], queryFn: subjectApi.all, enabled: subjects.isError })
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [subjectId, setSubjectId] = useState<number | ''>('')
@@ -61,19 +63,26 @@ export default function ProposePage() {
     propose.mutate()
   }
 
-  if (subjects.isPending) return <Spinner />
-  if (subjects.isError) return <ErrorBox error={subjects.error} onRetry={() => subjects.refetch()} />
+  const pending = subjects.isPending || (subjects.isError && subjectsFallback.isPending)
+  const list = subjects.data ?? subjectsFallback.data ?? []
+  if (pending) return <Spinner />
+  if (list.length === 0 && subjectsFallback.isError) {
+    return <ErrorBox error={subjectsFallback.error} onRetry={() => { subjects.refetch(); subjectsFallback.refetch() }} />
+  }
 
   return (
     <>
       <h1 className="text-xl font-bold">Đề xuất câu hỏi</h1>
+      {subjects.isError && subjectsFallback.isSuccess && (
+        <p className="text-xs text-textMuted">Hiển thị tất cả môn học (chưa lấy được danh sách môn đã đăng ký).</p>
+      )}
 
       <div className="card space-y-3">
         <div>
           <label className="label">Môn học</label>
           <select className="input" value={subjectId} onChange={(e) => setSubjectId(Number(e.target.value) || '')}>
             <option value="">-- Chọn môn --</option>
-            {subjects.data.map((s) => (
+            {list.map((s) => (
               <option key={s.subject_id} value={s.subject_id}>
                 {s.code} - {s.name}
               </option>
