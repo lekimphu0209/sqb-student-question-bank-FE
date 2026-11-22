@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { blockApi, convApi, followApi, friendApi, postApi, userApi } from '@/api/endpoints'
+import type { Profile } from '@/api/types'
 import { useAuthStore } from '@/store/auth'
 import PostCard from '@/components/PostCard'
 import ReportModal from '@/components/ReportModal'
-import { Avatar, EmptyState, ErrorBox, Spinner } from '@/components/ui'
-import { MessageCircle } from 'lucide-react'
+import { Avatar, EmptyState, ErrorBox, Modal, Spinner } from '@/components/ui'
+import { uploadImages } from '@/lib/upload'
+import { toast } from '@/lib/toast'
+import { FileText, ImagePlus, MessageCircle, Pencil } from 'lucide-react'
 
 // Nút hành động quan hệ trên profile người khác (BF-07)
 function RelationActions({ userId }: { userId: number }) {
@@ -73,6 +76,90 @@ function RelationActions({ userId }: { userId: number }) {
   )
 }
 
+// Modal sửa hồ sơ của chính mình: tên, bio, avatar + cover (upload qua presign/upload trực tiếp)
+function EditProfileModal({ profile, open, onClose }: { profile: Profile; open: boolean; onClose: () => void }) {
+  const qc = useQueryClient()
+  const [fullName, setFullName] = useState(profile.full_name)
+  const [bio, setBio] = useState(profile.bio ?? '')
+  const [avatarFile, setAvatarFile] = useState<File | null>(null)
+  const [coverFile, setCoverFile] = useState<File | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const avatarRef = useRef<HTMLInputElement>(null)
+  const coverRef = useRef<HTMLInputElement>(null)
+
+  async function save() {
+    if (!fullName.trim()) return setError('Vui lòng nhập họ tên.')
+    setSaving(true)
+    setError(null)
+    try {
+      const body: { full_name: string; bio: string; avatar_url?: string; cover_url?: string } = {
+        full_name: fullName.trim(),
+        bio: bio.trim(),
+      }
+      if (avatarFile) body.avatar_url = (await uploadImages([avatarFile], 'AVATAR'))[0]
+      if (coverFile) body.cover_url = (await uploadImages([coverFile], 'COVER'))[0]
+      const updated = await userApi.updateMe(body)
+      // Đồng bộ avatar vào auth store -> header cập nhật ngay
+      const s = useAuthStore.getState()
+      if (s.user && s.accessToken) {
+        s.setAuth({ ...s.user, avatar_url: updated.avatar_url ?? s.user.avatar_url }, s.accessToken, s.refreshToken)
+      }
+      qc.invalidateQueries({ queryKey: ['profile'] })
+      toast('Đã cập nhật hồ sơ', 'success')
+      onClose()
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const avatarPreview = avatarFile ? URL.createObjectURL(avatarFile) : profile.avatar_url
+  const coverPreview = coverFile ? URL.createObjectURL(coverFile) : profile.cover_url
+
+  return (
+    <Modal open={open} onClose={onClose} title="Chỉnh sửa hồ sơ">
+      <div className="space-y-4">
+        <div
+          className="h-24 rounded-md bg-primary/20 bg-cover bg-center relative"
+          style={coverPreview ? { backgroundImage: `url(${coverPreview})` } : {}}
+        >
+          <button
+            className="absolute bottom-2 right-2 btn-ghost text-xs !py-1 !px-2 bg-card/80"
+            onClick={() => coverRef.current?.click()}
+          >
+            <ImagePlus size={13} className="inline mr-1 -mt-0.5" />Ảnh bìa
+          </button>
+        </div>
+        <div className="flex items-center gap-3">
+          <Avatar src={avatarPreview} name={fullName} size={64} />
+          <button className="btn-ghost text-sm" onClick={() => avatarRef.current?.click()}>
+            <ImagePlus size={14} className="inline mr-1 -mt-0.5" />Đổi ảnh đại diện
+          </button>
+        </div>
+        <input ref={avatarRef} type="file" accept="image/*" hidden onChange={(e) => setAvatarFile(e.target.files?.[0] ?? null)} />
+        <input ref={coverRef} type="file" accept="image/*" hidden onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)} />
+        <div>
+          <label className="label">Họ tên *</label>
+          <input className="input" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+        </div>
+        <div>
+          <label className="label">Giới thiệu</label>
+          <textarea className="input" rows={3} value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Vài dòng về bạn..." />
+        </div>
+        {error && <p className="error-text">{error}</p>}
+        <div className="flex justify-end gap-2">
+          <button className="btn-ghost" onClick={onClose} disabled={saving}>Huỷ</button>
+          <button className="btn-primary" onClick={save} disabled={saving}>
+            {saving ? 'Đang lưu...' : 'Lưu thay đổi'}
+          </button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
 export default function ProfilePage() {
   const { userId } = useParams()
   const me = useAuthStore((s) => s.user)
@@ -82,6 +169,8 @@ export default function ProfilePage() {
     queryKey: ['profile', isMe ? 'me' : userId],
     queryFn: () => (isMe ? userApi.me() : userApi.byId(userId!)),
   })
+
+  const [editOpen, setEditOpen] = useState(false)
 
   const posts = useInfiniteQuery({
     queryKey: ['my-posts', isMe ? 'me' : userId],
@@ -118,7 +207,13 @@ export default function ProfilePage() {
             {p.email && ` · ${p.email}`}
           </p>
           {p.bio && <p className="mt-2 text-sm">{p.bio}</p>}
-          {!isMe && <RelationActions userId={Number(userId)} />}
+          {isMe ? (
+            <button className="btn-ghost mt-3" onClick={() => setEditOpen(true)}>
+              <Pencil size={14} className="inline mr-1.5 -mt-0.5" />Chỉnh sửa hồ sơ
+            </button>
+          ) : (
+            <RelationActions userId={Number(userId)} />
+          )}
           <div className="mt-3 grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
             {stats.map(([label, val]) => (
               <div key={label} className="bg-bg rounded-md py-2">
@@ -133,7 +228,7 @@ export default function ProfilePage() {
       <h2 className="font-semibold">Bài viết</h2>
       {posts.isPending && <Spinner />}
       {posts.isError && <ErrorBox error={posts.error} onRetry={() => posts.refetch()} />}
-      {posts.isSuccess && items.length === 0 && <EmptyState>Chưa có bài viết nào.</EmptyState>}
+      {posts.isSuccess && items.length === 0 && <EmptyState icon={<FileText size={32} />}>Chưa có bài viết nào.</EmptyState>}
       {items.map((post) => (
         <PostCard key={post.post_id} post={post} />
       ))}
@@ -142,6 +237,7 @@ export default function ProfilePage() {
           Tải thêm
         </button>
       )}
+      {isMe && <EditProfileModal profile={p} open={editOpen} onClose={() => setEditOpen(false)} />}
     </>
   )
 }
