@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Client } from '@stomp/stompjs'
-import { ArrowLeft, MoreHorizontal, Trash2, Undo2 } from 'lucide-react'
+import { ArrowLeft, CornerUpLeft, MoreHorizontal, Trash2, Undo2, X } from 'lucide-react'
 import { convApi } from '@/api/endpoints'
 import type { ChatMessage } from '@/api/types'
 import { createChatClient, chatSend, chatRead, chatTyping } from '@/lib/chatSocket'
@@ -27,7 +27,17 @@ function normalizeWsMessage(payload: unknown): ChatMessage | null {
     content: String(p.content ?? ''),
     message_type: (p.message_type ?? p.messageType ?? 'TEXT') as ChatMessage['message_type'],
     media_urls: (p.media_urls ?? p.mediaUrls ?? []) as string[],
-    reply_to_message: null,
+    reply_to_message: (() => {
+      const r = p.reply_to_message ?? p.replyToMessage
+      return r && typeof r === 'object'
+        ? {
+            message_id: Number(r.message_id ?? r.messageId ?? 0),
+            sender_id: Number(r.sender_id ?? r.senderId ?? 0),
+            sender_name: String(r.sender_name ?? r.senderName ?? ''),
+            content_preview: String(r.content_preview ?? r.contentPreview ?? ''),
+          }
+        : null
+    })(),
     created_at: String(p.created_at ?? p.createdAt ?? new Date().toISOString()),
     edited: Boolean(p.edited),
     revoked: Boolean(p.revoked),
@@ -44,6 +54,7 @@ export default function ChatPage() {
   const [peerTyping, setPeerTyping] = useState(false)
   const [wsError, setWsError] = useState(false)
   const [menuFor, setMenuFor] = useState<number | null>(null)
+  const [replyTo, setReplyTo] = useState<ChatMessage | null>(null)
   const clientRef = useRef<Client | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -150,8 +161,14 @@ export default function ChatPage() {
     if (!content || !conversationId) return
     const c = clientRef.current
     if (c?.connected) {
-      chatSend(c, { conversation_id: Number(conversationId), content: applyEmotes(content), message_type: 'TEXT' })
+      chatSend(c, {
+        conversation_id: Number(conversationId),
+        content: applyEmotes(content),
+        message_type: 'TEXT',
+        ...(replyTo ? { reply_to_message_id: replyTo.message_id } : {}),
+      })
       setText('')
+      setReplyTo(null)
     } else {
       setWsError(true)
     }
@@ -193,6 +210,16 @@ export default function ChatPage() {
               </button>
               {menuFor === m.message_id && (
                 <div className={`absolute ${mine ? 'right-0' : 'left-0'} top-full z-20 card !p-1 w-44 shadow-lg`}>
+                  <button
+                    className="w-full text-left px-3 py-2 text-sm rounded hover:bg-bg"
+                    onClick={() => {
+                      setMenuFor(null)
+                      setReplyTo(m)
+                      inputRef.current?.focus()
+                    }}
+                  >
+                    <CornerUpLeft size={14} className="inline mr-2 -mt-0.5" />Trả lời
+                  </button>
                   {mine && (
                     <button
                       className="w-full text-left px-3 py-2 text-sm rounded hover:bg-bg"
@@ -243,6 +270,17 @@ export default function ChatPage() {
         <div ref={bottomRef} />
       </div>
 
+      {replyTo && (
+        <div className="px-3 py-2 border-t border-border flex items-center gap-2 text-xs text-textMuted">
+          <CornerUpLeft size={13} className="shrink-0" />
+          <span className="flex-1 min-w-0 truncate">
+            Trả lời <b>{replyTo.sender_name}</b>: {replyTo.content}
+          </span>
+          <button className="btn-ghost !p-1" onClick={() => setReplyTo(null)} aria-label="Huỷ trả lời">
+            <X size={14} />
+          </button>
+        </div>
+      )}
       <div className="p-3 border-t border-border flex gap-2 items-center">
         <input
           ref={inputRef}
