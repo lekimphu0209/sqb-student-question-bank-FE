@@ -4,7 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { subjectApi, videoApi } from '@/api/endpoints'
 import type { VideoPostItem } from '@/api/types'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
-import { Clock, MessageCircle, ThumbsUp } from 'lucide-react'
+import { Clock, MessageCircle, ThumbsUp, Video } from 'lucide-react'
 
 function formatDuration(sec?: number): string | null {
   if (!sec) return null
@@ -95,7 +95,7 @@ export default function VideosPage() {
         </>
       )}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
-      {q.isSuccess && items.length === 0 && <EmptyState>Chưa có video bài giảng nào.</EmptyState>}
+      {q.isSuccess && items.length === 0 && <EmptyState icon={<Video size={32} />}>Chưa có video bài giảng nào.</EmptyState>}
 
       {items.map((v) => (
         <VideoCard key={v.post_id} v={v} />

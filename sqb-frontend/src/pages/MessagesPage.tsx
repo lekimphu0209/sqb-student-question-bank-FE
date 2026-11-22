@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { Mail } from 'lucide-react'
 import { convApi } from '@/api/endpoints'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
 
@@ -19,7 +20,7 @@ export default function MessagesPage() {
       {q.isPending && <CardSkeleton />}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
       {q.isSuccess && items.length === 0 && (
-        <EmptyState>
+        <EmptyState icon={<Mail size={32} />}>
           Chưa có cuộc trò chuyện nào. Vào trang cá nhân của bạn bè để bắt đầu nhắn tin.
         </EmptyState>
       )}

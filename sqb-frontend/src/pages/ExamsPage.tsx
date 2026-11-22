@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query'
-import { Download } from 'lucide-react'
+import { Download, FileText } from 'lucide-react'
 import { examApi } from '@/api/endpoints'
 import { Badge, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
 
@@ -58,7 +58,7 @@ export default function ExamsPage() {
 
       {q.isPending && <CardSkeleton />}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
-      {q.isSuccess && items.length === 0 && <EmptyState>Chưa có đề thi nào. Tạo đề đầu tiên!</EmptyState>}
+      {q.isSuccess && items.length === 0 && <EmptyState icon={<FileText size={32} />}>Chưa có đề thi nào. Tạo đề đầu tiên!</EmptyState>}
 
       {items.map((e) => (
         <div key={e.exam_id} className="card space-y-2">

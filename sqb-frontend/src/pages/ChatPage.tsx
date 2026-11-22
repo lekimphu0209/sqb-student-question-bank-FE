@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Client } from '@stomp/stompjs'
+import { ArrowLeft } from 'lucide-react'
 import { convApi } from '@/api/endpoints'
 import type { ChatMessage } from '@/api/types'
 import { createChatClient, chatSend, chatRead, chatTyping } from '@/lib/chatSocket'
@@ -155,7 +156,7 @@ export default function ChatPage() {
   return (
     <div className="card !p-0 flex flex-col h-[calc(100vh-180px)] min-h-[400px]">
       <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-        <Link to="/messages" className="text-sm text-textMuted hover:text-primary">← Tin nhắn</Link>
+        <Link to="/messages" className="text-sm text-textMuted hover:text-primary inline-flex items-center gap-1"><ArrowLeft size={14} /> Tin nhắn</Link>
         <span className={`text-xs ${connected ? 'text-success' : 'text-textMuted'}`}>
           {connected ? '● Trực tuyến' : wsError ? '○ Lỗi kết nối realtime' : '○ Đang kết nối...'}
         </span>

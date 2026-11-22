@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { reviewApi } from '@/api/endpoints'
 import type { ReviewQuestion } from '@/api/types'
 import { Badge, CardSkeleton, EmptyState, ErrorBox, Modal } from '@/components/ui'
-import { AlertTriangle, Check, X } from 'lucide-react'
+import { AlertTriangle, ArrowLeft, Check, X } from 'lucide-react'
 
 function QuestionReviewCard({
   q,
@@ -111,7 +111,7 @@ export default function LecturerReviewDetailPage() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <Link to="/lecturer/review" className="text-sm text-textMuted hover:text-primary">← Danh sách chờ duyệt</Link>
+        <Link to="/lecturer/review" className="text-sm text-textMuted hover:text-primary inline-flex items-center gap-1"><ArrowLeft size={14} /> Danh sách chờ duyệt</Link>
         <button className="btn-primary" onClick={() => complete.mutate()} disabled={complete.isPending || pendingItems.length > 0}>
           {complete.isPending ? 'Đang chốt...' : 'Hoàn tất duyệt'}
         </button>

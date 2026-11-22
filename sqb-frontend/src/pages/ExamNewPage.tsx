@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { ArrowLeft } from 'lucide-react'
 import { classApi, examApi, subjectApi } from '@/api/endpoints'
 import { CardSkeleton, ErrorBox } from '@/components/ui'
 
@@ -63,7 +64,7 @@ export default function ExamNewPage() {
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold">Tạo đề thi</h1>
-        <Link to="/lecturer/exams" className="text-sm text-textMuted hover:text-primary">← Danh sách đề</Link>
+        <Link to="/lecturer/exams" className="text-sm text-textMuted hover:text-primary inline-flex items-center gap-1"><ArrowLeft size={14} /> Danh sách đề</Link>
       </div>
 
       <div className="card space-y-4">

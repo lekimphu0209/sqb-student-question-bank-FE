@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Send, UserPlus, Users } from 'lucide-react'
 import { blockApi, friendApi } from '@/api/endpoints'
 import type { Author, FriendItem } from '@/api/types'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, Tabs, timeAgo } from '@/components/ui'
@@ -64,7 +65,7 @@ export default function FriendsPage() {
         <>
           {friends.isPending && <CardSkeleton />}
           {friends.isError && <ErrorBox error={friends.error} onRetry={() => friends.refetch()} />}
-          {friends.isSuccess && friends.data.items.length === 0 && <EmptyState>Chưa có bạn bè nào.</EmptyState>}
+          {friends.isSuccess && friends.data.items.length === 0 && <EmptyState icon={<Users size={32} />}>Chưa có bạn bè nào.</EmptyState>}
           {friends.data?.items.map((f: FriendItem) => (
             <PersonRow
               key={f.user_id}
@@ -87,7 +88,7 @@ export default function FriendsPage() {
         <>
           {received.isPending && <CardSkeleton />}
           {received.isError && <ErrorBox error={received.error} onRetry={() => received.refetch()} />}
-          {received.isSuccess && received.data.items.length === 0 && <EmptyState>Không có lời mời nào.</EmptyState>}
+          {received.isSuccess && received.data.items.length === 0 && <EmptyState icon={<UserPlus size={32} />}>Không có lời mời nào.</EmptyState>}
           {received.data?.items.map((r) => {
             const u = (r as any).requester ?? (r as any).user
             return (
@@ -115,7 +116,7 @@ export default function FriendsPage() {
         <>
           {sent.isPending && <CardSkeleton />}
           {sent.isError && <ErrorBox error={sent.error} onRetry={() => sent.refetch()} />}
-          {sent.isSuccess && sent.data.items.length === 0 && <EmptyState>Bạn chưa gửi lời mời nào.</EmptyState>}
+          {sent.isSuccess && sent.data.items.length === 0 && <EmptyState icon={<Send size={32} />}>Bạn chưa gửi lời mời nào.</EmptyState>}
           {sent.data?.items.map((r) => {
             const u = (r as any).receiver ?? (r as any).user
             return (

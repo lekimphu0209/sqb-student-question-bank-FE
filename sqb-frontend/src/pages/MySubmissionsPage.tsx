@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { sessionApi } from '@/api/endpoints'
 import { EmptyState, ErrorBox, Spinner, timeAgo } from '@/components/ui'
-import { MessageCircle, ThumbsUp } from 'lucide-react'
+import { ClipboardList, MessageCircle, ThumbsUp } from 'lucide-react'
 
 export default function MySubmissionsPage() {
   const q = useQuery({ queryKey: ['my-submissions'], queryFn: () => sessionApi.mySubmissions(null, 20) })
@@ -14,7 +14,7 @@ export default function MySubmissionsPage() {
   return (
     <>
       <h1 className="text-xl font-bold">Phiên đề xuất của tôi</h1>
-      {items.length === 0 && <EmptyState>Bạn chưa đề xuất câu hỏi nào.</EmptyState>}
+      {items.length === 0 && <EmptyState icon={<ClipboardList size={32} />}>Bạn chưa đề xuất câu hỏi nào.</EmptyState>}
       {items.map((s) => (
         <div key={s.session_id} className="card flex items-center justify-between">
           <div>

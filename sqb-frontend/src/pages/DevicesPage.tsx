@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { deviceApi } from '@/api/endpoints'
 import { CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
-import { Globe, Monitor, Smartphone, type LucideIcon } from 'lucide-react'
+import { Globe, Monitor, MonitorSmartphone, Smartphone, type LucideIcon } from 'lucide-react'
 
 const PLATFORM_ICON: Record<string, LucideIcon> = { WEB: Globe, IOS: Smartphone, ANDROID: Smartphone, DESKTOP: Monitor }
 
@@ -22,7 +22,7 @@ export default function DevicesPage() {
 
       {q.isPending && <CardSkeleton />}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
-      {q.isSuccess && q.data.devices.length === 0 && <EmptyState>Không có thiết bị nào.</EmptyState>}
+      {q.isSuccess && q.data.devices.length === 0 && <EmptyState icon={<MonitorSmartphone size={32} />}>Không có thiết bị nào.</EmptyState>}
 
       {q.data?.devices.map((d) => (
         <div key={d.user_device_id} className="card flex items-center gap-3">

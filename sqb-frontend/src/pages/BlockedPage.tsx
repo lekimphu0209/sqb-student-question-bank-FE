@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Ban } from 'lucide-react'
 import { blockApi } from '@/api/endpoints'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
 
@@ -20,7 +21,7 @@ export default function BlockedPage() {
 
       {q.isPending && <CardSkeleton />}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
-      {q.isSuccess && q.data.items.length === 0 && <EmptyState>Bạn chưa chặn ai.</EmptyState>}
+      {q.isSuccess && q.data.items.length === 0 && <EmptyState icon={<Ban size={32} />}>Bạn chưa chặn ai.</EmptyState>}
 
       {q.data?.items.map((u) => (
         <div key={u.user_id} className="card flex items-center gap-3">

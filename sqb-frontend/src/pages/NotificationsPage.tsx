@@ -4,7 +4,7 @@ import { notiApi } from '@/api/endpoints'
 import type { NotificationItem } from '@/api/types'
 import { Avatar, CardSkeleton, EmptyState, ErrorBox, timeAgo } from '@/components/ui'
 import {
-  AlertTriangle, BarChart3, Bell, CheckCircle2, Medal, MessageCircle, Trophy, UserPlus,
+  AlertTriangle, BarChart3, Bell, BellOff, CheckCircle2, Medal, MessageCircle, Trophy, UserPlus,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -66,7 +66,7 @@ export default function NotificationsPage() {
 
       {q.isPending && <CardSkeleton />}
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
-      {q.isSuccess && items.length === 0 && <EmptyState>Chưa có thông báo nào.</EmptyState>}
+      {q.isSuccess && items.length === 0 && <EmptyState icon={<BellOff size={32} />}>Chưa có thông báo nào.</EmptyState>}
 
       <div className="space-y-1">
         {items.map((n) => (

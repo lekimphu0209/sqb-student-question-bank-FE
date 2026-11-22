@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, Newspaper } from 'lucide-react'
 import { feedApi } from '@/api/endpoints'
 import type { FeedItem, Post } from '@/api/types'
 import PostComposer from '@/components/PostComposer'
@@ -115,7 +115,7 @@ export default function HomePage() {
       {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
 
       {q.isSuccess && items.length === 0 && (
-        <EmptyState>Bảng tin trống. Hãy kết bạn hoặc đăng bài đầu tiên!</EmptyState>
+        <EmptyState icon={<Newspaper size={32} />}>Bảng tin trống. Hãy kết bạn hoặc đăng bài đầu tiên!</EmptyState>
       )}
 
       {displayItems.map((item, i) => {

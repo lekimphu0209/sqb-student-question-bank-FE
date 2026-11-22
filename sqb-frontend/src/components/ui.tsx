@@ -26,8 +26,13 @@ export function ErrorBox({ error, onRetry }: { error: unknown; onRetry?: () => v
   )
 }
 
-export function EmptyState({ children = MESSAGES.empty }: { children?: ReactNode }) {
-  return <div className="card text-center text-textMuted text-sm py-10">{children}</div>
+export function EmptyState({ children = MESSAGES.empty, icon }: { children?: ReactNode; icon?: ReactNode }) {
+  return (
+    <div className="card text-center text-textMuted text-sm py-10">
+      {icon && <div className="mb-3 flex justify-center text-textMuted/60">{icon}</div>}
+      {children}
+    </div>
+  )
 }
 
 export function Avatar({ src, name, size = 40 }: { src?: string; name: string; size?: number }) {
