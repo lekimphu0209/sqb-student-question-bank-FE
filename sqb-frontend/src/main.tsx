@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom'
+import { queryClient } from '@/lib/queryClient'
 import { useAuthStore } from '@/store/auth'
 import Layout from '@/components/Layout'
 import LoginPage from '@/pages/LoginPage'
@@ -31,10 +32,6 @@ import './index.css'
 
 // Áp theme (light/dark) trước khi render
 initTheme()
-
-const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: 1, staleTime: 30_000, refetchOnWindowFocus: false } },
-})
 
 function RequireAuth() {
   const token = useAuthStore((s) => s.accessToken)

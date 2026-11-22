@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { queryClient } from '@/lib/queryClient'
 
 export interface AuthUser {
   user_id: number
@@ -26,16 +27,32 @@ function makeDeviceId() {
   return `web-${crypto.randomUUID()}`
 }
 
+// Dọn cache theo phiên: TanStack Query + feed cache — tránh lộ data user trước khi đổi tài khoản
+function clearSessionCaches() {
+  queryClient.clear()
+  try {
+    localStorage.removeItem('sqb-feed-cache')
+  } catch {
+    // storage bị chặn -> bỏ qua
+  }
+}
+
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       accessToken: null,
       refreshToken: null,
       user: null,
       deviceId: makeDeviceId(),
-      setAuth: (user, accessToken, refreshToken) => set({ user, accessToken, refreshToken }),
+      setAuth: (user, accessToken, refreshToken) => {
+        if (get().user?.user_id !== user.user_id) clearSessionCaches()
+        set({ user, accessToken, refreshToken })
+      },
       setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
-      logout: () => set({ user: null, accessToken: null, refreshToken: null }),
+      logout: () => {
+        clearSessionCaches()
+        set({ user: null, accessToken: null, refreshToken: null })
+      },
     }),
     { name: 'sqb-auth' },
   ),
