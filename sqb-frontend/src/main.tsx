@@ -27,6 +27,7 @@ import ExamsPage from '@/pages/ExamsPage'
 import ExamNewPage from '@/pages/ExamNewPage'
 import VideosPage from '@/pages/VideosPage'
 import { ErrorBox } from '@/components/ui'
+import ToastHost from '@/components/Toast'
 import { initTheme } from '@/lib/theme'
 import './index.css'
 
@@ -88,6 +89,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ToastHost />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </React.StrictMode>,

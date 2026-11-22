@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { sessionApi, subjectApi } from '@/api/endpoints'
 import type { ProposeQuestion } from '@/api/types'
 import { ErrorBox, Spinner } from '@/components/ui'
+import { toast } from '@/lib/toast'
 
 const KEYS = ['A', 'B', 'C', 'D']
 
@@ -32,8 +33,8 @@ export default function ProposePage() {
     mutationFn: () =>
       sessionApi.propose({ title: title.trim(), content: content.trim() || undefined, subject_id: Number(subjectId), questions }),
     onSuccess: (d) => {
-      const warn = d.duplicate_warnings?.length ? `\nCảnh báo trùng lặp: ${d.duplicate_warnings.length} câu.` : ''
-      alert(`Đã gửi phiên #${d.session_id} (${d.questions_count} câu, trạng thái ${d.status}).${warn}`)
+      const warn = d.duplicate_warnings?.length ? ` — cảnh báo trùng lặp ${d.duplicate_warnings.length} câu` : ''
+      toast(`Đã gửi phiên #${d.session_id} (${d.questions_count} câu, trạng thái ${d.status})${warn}`, 'success')
       navigate('/questions/my-submissions')
     },
     onError: (e: Error) => setError(e.message),
