@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Client } from '@stomp/stompjs'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, MoreHorizontal, Trash2, Undo2 } from 'lucide-react'
 import { convApi } from '@/api/endpoints'
 import type { ChatMessage } from '@/api/types'
 import { createChatClient, chatSend, chatRead, chatTyping } from '@/lib/chatSocket'
 import { useAuthStore } from '@/store/auth'
 import { applyEmotes, insertAtCursor } from '@/lib/emote'
+import { toast } from '@/lib/toast'
 import { Avatar, ErrorBox, Spinner, timeAgo } from '@/components/ui'
 import EmoteButton from '@/components/EmoteButton'
 
@@ -42,6 +43,7 @@ export default function ChatPage() {
   const [connected, setConnected] = useState(false)
   const [peerTyping, setPeerTyping] = useState(false)
   const [wsError, setWsError] = useState(false)
+  const [menuFor, setMenuFor] = useState<number | null>(null)
   const clientRef = useRef<Client | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -124,6 +126,13 @@ export default function ChatPage() {
     }
   }, [messages, conversationId])
 
+  // Thu hồi (EVERYONE) hoặc xoá phía mình (ME) qua DELETE /messages/{id}?scope=
+  const delMsg = useMutation({
+    mutationFn: ({ id, scope }: { id: number; scope: 'ME' | 'EVERYONE' }) => convApi.deleteMessage(id, scope),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['messages', conversationId] }),
+    onError: (e: Error) => toast(e.message, 'error'),
+  })
+
   function onTyping(v: string) {
     setText(v)
     const c = clientRef.current
@@ -173,9 +182,45 @@ export default function ChatPage() {
               </div>
             )
           }
+          const menu = (
+            <div className="relative self-center">
+              <button
+                className="btn-ghost !p-1 text-textMuted opacity-0 transition group-hover:opacity-100"
+                onClick={() => setMenuFor(menuFor === m.message_id ? null : m.message_id)}
+                aria-label="Tuỳ chọn tin nhắn"
+              >
+                <MoreHorizontal size={16} />
+              </button>
+              {menuFor === m.message_id && (
+                <div className={`absolute ${mine ? 'right-0' : 'left-0'} top-full z-20 card !p-1 w-44 shadow-lg`}>
+                  {mine && (
+                    <button
+                      className="w-full text-left px-3 py-2 text-sm rounded hover:bg-bg"
+                      onClick={() => {
+                        setMenuFor(null)
+                        delMsg.mutate({ id: m.message_id, scope: 'EVERYONE' })
+                      }}
+                    >
+                      <Undo2 size={14} className="inline mr-2 -mt-0.5" />Thu hồi
+                    </button>
+                  )}
+                  <button
+                    className="w-full text-left px-3 py-2 text-sm rounded hover:bg-bg text-danger"
+                    onClick={() => {
+                      setMenuFor(null)
+                      delMsg.mutate({ id: m.message_id, scope: 'ME' })
+                    }}
+                  >
+                    <Trash2 size={14} className="inline mr-2 -mt-0.5" />Xoá với tôi
+                  </button>
+                </div>
+              )}
+            </div>
+          )
           return (
-            <div key={m.message_id} className={`flex gap-2 ${mine ? 'justify-end' : ''}`}>
+            <div key={m.message_id} className={`flex gap-2 group ${mine ? 'justify-end' : ''}`}>
               {!mine && <Avatar src={m.avatar_url} name={m.sender_name} size={28} />}
+              {mine && menu}
               <div className={`max-w-[70%] rounded-2xl px-3 py-2 text-sm ${mine ? 'bg-primary text-white' : 'bg-bg'}`}>
                 {m.reply_to_message && (
                   <div className={`text-xs mb-1 opacity-70 border-l-2 pl-2 ${mine ? 'border-white/50' : 'border-border'}`}>
@@ -190,6 +235,7 @@ export default function ChatPage() {
                   {timeAgo(m.created_at)}{m.edited ? ' · đã sửa' : ''}
                 </div>
               </div>
+              {!mine && menu}
             </div>
           )
         })}
