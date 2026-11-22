@@ -1,15 +1,15 @@
 import { useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { blockApi, convApi, followApi, friendApi, postApi, userApi } from '@/api/endpoints'
-import type { Profile } from '@/api/types'
+import { badgeApi, blockApi, convApi, followApi, friendApi, postApi, userApi } from '@/api/endpoints'
+import type { CursorPage, FollowUser, Profile } from '@/api/types'
 import { useAuthStore } from '@/store/auth'
 import PostCard from '@/components/PostCard'
 import ReportModal from '@/components/ReportModal'
 import { Avatar, EmptyState, ErrorBox, Modal, Spinner } from '@/components/ui'
 import { uploadImages } from '@/lib/upload'
 import { toast } from '@/lib/toast'
-import { FileText, ImagePlus, MessageCircle, Pencil } from 'lucide-react'
+import { Award, FileText, ImagePlus, MessageCircle, Pencil } from 'lucide-react'
 
 // Nút hành động quan hệ trên profile người khác (BF-07)
 function RelationActions({ userId }: { userId: number }) {
@@ -73,6 +73,43 @@ function RelationActions({ userId }: { userId: number }) {
       {chat.isError && <p className="error-text">{(chat.error as Error).message}</p>}
       <ReportModal open={reportOpen} onClose={() => setReportOpen(false)} targetType="USER" targetId={userId} />
     </div>
+  )
+}
+
+// Modal danh sách followers/following của chính mình (GET /follows/followers|following)
+function FollowListModal({ tab, onClose }: { tab: 'followers' | 'following'; onClose: () => void }) {
+  const q = useQuery({
+    queryKey: ['follow-list', tab],
+    queryFn: (): Promise<CursorPage<FollowUser>> =>
+      tab === 'followers' ? followApi.followers(null, 50) : followApi.following(null, 50),
+  })
+  const items = q.data?.items ?? []
+  return (
+    <Modal open onClose={onClose} title={tab === 'followers' ? 'Người theo dõi' : 'Đang theo dõi'}>
+      {q.isPending && <Spinner />}
+      {q.isError && <ErrorBox error={q.error} onRetry={() => q.refetch()} />}
+      {q.isSuccess && items.length === 0 && <EmptyState>Chưa có ai.</EmptyState>}
+      <div className="max-h-80 overflow-y-auto space-y-1">
+        {items.map((u) => (
+          <Link
+            key={u.user_id}
+            to={`/users/${u.user_id}`}
+            onClick={onClose}
+            className="flex items-center gap-3 rounded-md px-2 py-2 hover:bg-bg"
+          >
+            <Avatar src={u.avatar_url} name={u.full_name} size={36} />
+            <div className="min-w-0">
+              <div className="text-sm font-semibold truncate">{u.full_name}</div>
+              <div className="text-xs text-textMuted truncate">
+                {u.code}
+                {u.school_faculty ? ` · ${u.school_faculty}` : ''}
+              </div>
+            </div>
+            {u.friend && <span className="ml-auto text-xs text-success">Bạn bè</span>}
+          </Link>
+        ))}
+      </div>
+    </Modal>
   )
 }
 
@@ -171,6 +208,12 @@ export default function ProfilePage() {
   })
 
   const [editOpen, setEditOpen] = useState(false)
+  const [followTab, setFollowTab] = useState<'followers' | 'following' | null>(null)
+
+  const badges = useQuery({
+    queryKey: ['badges', isMe ? 'me' : userId],
+    queryFn: () => (isMe ? badgeApi.me() : badgeApi.ofUser(userId!)),
+  })
 
   const posts = useInfiniteQuery({
     queryKey: ['my-posts', isMe ? 'me' : userId],
@@ -215,13 +258,49 @@ export default function ProfilePage() {
             <RelationActions userId={Number(userId)} />
           )}
           <div className="mt-3 grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
-            {stats.map(([label, val]) => (
-              <div key={label} className="bg-bg rounded-md py-2">
-                <div className="font-semibold">{val}</div>
-                <div className="text-xs text-textMuted">{label}</div>
-              </div>
-            ))}
+            {stats.map(([label, val]) => {
+              const tab = label === 'Người theo dõi' ? 'followers' : label === 'Đang theo dõi' ? 'following' : null
+              return isMe && tab !== null ? (
+                <button
+                  key={label}
+                  className="bg-bg rounded-md py-2 hover:bg-border/60 transition"
+                  onClick={() => setFollowTab(tab)}
+                >
+                  <div className="font-semibold">{val}</div>
+                  <div className="text-xs text-textMuted">{label}</div>
+                </button>
+              ) : (
+                <div key={label} className="bg-bg rounded-md py-2">
+                  <div className="font-semibold">{val}</div>
+                  <div className="text-xs text-textMuted">{label}</div>
+                </div>
+              )
+            })}
           </div>
+          {badges.data && badges.data.length > 0 && (
+            <div className="mt-4">
+              <div className="text-sm font-semibold mb-2">Huy hiệu</div>
+              <div className="flex flex-wrap gap-2">
+                {badges.data.map((b) => (
+                  <div
+                    key={b.badge_id}
+                    title={`${b.name} — ${b.description}`}
+                    className="flex items-center gap-2 bg-bg rounded-md px-2 py-1.5"
+                  >
+                    {b.icon_url ? (
+                      <img src={b.icon_url} alt="" className="w-7 h-7 object-contain" />
+                    ) : (
+                      <Award size={22} className="text-warning" />
+                    )}
+                    <div>
+                      <div className="text-xs font-semibold">{b.name}</div>
+                      <div className="text-[10px] uppercase text-textMuted">{b.badge_tier}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -238,6 +317,7 @@ export default function ProfilePage() {
         </button>
       )}
       {isMe && <EditProfileModal profile={p} open={editOpen} onClose={() => setEditOpen(false)} />}
+      {isMe && followTab && <FollowListModal tab={followTab} onClose={() => setFollowTab(null)} />}
     </>
   )
 }
