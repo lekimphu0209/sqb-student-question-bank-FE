@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
+import { ArrowUp } from 'lucide-react'
 import { feedApi } from '@/api/endpoints'
 import type { FeedItem, Post } from '@/api/types'
 import PostComposer from '@/components/PostComposer'
@@ -97,7 +98,7 @@ export default function HomePage() {
     <>
       {fresh > 0 && (
         <button className="btn-primary sticky top-16 z-10 w-full shadow-md" onClick={onShowNewPosts}>
-          ↑ {fresh} bài viết mới
+          <ArrowUp size={15} className="inline -mt-0.5" /> {fresh} bài viết mới
         </button>
       )}
 
