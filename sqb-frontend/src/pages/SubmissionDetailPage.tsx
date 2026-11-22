@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, MessageCircle, ThumbsUp, Trash2 } from 'lucide-react'
-import { submissionApi } from '@/api/endpoints'
+import { reactApi, submissionApi } from '@/api/endpoints'
+import CommentThread from '@/components/CommentThread'
 import { EmptyState, ErrorBox, Modal, Spinner, timeAgo } from '@/components/ui'
 import { toast } from '@/lib/toast'
 
@@ -12,8 +13,24 @@ export default function SubmissionDetailPage() {
   const navigate = useNavigate()
   const qc = useQueryClient()
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState<number | null>(null)
+  const [commentsOpen, setCommentsOpen] = useState(false)
 
   const q = useQuery({ queryKey: ['submission', sessionId], queryFn: () => submissionApi.detail(sessionId) })
+
+  // Like/unlike phiên (POST /react target SESSION)
+  const like = useMutation({
+    mutationFn: () => reactApi.toggle('SESSION', Number(sessionId), liked ? 'NONE' : 'LIKE'),
+    onMutate: () => {
+      setLiked(!liked)
+      setLikeCount((c) => (c ?? q.data?.react_count ?? 0) + (liked ? -1 : 1))
+    },
+    onError: () => {
+      setLiked(liked)
+      setLikeCount((c) => (c ?? 0) + (liked ? 1 : -1))
+    },
+  })
   const withdraw = useMutation({
     mutationFn: () => submissionApi.remove(sessionId),
     onSuccess: () => {
@@ -58,17 +75,24 @@ export default function SubmissionDetailPage() {
           </button>
         </div>
         {s.content && <p className="text-sm whitespace-pre-wrap">{s.content}</p>}
-        <div className="text-sm text-textMuted flex items-center gap-4">
-          <span className="inline-flex items-center gap-1">
-            <ThumbsUp size={13} />
-            {s.react_count}
-          </span>
-          <span className="inline-flex items-center gap-1">
+        <div className="text-sm text-textMuted flex items-center gap-1 border-t border-border pt-2">
+          <button
+            className={`btn-ghost !px-2 !py-1 text-xs inline-flex items-center gap-1 ${liked ? 'text-primary' : ''}`}
+            onClick={() => like.mutate()}
+          >
+            <ThumbsUp size={13} className={liked ? 'fill-current' : ''} />
+            {likeCount ?? s.react_count}
+          </button>
+          <button
+            className="btn-ghost !px-2 !py-1 text-xs inline-flex items-center gap-1"
+            onClick={() => setCommentsOpen((v) => !v)}
+          >
             <MessageCircle size={13} />
-            {s.comment_count}
-          </span>
-          <span>{s.questions?.length ?? 0} câu hỏi</span>
+            {s.comment_count} bình luận
+          </button>
+          <span className="ml-auto text-xs">{s.questions?.length ?? 0} câu hỏi</span>
         </div>
+        {commentsOpen && <CommentThread targetType="SESSION" targetId={s.session_id} />}
       </div>
 
       <h2 className="font-semibold">Câu hỏi đã nộp</h2>
